@@ -2,6 +2,7 @@ name: Verificações da plataforma
 
 on:
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
