@@ -47,6 +47,9 @@ public final class InstalledAppChecks extends Instrumentation {
             waitFor("typeof PADevice.isOnline()==='boolean'","native network bridge");
             runOnMainSync(()->web.loadUrl("https://appassets.androidplatform.net/"));waitLoaded();
             waitFor("window.CrmWorkspace&&document.getElementById('crm-auth')&&window.PlatformTools?.manifests.size>=1","installed UI start with no internet");
+            run("document.querySelector('#platform-navigation [data-view=lists]').click();document.getElementById('native-account-access')?.scrollIntoView({block:'center'});");
+            waitFor("(()=>{const p=document.getElementById('native-account-access'),b=document.getElementById('native-connect-base'),f=document.getElementById('crm-auth');return p&&b&&f&&!p.hidden&&b.disabled&&b.getBoundingClientRect().width>0&&b.getBoundingClientRect().height>=44&&(p.compareDocumentPosition(f)&Node.DOCUMENT_POSITION_FOLLOWING)&&document.getElementById('native-account-status').textContent.includes('Conecte-se à internet');})()","authorization action visible above password with offline guidance");
+            waitFor("(()=>{const p=document.getElementById('native-account-access').getBoundingClientRect();return p.left>=0&&p.right<=document.documentElement.clientWidth+1;})()","authorization panel fits mobile width");
             waitFor("location.origin==='https://appassets.androidplatform.net'&&!navigator.onLine&&isSecureContext&&crypto.subtle","secure installed origin");
             run("window.testCoverage='';Promise.all(['/data/index.json','/data/federal/index.json','/data/4154.json'].map(p=>fetch(p).then(r=>r.json()))).then(values=>testCoverage=values[0].municipalities.length+':'+values[1].municipalities.length+':'+values[2].m[0]);");
             waitFor("window.testCoverage==='144:144:4154'","installed public election assets");
