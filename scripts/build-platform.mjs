@@ -30,12 +30,14 @@ await build({entryPoints:['src/crossing-view.mjs'],bundle:true,platform:'browser
 await build({entryPoints:['src/ocr-loader.mjs'],bundle:true,platform:'browser',format:'iife',target:'es2022',minify:true,outfile:'dist/client/ocr-runtime.js'});
 await build({entryPoints:['src/pdf-loader.mjs'],bundle:true,platform:'browser',format:'esm',target:'es2022',minify:true,external:['node:*','@napi-rs/canvas'],outfile:'dist/client/pdf-runtime.js'});
 mkdirSync('dist/client/vendor/pdf',{recursive:true});
+cpSync('node_modules/pdfjs-dist/LICENSE','dist/client/vendor/pdf/LICENSE');
 cpSync('node_modules/pdfjs-dist/legacy/build/pdf.worker.min.mjs','dist/client/vendor/pdf/pdf.worker.min.mjs');
 cpSync('node_modules/pdfjs-dist/standard_fonts','dist/client/vendor/pdf/standard_fonts',{recursive:true});
 cpSync('node_modules/pdfjs-dist/wasm','dist/client/vendor/pdf/wasm',{recursive:true});
 await build({entryPoints:['src/crm-workspace.mjs'],bundle:true,platform:'browser',format:'iife',target:'es2022',outfile:'dist/client/crm-workspace.js'});
 mkdirSync('dist/client/vendor/ocr/core',{recursive:true});
 cpSync('node_modules/tesseract.js/dist/worker.min.js','dist/client/vendor/ocr/worker.min.js');
+cpSync('node_modules/tesseract.js/LICENSE.md','dist/client/vendor/ocr/LICENSE.md');
 const coreNames=(await import('node:fs')).readdirSync('node_modules/tesseract.js-core').filter(n=>/\.wasm(?:\.js)?$/.test(n));
 for(const name of coreNames)cpSync('node_modules/tesseract.js-core/'+name,'dist/client/vendor/ocr/core/'+name);
 const {readdirSync,statSync}=await import('node:fs');
