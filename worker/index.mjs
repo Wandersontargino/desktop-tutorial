@@ -1,4 +1,5 @@
 import {automaticBackupMaintenance} from './automatic-backup.mjs';
+import {mobileMcp} from './mobile-mcp.mjs';
 import {recordOperationalMetric} from './operational-metrics.mjs';
 import { todayMaintenance } from './authorized-today-20261027.mjs';
 import { delmaFiveMaintenance } from './authorized-delma-five.mjs';
@@ -53,6 +54,7 @@ async function mapLimit(items,limit,fn){let next=0;const out=new Array(items.len
 const application={
   async fetch(request,env) {
     const url=new URL(request.url), path=url.pathname;
+    if(path==='/mcp')return mobileMcp(request,env);
     if(path==='/api/maintenance/automatic-backup')return automaticBackupMaintenance(request,env);
     if(path==='/api/maintenance/today-20261027')return todayMaintenance(request,env);
     if(path==='/api/maintenance/fatima-aura-20261017')return fatimaMaintenance(request,env);
@@ -133,7 +135,7 @@ const application={
         return new Response(object.body,{headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':'private, max-age=3600','X-Content-Type-Options':'nosniff'}});
       }
       authenticate(request,request.method!=='GET');
-      if(request.method!=='GET' && request.headers.get('oai-authenticated-user-email')?.toLowerCase()!=='owner@example.test')throw fail('Somente o responsável pode atualizar ou recuperar a base eleitoral.',403);
+      if(request.method!=='GET' && request.headers.get('oai-authenticated-user-email')?.toLowerCase()!=='wanderson.targino@gmail.com')throw fail('Somente o responsável pode atualizar ou recuperar a base eleitoral.',403);
       const snapshot=await stateSnapshot(bucket,baseKey(office),{revision:0,active:'bundled',versions:[]}),current=snapshot.value;
       if(action==='manifest'&&request.method==='GET')return json(current);
       if(action==='begin'&&request.method==='POST') {

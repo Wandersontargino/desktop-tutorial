@@ -35,10 +35,10 @@ def build(sdk, unsigned_only, signing_dir):
     env['LD_LIBRARY_PATH'] = str(tools/'lib64') + (':'+env['LD_LIBRARY_PATH'] if env.get('LD_LIBRARY_PATH') else '')
     run([tools/'aapt2','compile','--dir',ROOT/'project/res','-o',build_dir/'resources.zip'],env)
     run([tools/'aapt2','link','-o',build_dir/'unsigned.apk','--manifest',ROOT/'project/AndroidManifest.xml',
-         '-I',android,'--java',build_dir/'gen','--min-sdk-version','26','--target-sdk-version',platform,build_dir/'resources.zip'],env)
+         '-A',ROOT/'project/assets','-I',android,'--java',build_dir/'gen','--min-sdk-version','26','--target-sdk-version',platform,build_dir/'resources.zip'],env)
     sources = sorted((ROOT/'project/src').rglob('*.java'))+sorted((build_dir/'gen').rglob('*.java'))
     run(['java','--module','jdk.compiler/com.sun.tools.javac.Main','-source','8','-target','8',
-         '-bootclasspath',android,'-encoding','UTF-8','-d',build_dir/'classes',*sources],env)
+         '-bootclasspath',str(android)+os.pathsep+str(tools/'core-lambda-stubs.jar'),'-encoding','UTF-8','-d',build_dir/'classes',*sources],env)
     run(['java','-cp',tools/'lib/d8.jar','com.android.tools.r8.D8','--lib',android,
          '--min-api','26','--output',build_dir/'dex',*sorted((build_dir/'classes').rglob('*.class'))],env)
     with zipfile.ZipFile(build_dir/'unsigned.apk','a',compression=zipfile.ZIP_DEFLATED) as apk:
@@ -49,14 +49,19 @@ def build(sdk, unsigned_only, signing_dir):
     badging = run([tools/'aapt2','dump','badging',installer],env,capture=True).stdout
     assert "package: name='br.com.analiseeleitoralpara' versionCode='"+code+"' versionName='"+version+"'" in badging
     assert "minSdkVersion:'26'" in badging and "targetSdkVersion:'"+platform+"'" in badging
-    assert 'uses-permission:' not in badging and 'application-debuggable' not in badging
+    assert "uses-permission: name='android.permission.INTERNET'" in badging
+    assert "uses-permission: name='android.permission.ACCESS_NETWORK_STATE'" in badging
+    assert 'application-debuggable' not in badging
     assert 'br.com.analiseeleitoralpara.MainActivity' in badging
     with zipfile.ZipFile(installer) as apk:
         assert 'classes.dex' in apk.namelist()
-        assert not any(p.endswith(('.p12','.json','.csv','.xlsx','.mjs','.sqlite','.db')) for p in apk.namelist())
+        assert not any(p.endswith(('.p12','.pfx','.keystore','.sqlite','.db')) for p in apk.namelist())
+        assert 'assets/platform/index.html' in apk.namelist() and 'assets/platform/native-device.js' in apk.namelist()
+        assert 'assets/platform/vendor/ocr/lang/por.traineddata.gz' in apk.namelist()
+        assert 'assets/platform/native-assets.json' in apk.namelist()
     metadata = {'version':version,'version_code':int(code),'package':'br.com.analiseeleitoralpara',
                 'minimum_android':'8.0 (API 26)','target_api':int(platform), 'unsigned_sha256':hashlib.sha256(installer.read_bytes()).hexdigest(),
-                'permissions':[], 'resource_manifest_dex_alignment_verified':True,'embedded_personal_data':False,'device_tested':False}
+                'permissions':['INTERNET','ACCESS_NETWORK_STATE'], 'embedded_interface':True, 'local_origin':'https://appassets.androidplatform.net/', 'offline_expiry_days':7, 'resource_manifest_dex_alignment_verified':True,'embedded_personal_data':False,'device_tested':False}
     (output/'verification-android-build.json').write_text(json.dumps(metadata,ensure_ascii=False,indent=2))
     shutil.copy2(tools/'lib/apksigner.jar', output/'apksigner.jar')
     if (tools/'NOTICE.txt').is_file(): shutil.copy2(tools/'NOTICE.txt',output/'NOTICE-Android-SDK.txt')

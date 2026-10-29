@@ -30,7 +30,8 @@ def sign_apk(unsigned,signer,signing,output,metadata):
     assert 'Verified using v3 scheme (APK Signature Scheme v3): true' in verified
     with zipfile.ZipFile(installer) as apk:
         assert 'classes.dex' in apk.namelist() and 'AndroidManifest.xml' in apk.namelist()
-        assert not any(p.endswith(('.p12','.json','.csv','.xlsx','.mjs','.sqlite','.db')) for p in apk.namelist())
+        assert not any(p.endswith(('.p12','.pfx','.keystore','.sqlite','.db')) for p in apk.namelist())
+        assert 'assets/platform/index.html' in apk.namelist() and 'assets/platform/native-assets.json' in apk.namelist()
         payload=b''.join(apk.read(p) for p in apk.namelist())
         assert config['password'].encode() not in payload
         assert b'OAI-Sites-Authorization' not in payload

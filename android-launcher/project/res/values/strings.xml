@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Eleitoral Pará</string>
-    <string name="app_title">Análise Eleitoral Pará 2026</string>
-    <string name="app_intro">Versão 2.15.0 • Qualidade, duplicidades, arquivados, relatórios e backups.</string>
-    <string name="opening">Abrindo a plataforma…</string>
-    <string name="ready">Abra a plataforma sem precisar abrir a conversa. O site privado usa sua conta autorizada. Se você já tem uma hospedagem independente, configure o endereço HTTPS para usar o login dessa hospedagem.</string>
-    <string name="open_platform">Abrir plataforma</string>
-    <string name="open_browser">Abrir no navegador</string>
-    <string name="offline_help">Como usar offline</string>
-    <string name="offline_title">Preparar consulta offline</string>
-    <string name="offline_steps">1. Abra a plataforma com internet e entre na conta autorizada.\n\n2. Use Preparar uso offline para salvar a cópia eleitoral neste navegador.\n\n3. Entre em Cadastros e desbloqueie a base com sua senha para preparar a cópia protegida.\n\n4. Depois, abra o aplicativo no mesmo navegador e perfil para consultar os dados preparados.\n\nImportações, sincronizações e novas declarações de parceria precisam de internet. As regras de validade e proteção da cópia dos cadastros continuam sendo as da plataforma.</string>
-    <string name="no_browser">Não foi possível abrir a plataforma. Instale ou ative um navegador atualizado e tente novamente.</string>
-    <string name="understood">Entendi</string>
-    <string name="icon_description">Análise Eleitoral Pará</string>
+  <string name="app_name">Eleitoral Pará</string>
+  <string name="icon_description">Análise Eleitoral Pará</string>
 </resources>

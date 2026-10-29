@@ -13,3 +13,5 @@ independent-build/
 /windows-launcher/output/
 
 /android-launcher/__pycache__/
+
+/android-launcher/project/assets/
