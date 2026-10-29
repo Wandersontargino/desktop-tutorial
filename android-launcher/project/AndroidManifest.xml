@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.analiseeleitoralpara"
-    android:versionCode="21500" android:versionName="2.15.0">
+    android:versionCode="21600" android:versionName="2.16.0">
     <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="36" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <queries>
         <intent><action android:name="android.intent.action.VIEW" /><category android:name="android.intent.category.BROWSABLE" /><data android:scheme="https" /></intent>
         <intent><action android:name="android.support.customtabs.action.CustomTabsService" /></intent>
