@@ -66,7 +66,7 @@ jobs:
             adb shell wm dismiss-keyguard
             adb shell svc power stayon true
             adb shell am instrument -w -r br.com.analiseeleitoralpara.tests/.InstalledAppChecks > android-launcher/output/device-checks.txt
-            adb logcat -d -s chromium ActivityManager AndroidRuntime WebViewFactory > android-launcher/output/device-runtime.txt
+            adb logcat -d *:W > android-launcher/output/device-runtime.txt
             cat android-launcher/output/device-checks.txt
             grep "PASS:" android-launcher/output/device-checks.txt
             grep "INSTRUMENTATION_CODE: -1" android-launcher/output/device-checks.txt

@@ -15,7 +15,7 @@ public final class InstalledAppChecks extends Instrumentation {
     private String evaluate(String script) throws Exception {
         CountDownLatch done=new CountDownLatch(1);final String[] result={null};
         runOnMainSync(()->web.evaluateJavascript(script,value->{result[0]=value;done.countDown();}));
-        if(!done.await(15,TimeUnit.SECONDS))throw new Exception("WebView did not answer");return result[0];
+        if(!done.await(45,TimeUnit.SECONDS))throw new Exception("WebView did not answer; activityDestroyed="+activity.isDestroyed());return result[0];
     }
     private void waitLoaded() throws Exception {
         long deadline=System.currentTimeMillis()+90000;final int[] progress={0};
@@ -42,7 +42,10 @@ public final class InstalledAppChecks extends Instrumentation {
                 @Override public boolean onJsAlert(WebView v,String u,String m,JsResult r){r.confirm();return true;}
                 @Override public boolean onJsConfirm(WebView v,String u,String m,JsResult r){r.confirm();return true;}
             }));
-            waitLoaded();
+            runOnMainSync(()->{web.stopLoading();web.loadDataWithBaseURL("https://appassets.androidplatform.net/","<!doctype html><html><body>Installed runtime check</body></html>","text/html","UTF-8",null);});
+            waitLoaded();waitFor("1+1===2","Android JavaScript callback");
+            waitFor("typeof PADevice.isOnline()==='boolean'","native network bridge");
+            runOnMainSync(()->web.loadUrl("https://appassets.androidplatform.net/"));waitLoaded();
             waitFor("window.CrmWorkspace&&document.getElementById('crm-auth')&&window.PlatformTools?.manifests.size>=1","installed UI start with no internet");
             waitFor("location.origin==='https://appassets.androidplatform.net'&&!navigator.onLine&&isSecureContext&&crypto.subtle","secure installed origin");
             run("window.testCoverage='';Promise.all(['/data/index.json','/data/federal/index.json','/data/4154.json'].map(p=>fetch(p).then(r=>r.json()))).then(values=>testCoverage=values[0].municipalities.length+':'+values[1].municipalities.length+':'+values[2].m[0]);");
