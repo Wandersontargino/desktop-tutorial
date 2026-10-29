@@ -8,6 +8,7 @@ import android.os.*;
 import android.print.PrintManager;
 import android.view.*;
 import android.webkit.*;
+import android.webkit.CookieManager;
 import android.widget.*;
 import org.json.*;
 import java.io.*;

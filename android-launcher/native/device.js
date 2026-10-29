@@ -69,6 +69,7 @@
     if(!current()){$('crm-email').readOnly=false;$('crm-mfa-wrap').hidden=true;}
     try{if(!$('crm-email').value)$('crm-email').value=localStorage.getItem('pa-native-account-email')||'';}catch{}
     $('crm-signout').addEventListener('click',async event=>{event.preventDefault();await window.PANative.lock();native.signOut();});
+    let wasUnlocked=false;document.addEventListener('crm:state-change',()=>{const unlocked=!!window.CrmWorkspace?.isUnlocked();const opened=unlocked&&!wasUnlocked;wasUnlocked=unlocked;if(opened&&current())queueMicrotask(()=>window.dispatchEvent(new Event('online')));});
     for(const event of ['online','offline'])window.addEventListener(event,status);status();
     const favorite=$('favorite-status');if(favorite)new MutationObserver(()=>{if(favorite.textContent.includes('outro aparelho'))favorite.textContent='Consultas salvas neste aplicativo.';}).observe(favorite,{childList:true});
     // Base imports and activation belong to the central website; APK public data is versioned.
