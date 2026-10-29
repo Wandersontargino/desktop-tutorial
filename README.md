@@ -1,24 +1,55 @@
-# Plataforma eleitoral — código de manutenção
+# Análise Eleitoral Pará 2026
 
-Este repositório privado contém uma cópia sanitizada da plataforma 2.15.0. Nenhum cadastro real, senha, chave de servidor, cópia da base ou histórico Git privado acompanha o código. Importações históricas e sementes particulares foram desativadas nesta cópia.
+Código da plataforma web, do aplicativo Android instalado e do instalador Windows, preservado neste repositório privado para manutenção e reprodução futura.
+
+| Componente | Versão da entrega | Código e instruções |
+| --- | --- | --- |
+| Plataforma web e base central | 2.15.0 | `src/`, `public/`, `lib/`, `worker/` e `drizzle/` |
+| Android com interface e dados públicos instalados | 2.16.1 | [android-launcher/](android-launcher/README.md) |
+| Instalador Windows conectado à plataforma | 2.15.0 | [windows-launcher/](windows-launcher/README.md) |
+
+**Comece pelo [guia para reproduzir o projeto](docs/replicar-projeto.md).** Ele reúne a preparação do ambiente, compilação, testes, configuração de uma nova instância e assinatura dos aplicativos.
+
+O [registro da entrega](docs/entrega-final-2026-10-29.json) identifica versões, código validado e verificações. A branch [`release/entrega-final-2026-10-29`](https://github.com/Wandersontargino/desktop-tutorial/tree/release/entrega-final-2026-10-29) preserva esta referência para consultas futuras.
 
 ## Desenvolvimento e validação
 
-Use Node.js 24, execute `npm ci`, `npm run build`, `npm run check` e `npx playwright install --with-deps` seguido de `npm run check:browser`.
+Na raiz de uma cópia do repositório, com Node.js 24:
 
-O build confere e recompõe os arquivos eleitorais públicos empacotados em partes, mantendo o restante do código legível. Os testes usam contas e pessoas fictícias em banco SQLite temporário. O servidor de navegador escuta somente em localhost com certificado temporário; a tolerância ao certificado existe apenas nesse teste.
+```sh
+npm ci
+npm run build
+npm run check
+npx playwright install --with-deps chromium firefox webkit
+npm run check:browser
+```
+
+O build recompõe os 440 arquivos eleitorais públicos guardados em `.github/public-assets/` e verifica seus hashes SHA-256. O código e `package-lock.json` permitem recompilar a interface e o servidor com as dependências registradas.
+
+Os testes usam contas e pessoas fictícias em banco SQLite temporário. O servidor de testes de navegador escuta somente em localhost com certificado temporário; essa configuração pertence ao ambiente de testes.
+
+## Recursos preservados
+
+- Cadastros, filtros, relatórios, comparação de candidatos e dados eleitorais públicos.
+- Duplicidades com observações, revisão de divergências e área de cadastros arquivados.
+- Central de Qualidade com responsável, prazo, fonte, histórico e controle de alterações concorrentes.
+- Revisão de fotos/PDFs com documento original, confiança do OCR e preservação dos dígitos.
+- Cofre offline protegido, revisão das alterações e sincronização com controle de conflitos.
+- Backups de servidor criptografados, verificação de integridade e retenção das últimas 14 cópias verificadas.
+- Indicadores operacionais agregados, sem conteúdo pessoal nas métricas.
 
 ## Verificações contínuas
 
-GitHub Actions verifica o código e 24 cenários de navegador em Chromium, Firefox, WebKit e tela móvel. Dependabot propõe atualizações semanais de npm e Actions. As permissões de execução são somente de leitura, sem credenciais de produção ou publicação automática. Os testes históricos com lotes privados permanecem na manutenção privada e não são distribuídos aqui.
+GitHub Actions executa os testes funcionais, 24 cenários de navegador em Chromium, Firefox, WebKit e tela móvel, a compilação Windows e os testes do aplicativo Android instalado. A entrega Android 2.16.1 passou por 17 verificações em Android 15 e pela conferência dos 555 recursos instalados.
 
-## Recursos implementados
+Os workflows ficam em [.github/workflows/platform-checks.yml](.github/workflows/platform-checks.yml) e [.github/workflows/installers.yml](.github/workflows/installers.yml). Também podem ser executados manualmente em **Actions → Run workflow**. Os artefatos dos instaladores permanecem disponíveis por 14 dias; os fontes e instruções ficam versionados no Git.
 
-- Central de Qualidade: responsável autorizado, prazo, fonte documental, observação, histórico e proteção contra alterações concorrentes.
-- Backup de servidor: AES-GCM, verificação de integridade e estrutura por descriptografia, retenção das últimas 14 cópias verificadas, chave de recuperação protegida e restauração revisável.
-- Saúde e backups: duração, falhas e conflitos em métricas agregadas, sem dados pessoais.
-- Fotos/PDFs: revisão com o original ao lado, baixa confiança destacada e dígitos literais preservados.
+Dependabot propõe atualizações semanais de npm e Actions. Os workflows usam permissões de leitura e não publicam a plataforma de produção.
 
-## Produção
+## Configuração e dados privados
 
-Esta cópia não contém o identificador do Site em produção. A publicação continua pelo fluxo privado do Site existente, com revisão e validação. Nunca cadastre tokens, senhas, arquivos de recuperação ou registros pessoais neste repositório. O provedor deve proteger a origem e os cabeçalhos de identidade; a rotina de backup de serviço somente pode ser habilitada atrás do acesso privado do proprietário.
+Esta é a cópia de desenvolvimento sem a base particular. Os dados iniciais privados e as importações históricas foram desativados; o proprietário de exemplo do backend é `owner@example.test`. O guia explica a configuração necessária antes de implantar outra instância.
+
+Senhas, tokens, chaves de servidor, chave de assinatura Android, cópias da base e histórico Git privado permanecem fora deste repositório. A recuperação dos cadastros depende dos backups protegidos e das respectivas chaves, guardados separadamente.
+
+A publicação web usa o acesso privado e a infraestrutura de identidade do provedor. Mantenha os cabeçalhos de identidade sob controle desse provedor. Habilite a rotina de backup de serviço apenas em uma instância confirmada como privada e restrita ao proprietário.
