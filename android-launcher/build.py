@@ -38,7 +38,7 @@ def build(sdk, unsigned_only, signing_dir):
          '-A',ROOT/'project/assets','-I',android,'--java',build_dir/'gen','--min-sdk-version','26','--target-sdk-version',platform,build_dir/'resources.zip'],env)
     sources = sorted((ROOT/'project/src').rglob('*.java'))+sorted((build_dir/'gen').rglob('*.java'))
     run(['java','--module','jdk.compiler/com.sun.tools.javac.Main','-source','8','-target','8',
-         '-bootclasspath',android,'-encoding','UTF-8','-d',build_dir/'classes',*sources],env)
+         '-bootclasspath',str(android)+os.pathsep+str(tools/'core-lambda-stubs.jar'),'-encoding','UTF-8','-d',build_dir/'classes',*sources],env)
     run(['java','-cp',tools/'lib/d8.jar','com.android.tools.r8.D8','--lib',android,
          '--min-api','26','--output',build_dir/'dex',*sorted((build_dir/'classes').rglob('*.class'))],env)
     with zipfile.ZipFile(build_dir/'unsigned.apk','a',compression=zipfile.ZIP_DEFLATED) as apk:
