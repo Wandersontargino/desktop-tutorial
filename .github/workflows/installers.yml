@@ -60,10 +60,14 @@ jobs:
             adb install android-launcher/build/device-tests/target-ci.apk
             adb install android-launcher/build/device-tests/checks-ci.apk
             adb shell cmd connectivity airplane-mode enable
-            adb shell am instrument -w br.com.analiseeleitoralpara.tests/.InstalledAppChecks > android-launcher/output/device-checks.txt
+            adb shell input keyevent KEYCODE_WAKEUP
+            adb shell wm dismiss-keyguard
+            adb shell svc power stayon true
+            adb shell am instrument -w -r br.com.analiseeleitoralpara.tests/.InstalledAppChecks > android-launcher/output/device-checks.txt
+            adb logcat -d -s chromium ActivityManager AndroidRuntime WebViewFactory > android-launcher/output/device-runtime.txt
             cat android-launcher/output/device-checks.txt
-            rg "PASS:" android-launcher/output/device-checks.txt
-            rg "INSTRUMENTATION_CODE: -1" android-launcher/output/device-checks.txt
+            grep "PASS:" android-launcher/output/device-checks.txt
+            grep "INSTRUMENTATION_CODE: -1" android-launcher/output/device-checks.txt
       - uses: actions/upload-artifact@v7
         if: always()
         with:

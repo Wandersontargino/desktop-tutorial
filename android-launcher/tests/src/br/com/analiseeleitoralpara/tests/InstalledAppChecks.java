@@ -3,6 +3,7 @@ import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.webkit.WebView;
+import android.view.WindowManager;
 import org.json.*;
 import java.lang.reflect.Field;
 import java.util.concurrent.*;
@@ -18,7 +19,7 @@ public final class InstalledAppChecks extends Instrumentation {
     }
     private void waitFor(String expression,String label) throws Exception {
         long deadline=System.currentTimeMillis()+60000;String last="";
-        while(System.currentTimeMillis()<deadline){last=evaluate("Boolean("+expression+")");if("true".equals(last)){checks++;return;}Thread.sleep(150);}
+        while(System.currentTimeMillis()<deadline){last=evaluate("Boolean("+expression+")");if("true".equals(last)){checks++;Bundle report=new Bundle();report.putString("stream","CHECK "+checks+": "+label+"\n");sendStatus(0,report);return;}Thread.sleep(150);}
         throw new Exception(label+" failed; status="+evaluate("document.getElementById('crm-status')?.textContent")+"; result="+last);
     }
     private void run(String js) throws Exception{evaluate("(()=>{"+js+"})()");}
@@ -29,7 +30,7 @@ public final class InstalledAppChecks extends Instrumentation {
     @Override public void onStart(){
         Bundle result=new Bundle();
         try{
-            Intent intent=new Intent();intent.setClassName("br.com.analiseeleitoralpara","br.com.analiseeleitoralpara.MainActivity");intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);activity=startActivitySync(intent);
+            Intent intent=new Intent();intent.setClassName("br.com.analiseeleitoralpara","br.com.analiseeleitoralpara.MainActivity");intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);activity=startActivitySync(intent);runOnMainSync(()->activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON|WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON|WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED));
             Field field=activity.getClass().getDeclaredField("platform");field.setAccessible(true);web=(WebView)field.get(activity);
             waitFor("window.CrmWorkspace&&document.getElementById('crm-auth')&&window.PlatformTools?.manifests.size>=1","installed UI start with no internet");
             waitFor("location.origin==='https://appassets.androidplatform.net'&&!navigator.onLine&&isSecureContext&&crypto.subtle","secure installed origin");
@@ -49,6 +50,6 @@ public final class InstalledAppChecks extends Instrumentation {
             waitFor("syncCalls.length===1&&syncCalls[0].revision===7&&syncCalls[0].changes.length===2&&CrmWorkspace.getOperationalState().revision===8&&CrmWorkspace.getOperationalState().pending===0","online event resumes the approved queue (synthetic server)");
             run("PANative.offline(true);window.endDone=false;PANative.lock().then(()=>endDone=true);");waitFor("window.endDone&&!CrmWorkspace.isUnlocked()","final lock");
             result.putString("stream","PASS: "+checks+" installed Android checks. Offline UI, 144 municipalities per office, AES-GCM, incorrect password, registration editing, restart, lock and approved sync with a synthetic server. Production login is not simulated or claimed.\n");finish(Activity.RESULT_OK,result);
-        }catch(Throwable error){result.putString("stream","FAIL: "+error.toString()+"\n");finish(Activity.RESULT_CANCELED,result);}
+        }catch(Throwable error){result.putString("stream","FAIL after "+checks+" checks: "+error.toString()+"\n");finish(Activity.RESULT_CANCELED,result);}
     }
 }
