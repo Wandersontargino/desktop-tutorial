@@ -23,7 +23,7 @@ const controller=new AbortController(),aborted=win.fetch('/api/crm/records',{sig
 win.PANative.offline(true);await assert.rejects(win.fetch('/api/crm/records'),/Sem conexão/);assert.equal(win.navigator.onLine,false);
 assert.equal((await win.fetch('/api/election/estadual/manifest')).status,200);
 let changes=0;win.addEventListener('online',()=>changes++);win.PANative.network(true);assert.equal(changes,0);win.PANative.offline(false);assert.equal(changes,1);
-connect.click();await Promise.resolve();await Promise.resolve();assert.equal(authorizations,1);assert.equal(locks,1);assert.equal(connect.disabled,true);
+connect.click();await new Promise(setImmediate);assert.equal(authorizations,1);assert.equal(locks,1);assert.equal(connect.disabled,true);
 win.PANative.authorizationClosed();assert.equal(connect.disabled,false);assert.ok(notice.textContent.includes('tentar novamente'));
 const session=win.fetch('/api/crm/session');win.PANative.reply(requests.at(-1).id,{status:200,body:{user:{id:'synthetic-owner',email:'owner@example.test'}}});await session;
 assert.equal(panel.dataset.state,'authorized');assert.ok(notice.textContent.includes('Agora entre com a senha'));assert.equal(win.localStorage.getItem('pa-native-account-email'),'owner@example.test');
@@ -31,5 +31,5 @@ const incorrect=win.fetch('/api/crm/session',{method:'POST',body:'{}'});win.PANa
 const expired=win.fetch('/api/crm/records');win.PANative.reply(requests.at(-1).id,{status:401,body:{requiresDeviceAuthorization:true,error:'Autorize este aparelho em Conectar base e entre com a senha da plataforma.'}});await expired;
 assert.equal(panel.dataset.state,'required');assert.ok(notice.textContent.includes('Use Conectar base aqui acima'));
 win.PANative.network(false);assert.equal(connect.disabled,true);assert.ok(notice.textContent.includes('Conecte-se à internet'));connect.click();assert.equal(authorizations,1);
-win.PANative.network(true);assert.equal(connect.disabled,false);connect.click();await Promise.resolve();await Promise.resolve();assert.equal(authorizations,2);
+win.PANative.network(true);assert.equal(connect.disabled,false);connect.click();await new Promise(setImmediate);assert.equal(authorizations,2);
 await win.happyDOM.close();console.log('Native Android: installed assets, favorites CAS, revision, conflicts, cancellation, offline events and visible authorization above login, retry, verified account state, incorrect password and offline guidance passed.');
