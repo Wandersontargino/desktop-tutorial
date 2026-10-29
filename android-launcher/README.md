@@ -1,10 +1,10 @@
-# Android instalado — 2.16.0
+# Android instalado — 2.16.1
 
 O APK inclui a interface completa, as duas bases eleitorais públicas (144 municípios por cargo), relatórios, OCR em português e o leitor de PDFs. A tela principal é servida pelo próprio APK no contexto HTTPS `appassets.androidplatform.net`; nenhum navegador externo é aberto ao iniciar.
 
 ## Cadastros privados e sincronização
 
-Na primeira conexão, use **Conectar base** para autorizar a conta do Site privado dentro da janela de conta. Ela não tem acesso à ponte nativa. Volte ao aplicativo e entre com a senha da base e o segundo fator, quando exigido. Os cookies da conta permanecem no armazenamento privado do Android; o APK não contém cookies, senhas, chaves de serviço ou cadastros reais.
+Na primeira conexão, o formulário de login mostra **1. Autorize este aparelho**, com o botão **Conectar base** destacado acima de **2. Entre com a senha da base**. O painel informa quando há autorização, falta internet ou é preciso tentar novamente. Use a mesma conta do ChatGPT que acessa o Site privado na janela de conta. Ela não tem acesso à ponte nativa. Volte ao aplicativo e entre com a senha da base e o segundo fator, quando exigido. Os cookies da conta permanecem no armazenamento privado do Android; o APK não contém cookies, senhas, chaves de serviço ou cadastros reais.
 
 A cópia dos cadastros utiliza o cofre existente: AES-GCM de 256 bits com PBKDF2/SHA-256 de 600 mil iterações, senha da base e validade offline de sete dias desde a última validação central. Os arquivos instalados não expiram. **Usar cópia offline** permite consultar e editar o cofre mesmo quando há internet e a autorização da conta precisa ser renovada.
 
