@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {Window} from 'happy-dom';
-const win=new Window({url:'https://appassets.androidplatform.net/'}),requests=[],assets=[];let authorizations=0,locks=0;
+const win=new Window({url:'https://appassets.androidplatform.net/'}),requests=[],assets=[];let authorizations=0,locks=0,unlocked=false;
 Object.assign(win,{Response,Headers,Request,AbortController,DOMException});
 win.document.body.innerHTML='<button id="install-app"></button><button id="prepare-offline"></button><button id="access-help"></button><p id="offline-status"></p><span id="connection-label"></span><section class="crm-access-card"><p id="crm-status"></p><form id="crm-auth"><input id="crm-email"><input id="crm-password" type="password"><span id="crm-confirm-wrap"></span><input id="crm-confirm"><span id="crm-mfa-wrap"></span></form><button id="crm-signout"></button></section><p id="favorite-status"></p>';
-win.CrmWorkspace={lock:async()=>{locks++;},isUnlocked:()=>false};
+win.CrmWorkspace={lock:async()=>{locks++;},isUnlocked:()=>unlocked};
 win.PADevice={isOnline:()=>true,request:(id,payload)=>requests.push({id,...JSON.parse(payload)}),saveFile:()=>{},print:()=>{},authorize:()=>{authorizations++;}};
 win.fetch=async input=>{assets.push(String(input));return new Response('{"ok":true}',{headers:{'Content-Type':'application/json'}});};
 win.eval(readFileSync('android-launcher/native/device.js','utf8'));
@@ -31,5 +31,7 @@ const incorrect=win.fetch('/api/crm/session',{method:'POST',body:'{}'});win.PANa
 const expired=win.fetch('/api/crm/records');win.PANative.reply(requests.at(-1).id,{status:401,body:{requiresDeviceAuthorization:true,error:'Autorize este aparelho em Conectar base e entre com a senha da plataforma.'}});await expired;
 assert.equal(panel.dataset.state,'required');assert.ok(notice.textContent.includes('Use Conectar base aqui acima'));
 win.PANative.network(false);assert.equal(connect.disabled,true);assert.ok(notice.textContent.includes('Conecte-se à internet'));connect.click();assert.equal(authorizations,1);
+unlocked=true;win.document.dispatchEvent(new win.Event('crm:state-change'));assert.equal(panel.hidden,true);assert.equal(panel.style.display,'none');assert.equal(win.document.getElementById('native-login-step').hidden,true);
+unlocked=false;win.document.dispatchEvent(new win.Event('crm:state-change'));assert.equal(panel.hidden,false);assert.equal(win.document.getElementById('native-login-step').hidden,false);
 win.PANative.network(true);assert.equal(connect.disabled,false);connect.click();await new Promise(setImmediate);assert.equal(authorizations,2);
 await win.happyDOM.close();console.log('Native Android: installed assets, favorites CAS, revision, conflicts, cancellation, offline events and visible authorization above login, retry, verified account state, incorrect password and offline guidance passed.');
