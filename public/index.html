@@ -1,0 +1,1200 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#2358ed" />
+    <meta
+      name="description"
+      content="Análise da votação de deputados estaduais e federais em 2026 por município, região territorial, zona, seção, local de votação e bairro no Pará, com comparação de 2022."
+    />
+    <title>Análise Eleitoral Pará</title>
+    <link rel="stylesheet" href="./styles.css?v=2026-10-28-qualidade-v107" />
+    <link rel="stylesheet" href="./platform.css?v=2026-10-28-qualidade-v107" />
+    <link rel="stylesheet" href="./dashboard-theme.css?v=2026-10-23-aproveitamento-v97" />
+    <link rel="stylesheet" href="./council.css?v=2026-10-27-polos-v99" />
+  </head>
+  <body class="platform">
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="#topo" data-view="home" aria-label="Análise Eleitoral Pará — início">
+          <span class="brand-mark" aria-hidden="true">PA</span>
+          <span>
+            <strong>Análise Eleitoral</strong>
+            <small>Pará • 2026</small>
+          </span>
+        </a>
+        <div class="connection-indicator" id="connection-label" aria-live="polite">Online</div>
+        <button id="header-menu-button" class="header-menu-button" type="button" data-view="menu" aria-label="Abrir menu da plataforma"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+        <div class="election-stamp">
+          Eleições <strong>2026</strong> <span>Pará • 1º turno</span>
+        </div>
+      </div>
+      <nav class="platform-navigation" id="platform-navigation" aria-label="Áreas da plataforma">
+<button type="button" class="" data-view="home" data-workspace-area="home" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 11 10-9 10 9M5 9v13h5v-7h4v7h5V9"/></svg><span>Início</span></button>
+<button type="button" class="" data-view="lists" data-workspace-area="cadastros" aria-current="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="3"/><path d="M3 20v-3a6 6 0 0 1 12 0v3M17 4a3 3 0 0 1 0 6M18 14a5 5 0 0 1 3 5"/></svg><span>Cadastros</span></button>
+<button type="button" class="" data-view="paired" data-workspace-area="cruzamentos" aria-current="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h6v14H3zM15 5h6v14h-6zM9 12h6"/></svg><span>Cruzamentos</span></button>
+<button type="button" class="" data-view="results" data-workspace-area="resultados" aria-current="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Resultados</span></button>
+<button type="button" class="" data-view="reports" data-workspace-area="relatorios" aria-current="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18H5zM8 8h8M8 12h8m-8 4 2 2 5-5"/></svg><span>Relatórios</span></button>
+<button type="button" class="" data-view="management" data-workspace-area="gestao" aria-current="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/></svg><span>Gestão</span></button>
+</nav>
+    </header>
+      <div class="app-access-toolbar" aria-label="Instalação e uso offline">
+        <div class="app-access-actions"><button id="install-app" class="button secondary" type="button">Instalar aplicativo</button><button id="prepare-offline" class="button secondary" type="button">Preparar uso offline</button><button id="access-help" class="button secondary" type="button">Como acessar</button><button id="platform-health-open" class="button secondary" type="button">Dados e atualização</button></div>
+        <p id="offline-status" role="status" aria-live="polite">Use o link direto ou instale neste aparelho.</p><progress id="offline-progress" max="100" value="0" hidden aria-label="Preparação para uso offline"></progress>
+      </div>
+
+
+    <main id="conteudo">
+<dialog id="platform-health-dialog" class="app-access-dialog" aria-labelledby="platform-health-title"><div class="subpanel-heading"><h2 id="platform-health-title">Dados e atualização</h2><button id="platform-health-close" class="button secondary" type="button">Fechar</button></div><p id="platform-health-version"></p><p id="platform-health-sync" class="operational-status" role="status"></p><h3>Qualidade cadastral</h3><dl id="platform-health-quality" class="platform-health-details"></dl><p id="platform-health-backup" class="compact-note"></p><p id="platform-health-offline" class="compact-note"></p><details class="operational-audit"><summary>Conferência das fontes e totais</summary><p>Confere ano, cargo, versão ativa, soma dos votos e seções e os 144 municípios nas 13 regiões da configuração da plataforma.</p><div class="button-row"><button id="platform-health-audit" class="button secondary" type="button">Auditar fontes agora</button><button id="platform-health-diagnostics" class="button secondary" type="button">Baixar diagnóstico sem nomes</button></div><p id="platform-health-audit-status" class="compact-note" role="status"></p><div id="platform-health-audit-results"></div></details><a class="button secondary" href="/checklist-final.html" target="_blank" rel="noopener">Checklist funcional da versão consolidada</a><dl id="platform-health-details" class="platform-health-details"></dl><p id="platform-health-environment" class="compact-note"></p><a id="platform-health-central" class="button primary" href="https://analise-eleitoral-pa.wanderson-targino.chatgpt.site" target="_blank" rel="noopener noreferrer" hidden>Abrir base central</a><div class="button-row"><button id="platform-health-clean" class="button secondary" type="button">Liberar dados temporários</button><button id="platform-health-refresh" class="button secondary" type="button">Conferir cadastros centrais</button><button id="platform-health-check" class="button secondary" type="button">Verificar atualização</button><button id="platform-health-apply" class="button primary" type="button" disabled>Aplicar atualização</button></div><p id="platform-health-status" class="compact-note" role="status" aria-live="polite"></p></dialog>
+<dialog id="zone-history-dialog" class="app-access-dialog zone-history-dialog" aria-labelledby="zone-history-title"><div class="subpanel-heading"><h2 id="zone-history-title">Zona 107 — área reconstruída em 2022</h2><button id="zone-history-close" class="button secondary" type="button">Fechar</button></div><p>A zona 107 foi instalada em 2023, com locais das zonas 43 e 72. A consulta reconstitui os locais documentados, mantendo a base oficial de 2022 intacta.</p><p id="zone-history-status" class="compact-note" role="status" aria-live="polite"></p><section id="zone-history-output" hidden><h3 id="zone-history-candidate"></h3><div id="zone-history-metrics" class="metric-grid"></div><p id="zone-history-reading" class="compact-note"></p><h3>Votação nos mesmos locais — principais 8</h3><div id="zone-history-chart"></div><div class="table-scroll" tabindex="0" role="region" aria-label="Locais na reconstrução territorial"><table class="data-table"><thead><tr><th>Local</th><th>Zona em 2022</th><th>Votos 2022</th><th>Votos 2026</th><th>Diferença</th></tr></thead><tbody id="zone-history-rows"></tbody></table></div></section><button id="zone-history-report" class="button primary" type="button" disabled>Gerar relatório da reconstrução</button><p class="compact-note">Sem de-para individual de seções, a comparação é por local documentado. Lacunas não são tratadas como zero nem completadas por aproximação.</p></dialog>
+      <dialog id="app-access-dialog" class="app-access-dialog" aria-labelledby="app-access-title"><form method="dialog"><div class="subpanel-heading"><h2 id="app-access-title">Acesso e instalação</h2><button class="button secondary" type="submit">Fechar</button></div></form><p>Abra a plataforma pelo link direto, sem manter esta conversa aberta. O acesso online deste site privado usa sua conta autorizada.</p><div class="app-access-guide"><h3>Android</h3><p>Abra no Chrome e use Instalar aplicativo. Se necessário, procure Instalar e criar atalho no menu do navegador.</p><h3>iPhone ou iPad</h3><p>Abra no Safari, toque em Compartilhar e escolha Adicionar à Tela de Início.</p><h3>Computador</h3><p>No Chrome ou Edge, use a opção de instalação na barra de endereços ou no menu do navegador.</p><h3>Sem internet</h3><p>Prepare este aparelho online e aguarde a confirmação. A base de lideranças precisa da sua senha e de uma renovação online do acesso em até sete dias. Para enviar alterações ou receber dados novos, conecte à internet.</p></div><p id="app-access-install-note" class="compact-note"></p></dialog>
+      <nav id="workspace-breadcrumb" class="workspace-breadcrumb" aria-label="Localização na plataforma" hidden><button id="workspace-parent" type="button" data-view="home">Início</button><span aria-hidden="true">/</span><span id="workspace-current"></span></nav>
+      <section class="hero" id="topo">
+        <div class="hero-copy">
+          <p class="eyebrow">Análise Eleitoral Pará</p>
+          <h1 id="view-title" tabindex="-1">Início</h1>
+          <p class="hero-lead" id="view-description">Cadastros, cruzamentos e resultados organizados por área.</p>
+        </div>
+        <div class="hero-stats" data-view-content="help" aria-label="Cobertura da base">
+          <div><strong id="base-municipalities">144</strong><span>municípios</span></div>
+          <div><strong id="base-candidates">—</strong><span>candidaturas</span></div>
+          <div><strong id="base-sections">—</strong><span>seções</span></div>
+          <div><strong id="base-votes">—</strong><span>votos nominais</span></div>
+        </div>
+      </section>
+
+      <div class="source-strip" data-view-content="help">
+        <div>
+          <span class="source-label">BASE OFICIAL 2026</span>
+          <span id="base-source">Carregando dados do TSE…</span>
+        </div>
+      </div>
+
+      <nav id="workspace-section-nav" class="workspace-section-nav" aria-label="Páginas desta área" hidden></nav>
+      <nav id="workspace-detail-nav" class="workspace-detail-nav" aria-label="Detalhamento desta página" hidden></nav>
+      <section class="workspace" aria-label="Ferramenta de análise">
+<article id="workspace-report-hub" class="panel workspace-hub" data-view-content="reports" aria-label="Central de relatórios"><h2>O que você quer gerar?</h2><p class="compact-note">Defina os filtros na área de origem. Todos os PDFs passam pela mesma prévia antes do download.</p><p id="workspace-report-scope" class="compact-note"></p><button type="button" class="button secondary" data-view="lists">Ajustar liderança e município</button><div class="workspace-hub-grid">
+<button type="button" data-workspace-action="registrations"><span class="workspace-card-tag">CADASTROS</span><strong>OK e com pendência</strong><span>Listagem simples por liderança, com nome, zona, seção e local. Escolha todos, somente OK ou somente com pendência.</span><b>Preparar relatório →</b></button>
+<button type="button" data-workspace-action="pendencies"><span class="workspace-card-tag">CADASTROS</span><strong>Pendências por liderança</strong><span>Todas de uma vez em um PDF. Cada liderança começa em nova página, com nomes, motivos e identificação dos locais não confirmados.</span><b>Gerar por liderança →</b></button>
+<button type="button" data-workspace-action="municipal"><span class="workspace-card-tag">CADASTROS</span><strong>Resumo por município</strong><span>Totais por liderança, cadastros do município, outros municípios e locais sem confirmação.</span><b>Preparar resumo →</b></button>
+<button type="button" data-workspace-action="partnership"><span class="workspace-card-tag">CRUZAMENTOS</span><strong>Compatibilidade da liderança</strong><span>Escolha a dupla e confira o recorte antes de gerar o relatório de compatibilidade.</span><b>Abrir conferência →</b></button>
+<button type="button" data-workspace-action="candidate"><span class="workspace-card-tag">RESULTADOS</span><strong>Votação do candidato</strong><span>Relatório da votação no recorte selecionado, com opção de separar por regiões.</span><b>Preparar relatório →</b></button>
+</div><p id="workspace-action-status" class="compact-note" role="status" aria-live="polite">Os relatórios de cadastros exigem a base desbloqueada.</p><p class="compact-note">Na consulta de resultados, os relatórios específicos de território, comparação e histórico também ficam junto do resultado correspondente.</p></article>
+<article id="workspace-management-hub" class="panel workspace-hub" data-view-content="management" aria-label="Gestão da plataforma"><h2>Dados, acesso e instalação</h2><p class="compact-note">Escolha o tipo de informação que deseja administrar.</p><div class="workspace-hub-grid">
+<button type="button" data-view="base"><span class="workspace-card-tag">DADOS ELEITORAIS</span><strong>Resultados do TSE</strong><span>Importar arquivos oficiais e consultar as versões da votação por cargo.</span><b>Abrir atualização →</b></button>
+<button type="button" data-view="crm-settings"><span class="workspace-card-tag">BASE DE CADASTROS</span><strong>Backup e administração</strong><span>Cópia protegida, exportação da base, histórico, acessos e integrações.</span><b>Abrir administração →</b></button>
+<button type="button" data-view="intake"><span class="workspace-card-tag">RECEBIMENTOS</span><strong>Adicionar cadastros</strong><span>Importar planilhas, ler fichas e revisar cadastros recebidos para uma liderança.</span><b>Abrir recebimentos →</b></button>
+<button type="button" data-view="help"><span class="workspace-card-tag">AJUDA</span><strong>Critérios e fontes</strong><span>Entenda validação dos cadastros, recortes e leitura dos indicadores.</span><b>Consultar ajuda →</b></button>
+</div><section id="workspace-management-tools" class="workspace-management-tools" aria-label="Instalação e estado dos dados"></section></article>
+
+        <article class="home-panel" data-view-content="home" aria-label="Página inicial da plataforma">
+          <div class="home-welcome"><div><p class="eyebrow">Análise Eleitoral Pará · 2026</p><h2>Sua base, seus resultados.</h2><p>Cadastros, lideranças e resultados para acompanhar de perto.</p><span class="home-version-pill">Áreas de trabalho</span></div><span class="home-connection" id="home-connection">Online</span></div>
+          <div class="home-workflow" aria-label="Como usar"><span><b>1</b> Organize os cadastros</span><span><b>2</b> Confira os cruzamentos</span><span><b>3</b> Gere os relatórios</span></div><div class="home-section-heading"><h3>Seus atalhos</h3><a id="home-customize" href="#home-favorites">Personalizar</a></div>
+          <div id="home-shortcuts" class="home-shortcuts"></div>
+          <p id="home-action-note" class="compact-note" role="status" aria-live="polite"></p>
+          <details id="home-favorites" class="home-favorites"><summary>Personalizar atalhos</summary><p class="compact-note">Escolha até seis ferramentas. Sua seleção fica neste aparelho.</p><div id="home-favorite-options" class="home-favorite-options"></div><button id="home-favorite-reset" type="button" class="button secondary">Restaurar atalhos iniciais</button><p id="home-favorite-note" class="compact-note" role="status"></p></details>
+          <section class="home-recent"><div><span class="eyebrow">Última consulta</span><h3 id="home-recent-name">Sua próxima consulta começa aqui</h3><p id="home-recent-context">Busque um candidato pelo nome ou número acima.</p></div><button id="home-resume" type="button" class="button primary" disabled>Continuar consulta</button></section>
+          <section id="home-private-summary" class="home-base-summary" hidden aria-label="Resumo protegido dos cadastros"><div class="home-section-heading"><h3>Sua base de cadastros</h3><button type="button" data-view="lists" class="link-button">Abrir base</button></div><div class="home-base-metrics"><button type="button" class="home-base-card " data-home-filter="all" disabled><span>Cadastros ativos</span><strong id="home-base-total"></strong><small>Ver lista →</small></button><button type="button" class="home-base-card is-ok" data-home-filter="ready" disabled><span>Dados principais OK</span><strong id="home-base-ready"></strong><small>Ver lista →</small></button><button type="button" class="home-base-card is-priority" data-home-filter="priority" disabled><span>Revisão prioritária</span><strong id="home-base-priority"></strong><small>Ver lista →</small></button><button type="button" class="home-base-card has-secondary" data-home-filter="secondary" disabled><span>OK com pendência secundária</span><strong id="home-base-secondary"></strong><small>Ver lista →</small></button></div><div id="home-uncounted-alert" class="crm-accounting-alert" hidden><div><strong><span id="home-base-uncounted"></span> não contabilizados nos resultados</strong><p>Local não confirmado · Conferir zona e seção</p></div><button id="home-show-uncounted" type="button" class="button primary" data-home-filter="uncounted" disabled>Ver cadastros</button></div><p id="home-base-sync" class="compact-note"></p></section>
+          <section id="home-private-locked" class="home-locked"><div><h3>Eleitores e lideranças</h3><p>Abra a base protegida para ver seus cadastros e as localizações das lideranças.</p></div><button type="button" class="button secondary" data-view="lists">Acessar base</button></section>
+          <div class="home-footer"><span>Consultas eleitorais e cadastros com acesso protegido.</span><button type="button" id="home-essential-map" class="link-button">Mapa das lideranças</button><button type="button" class="link-button" data-view="council">Conselho Tutelar 2023</button><button id="home-access-help" class="link-button" type="button">Instalação e uso offline</button></div>
+        </article>
+<article class="panel app-menu-panel" data-view-content="menu" aria-label="Todas as áreas da plataforma"><h2>Escolha uma área</h2><p class="compact-note">Cada área reúne as páginas de uma mesma atividade.</p><div class="app-menu-list"><button class="app-menu-item" type="button" data-view="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 11 10-9 10 9M5 9v13h5v-7h4v7h5V9"/></svg><span><strong>Início</strong><small>Visão geral e última consulta</small></span></button><button class="app-menu-item" type="button" data-view="lists"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="3"/><path d="M3 20v-3a6 6 0 0 1 12 0v3M17 4a3 3 0 0 1 0 6M18 14a5 5 0 0 1 3 5"/></svg><span><strong>Cadastros</strong><small>Registros, arquivados, distribuição, mapa e recebimentos</small></span></button><button class="app-menu-item" type="button" data-view="paired"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h6v14H3zM15 5h6v14h-6zM9 12h6"/></svg><span><strong>Cruzamentos</strong><small>Cadastros, candidatos e compatibilidade</small></span></button><button class="app-menu-item" type="button" data-view="results"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span><strong>Resultados</strong><small>Apuração, território e histórico</small></span></button><button class="app-menu-item" type="button" data-view="reports"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18H5zM8 8h8M8 12h8m-8 4 2 2 5-5"/></svg><span><strong>Relatórios</strong><small>PDFs de cadastros e resultados</small></span></button><button class="app-menu-item" type="button" data-view="management"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/></svg><span><strong>Gestão</strong><small>Importação, backup, acesso e ajuda</small></span></button></div></article>
+
+        <article id="ct-panel" class="panel ct-panel" data-view-content="council" aria-labelledby="ct-title">
+          <div class="ct-heading"><div><span class="ct-year">CONSELHO TUTELAR · ANANINDEUA · 2023</span><h2 id="ct-title">Panorama, votação e escolas</h2><p class="compact-note">Resultado homologado pelo COMDICA em 20/10/2023.</p></div><div class="ct-actions"><button id="ct-pdf" type="button" class="button primary" disabled>Gerar relatório</button><button id="ct-csv" type="button" class="button secondary" disabled>Exportar CSV</button></div></div>
+          <p id="ct-loading" class="compact-note" role="status" aria-live="polite">Abra esta página para consultar a eleição de 2023.</p><button id="ct-retry" class="button secondary" type="button" hidden>Tentar novamente</button>
+          <section id="ct-output" hidden>
+            <div class="ct-context"><label class="field"><span>Conselho</span><select id="ct-council"><option value="">Todos os quatro conselhos</option><option value="I">Conselho Tutelar I</option><option value="II">Conselho Tutelar II</option><option value="III">Conselho Tutelar III</option><option value="IV">Conselho Tutelar IV</option></select></label><p id="ct-scope" class="compact-note"></p></div>
+            <aside id="ct-quality" class="ct-alert" aria-label="Divergência no documento oficial"><strong>Conselho II: diferença de 5 votos na publicação</strong><p>A soma dos candidatos é 13.121, mas o total de votos válidos publicado é 13.116. Os valores foram preservados. A urna 031, do polo 09, teve 348 votos anulados, já considerados na homologação.</p></aside>
+            <div id="ct-public-metrics" class="ct-metrics" aria-label="Panorama do conselho selecionado">
+              <div class="ct-metric"><span>Válidos publicados</span><strong id="ct-valid">—</strong><small>Total oficial do conselho</small></div>
+              <div class="ct-metric"><span>Comparecimento</span><strong id="ct-attendance">—</strong><small>Eleitores que participaram</small></div>
+              <div class="ct-metric"><span>Candidatos</span><strong id="ct-candidate-count">—</strong><small id="ct-elected-count"></small></div>
+              <div class="ct-metric"><span>Escolas polo de votação</span><strong id="ct-pole-count">—</strong><small id="ct-association-count"></small></div>
+            </div>
+            <div class="ct-tabs" role="group" aria-label="Conteúdo do Conselho Tutelar"><button type="button" data-ct-tab="results" aria-pressed="true">Resultados</button><button type="button" data-ct-tab="schools" aria-pressed="false">Escolas</button><button type="button" data-ct-tab="registers" aria-pressed="false">Cadastros por polo</button><button type="button" data-ct-tab="map" aria-pressed="false">Mapa dos polos</button><button type="button" data-ct-tab="history" aria-pressed="false">Histórico 2019 × 2023</button><button type="button" data-ct-tab="sources" aria-pressed="false">Fontes</button></div>
+            <section data-ct-page="results" aria-label="Resultados e gráficos de votação">
+              <div class="ct-filters"><label class="field"><span>Buscar candidato</span><input id="ct-search" type="search" autocomplete="off" placeholder="Nome ou número do candidato"></label><label class="field"><span>Situação na homologação</span><select id="ct-status"><option value="">Todos</option><option value="elected">Titulares eleitos</option><option value="substitute">Suplentes</option></select></label><button id="ct-clear" class="button secondary" type="button">Limpar busca</button></div>
+              <div class="ct-chart-grid"><section class="ct-surface"><h3>Dez maiores votações do filtro</h3><p class="compact-note">Cada candidato concorreu em seu próprio conselho. Toque em uma barra para abrir sua ficha.</p><div id="ct-ranking" class="ct-bars" aria-label="Ranking de votação"></div></section><section class="ct-surface"><h3>Destinação dos votos no conselho</h3><p class="compact-note">Totais publicados. Não muda com a busca de candidatos.</p><div class="ct-ring-layout"><div id="ct-ring" class="ct-ring" role="img"><div class="ct-ring-center"><strong id="ct-ring-total">—</strong><span>compareceram</span></div></div><ul id="ct-legend" class="ct-legend"></ul></div></section></div>
+              <details class="ct-surface ct-competition"><summary>Concentração dos votos e disputa pela quinta posição</summary><p class="compact-note">Top 5 sobre a soma nominal das candidaturas de cada conselho. Classificação conforme a homologação.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Indicadores por conselho"><table class="ct-table"><thead><tr><th>Conselho</th><th>Votos dos cinco primeiros</th><th>5º colocado</th><th>6º colocado</th><th>Diferença 5º − 6º</th></tr></thead><tbody id="ct-competition-rows"></tbody></table></div></details>
+              <p id="ct-result-count" class="compact-note" role="status" aria-live="polite"></p><p id="ct-scope-note" class="compact-note"></p>
+              <div id="ct-result-table" class="table-wrap" tabindex="0" role="region" aria-label="Resultado dos candidatos, com rolagem horizontal"><table class="ct-table"><thead><tr><th>Conselho</th><th>Candidato</th><th class="ct-number">Votos</th><th class="ct-number">% nominal</th><th class="ct-number">Posição</th><th>Situação</th></tr></thead><tbody id="ct-candidate-rows"></tbody></table></div><p id="ct-result-empty" class="ct-empty" hidden>Nenhum candidato encontrado. Tente parte do nome ou o número.</p>
+              <div class="ct-pagination"><button id="ct-prev" type="button" class="button secondary">Anterior</button><span id="ct-page" aria-live="polite"></span><button id="ct-next" type="button" class="button secondary">Próxima</button></div>
+              <section id="ct-compare-panel" class="ct-surface ct-compare" aria-label="Ficha e comparação de candidatos"><h3>Ficha do candidato e comparação</h3><div class="ct-compare-selects"><label class="field"><span>Candidato A</span><select id="ct-compare-a"><option value="">Escolha um candidato</option></select></label><label class="field"><span>Candidato B · mesmo conselho</span><select id="ct-compare-b" disabled><option value="">Escolha o primeiro candidato</option></select></label></div><p id="ct-compare-help" class="compact-note">Escolha um candidato ou toque no nome no ranking. Para comparar, selecione outro do mesmo conselho.</p><div id="ct-candidate-detail" hidden></div></section>
+            </section>
+            <section data-ct-page="schools" aria-label="Consulta de escolas por conselho" hidden>
+              <div class="ct-filters"><label class="field"><span>Buscar escola ou seção</span><input id="ct-school-search" type="search" autocomplete="off" placeholder="Digite escola, endereço ou seção"></label><label class="field"><span>Escola polo</span><select id="ct-pole"><option value="">Todos os polos do recorte</option></select></label><button id="ct-school-clear" class="button secondary" type="button">Limpar busca</button></div>
+              <p class="compact-note">A escola polo recebeu a votação de 2023. Expanda o cartão para ver as escolas de origem e as seções encaminhadas. A relação não informa a zona eleitoral dessas seções.</p><p id="ct-school-count" class="compact-note" role="status" aria-live="polite"></p><div id="ct-school-list" class="ct-school-grid"></div>
+            </section>
+            <section id="ct-reg-panel" data-ct-page="registers" aria-label="Associação territorial dos cadastros aos polos" hidden>
+              <h3>Cadastros atuais por conselho e polo de referência</h3><p class="compact-note">Associa município, escola de origem e seção à relação de 2023. A zona de 2023 não consta no documento. O vínculo é territorial e não comprova comparecimento ou voto.</p>
+              <section id="ct-reg-locked" class="ct-empty"><h4>Abra sua base de cadastros</h4><p id="ct-reg-access-note">Esta consulta usa somente os cadastros autorizados para sua conta, depois do acesso com sua senha.</p><button class="button primary" type="button" data-view="lists">Abrir base de cadastros</button></section>
+              <section id="ct-reg-private" hidden>
+                <div class="ct-reg-counters" aria-label="Filtrar por situação do vínculo"><button type="button" data-ct-register-status=""><span>Cadastros no território</span><strong id="ct-reg-total"></strong></button><button type="button" data-ct-register-status="matched"><span>Correspondência documental</span><strong id="ct-reg-matched"></strong></button><button type="button" data-ct-register-status="review"><span>Conferência necessária</span><strong id="ct-reg-review"></strong></button><button type="button" data-ct-register-status="unmatched"><span>Sem correspondência</span><strong id="ct-reg-unmatched"></strong></button><button type="button" data-ct-register-status="outside"><span>Outro município</span><strong id="ct-reg-outside"></strong></button></div>
+                <div class="ct-reg-filters"><label class="field"><span>Polo de referência</span><select id="ct-reg-pole"><option value="">Todos os polos</option></select></label><label class="field"><span>Situação do vínculo</span><select id="ct-reg-status"><option value="">Todas</option><option value="matched">Correspondência documental</option><option value="review">Conferência necessária</option><option value="unmatched">Sem correspondência</option><option value="outside">Outro município</option></select></label><label class="field"><span>Buscar cadastro ou escola</span><input id="ct-reg-search" type="search" placeholder="Nome, escola, zona, seção ou pendência"></label><button id="ct-reg-clear" class="button secondary" type="button">Limpar filtros</button></div>
+                <p id="ct-reg-note" class="compact-note"></p><details class="ct-surface"><summary>Quantidade de correspondências por polo</summary><p class="compact-note">Toque no polo para filtrar. Entram somente as correspondências documentais; sugestões pendentes ficam separadas.</p><div class="table-wrap"><table class="ct-table"><thead><tr><th>Conselho e polo</th><th>Cadastros</th></tr></thead><tbody id="ct-reg-poles"></tbody></table></div></details>
+                <p id="ct-reg-count" role="status" aria-live="polite" class="compact-note"></p><div class="table-wrap" tabindex="0" role="region" aria-label="Cadastros e situação da associação territorial"><table class="ct-table"><thead><tr><th>Cadastro · tocar para revisar</th><th>Zona / seção atual</th><th>Escola informada</th><th>Referência de polo de 2023</th><th>Situação do vínculo</th></tr></thead><tbody id="ct-reg-rows"></tbody></table></div><div class="ct-pagination"><button id="ct-reg-prev" class="button secondary" type="button">Anterior</button><span id="ct-reg-page"></span><button id="ct-reg-next" class="button secondary" type="button">Próxima</button></div>
+                <section id="ct-reg-alias-panel" class="ct-surface" hidden><div class="ct-heading"><h4>Conferir nomes da escola de referência</h4><button id="ct-reg-alias-close" class="button secondary" type="button">Fechar conferência</button></div><form id="ct-reg-alias-form"><div class="ct-compare-selects"><label class="field"><span>Escola informada no cadastro atual</span><input id="ct-reg-alias-current" readonly></label><label class="field"><span>Seção informada</span><input id="ct-reg-alias-section" readonly></label></div><label class="field"><span>Escola de origem no documento de 2023</span><select id="ct-reg-alias-source"><option value="">Escolha a escola na relação de 2023</option></select></label><a id="ct-reg-alias-link" target="_blank" rel="noopener noreferrer">Consultar a relação oficial para conferir</a><label class="ct-map-confirm"><input id="ct-reg-alias-confirm" type="checkbox"> Conferi documentalmente que os nomes correspondem à mesma escola e que a seção consta na relação de 2023.</label><div class="ct-actions"><button id="ct-reg-alias-save" class="button primary" type="submit" disabled>Salvar correspondência neste aparelho</button><button id="ct-reg-alias-remove" class="button secondary" type="button">Remover correspondência manual</button></div><p id="ct-reg-alias-message" class="compact-note" role="status"></p></form></section>
+                <details class="ct-surface"><summary>Levar as conferências de escolas para outro aparelho</summary><p class="compact-note">Transfere apenas nomes de escolas e referências documentais. A base de cadastros permanece protegida separadamente.</p><div class="ct-actions"><button id="ct-reg-alias-export" class="button secondary" type="button">Exportar conferências JSON</button><label class="field"><span>Importar conferências JSON</span><input id="ct-reg-alias-import" type="file" accept="application/json,.json"></label></div><p id="ct-reg-transfer-note" class="compact-note" role="status"></p></details>
+              </section>
+            </section>
+            <section data-ct-page="map" aria-label="Mapa e consulta de endereços dos polos" hidden>
+              <h3>Mapa dos polos e consulta por endereço</h3><p class="compact-note">Os endereços são da relação de 2023. O mapa desenha somente coordenadas conferidas de escolas. Para cada escola, há uma consulta pelo nome e endereço.</p>
+              <label class="field"><span>Buscar escola no mapa</span><input id="ct-geo-search" type="search" placeholder="Escola, endereço ou número do polo"></label><p id="ct-geo-status" class="compact-note" role="status" aria-live="polite">Abra esta aba para carregar o mapa.</p>
+              <div class="ct-geo-layout"><div class="ct-surface"><svg id="ct-geo-svg" role="group" aria-label="Mapa de Ananindeua e polos com coordenadas conferidas"></svg><p class="compact-note">Cores: <span style="color:#2563eb">I azul</span>, <span style="color:#7c3aed">II roxo</span>, <span style="color:#087f8c">III verde</span>, <span style="color:#d87320">IV laranja</span>. Limite municipal: cartografia IBGE preparada na plataforma.</p></div><div id="ct-geo-list" class="ct-geo-list" aria-label="Selecionar escola polo"></div></div>
+              <section id="ct-geo-detail" class="ct-surface" hidden><h4 id="ct-geo-name"></h4><p id="ct-geo-address"></p><a id="ct-geo-link" class="button secondary" target="_blank" rel="noopener noreferrer">Consultar escola e endereço no Google Maps</a><form id="ct-geo-form"><div class="ct-compare-selects"><label class="field"><span>Latitude conferida</span><input id="ct-geo-lat" inputmode="decimal" placeholder="Ex.: -1,40"></label><label class="field"><span>Longitude conferida</span><input id="ct-geo-lon" inputmode="decimal" placeholder="Ex.: -48,40"></label></div><label class="field"><span>Fonte consultada para a coordenada</span><input id="ct-geo-source" maxlength="500" placeholder="Link ou identificação do documento consultado"></label><label class="ct-map-confirm"><input id="ct-geo-confirm" type="checkbox"> Conferi que o ponto corresponde a esta escola polo.</label><button class="button primary" type="submit">Salvar ponto conferido neste aparelho</button><p id="ct-geo-save-note" class="compact-note" role="status"></p></form></section>
+              <details class="ct-surface"><summary>Levar os pontos para outro aparelho</summary><div class="ct-actions"><button id="ct-geo-json" class="button secondary" type="button">Exportar pontos JSON</button><button id="ct-geo-export" class="button secondary" type="button">Exportar coordenadas CSV</button><label class="field"><span>Importar pontos JSON</span><input id="ct-geo-import" type="file" accept="application/json,.json"></label></div><p id="ct-geo-import-note" class="compact-note" role="status"></p></details>
+            </section>
+            <section data-ct-page="history" aria-label="Histórico municipal de 2019 e 2023" hidden>
+              <div class="ct-heading"><h3>Histórico municipal: 2019 × 2023</h3><button id="ct-history-pdf" class="button primary" type="button" disabled>Relatório histórico A4</button></div><p id="ct-history-status" class="compact-note" role="status">Abra esta aba para consultar os totais municipais.</p><button id="ct-history-retry" class="button secondary" type="button">Consultar histórico</button>
+              <section id="ct-history-output" hidden><div class="ct-metrics ct-history-metrics"><div class="ct-metric"><span>Válidos publicados em 2019</span><strong id="ct-history-old"></strong></div><div class="ct-metric"><span>Válidos publicados em 2023</span><strong id="ct-history-current"></strong></div><div class="ct-metric"><span>Diferença de votos válidos</span><strong id="ct-history-change"></strong></div></div><div class="table-wrap"><table class="ct-table"><thead><tr><th>Indicador municipal</th><th>2019</th><th>2023</th></tr></thead><tbody id="ct-history-rows"></tbody></table></div><p class="compact-note">2019: Resolução COMDICA nº 32, de 30/10/2019, publicada em 31/10/2019. <a href="https://ananindeua.pa.gov.br/midias/midias/3235_diario_de_outubro_31.pdf#page=4" target="_blank" rel="noopener noreferrer">Abrir homologação oficial de 2019</a>.</p><p class="compact-note">Os totais abrangem todo o município. A comparação individual de candidatos ou por conselho depende de confirmar identidade e equivalência territorial. A divergência de 5 votos no total do Conselho II de 2023 permanece sinalizada.</p></section>
+            </section>
+            <section data-ct-page="sources" aria-label="Fontes e limites do detalhamento" hidden>
+              <div class="ct-source-grid"><section class="ct-surface"><h3>Resultado homologado</h3><p>Resolução COMDICA nº 045 de 20/10/2023. Diário Oficial de Ananindeua nº 4197, páginas 11–13.</p><a class="button secondary" href="https://www.ananindeua.pa.gov.br/midias/midias/6885_diario_de_outubro_20.pdf#page=12" target="_blank" rel="noopener noreferrer">Abrir resultado oficial</a><p>Classificações, nomes e votos foram mantidos conforme a homologação publicada naquela data.</p></section><section class="ct-surface"><h3>Escolas e polos</h3><p>Resolução COMDICA nº 038/2023. Diário Oficial de 04/09/2023, páginas 4–7.</p><a class="button secondary" href="https://ananindeua.pa.gov.br/midias/midias/6851_diario_de_setembro_04.pdf#page=4" target="_blank" rel="noopener noreferrer">Abrir relação oficial das escolas</a><p>34 polos e 124 vínculos de escolas de origem. Endereços e seções preservados conforme o documento de 2023.</p></section><section class="ct-surface"><h3>Conferência do Conselho II</h3><p>Os votos das candidaturas somam 13.121. O documento publica 13.116 válidos. A diferença de 5 votos permanece identificada e precisa de esclarecimento pelo COMDICA.</p><p>A urna 031, no polo 09 (EEEF Antônio Gondim Lins), teve 348 votos anulados. Esses votos não são acrescentados às candidaturas.</p></section><section class="ct-surface"><h3>Detalhamento disponível</h3><ul><li>Votos, classificação e situação por candidato e conselho.</li><li>Escolas polo, endereços e escolas de origem com seções.</li><li>Para votação por escola, polo ou urna, faltam os boletins de urna.</li><li>Não há zona eleitoral na relação de escolas nem base anterior equivalente carregada.</li></ul><p>As informações desta área são exclusivamente da eleição de 2023.</p></section></div>
+            </section>
+          </section>
+        </article>
+
+        <article class="panel results-panel" data-view-content="results" aria-label="Resultados eleitorais de 2026">
+          <div class="panel-heading"><div><h2>Consultar resultados</h2><p class="compact-note">2026 • Pará • 1º turno</p></div><button type="button" class="button secondary" data-view="territory">Selecionar municípios e escolas — deputados</button></div>
+          <div class="results-filters">
+            <label class="field"><span>Cargo</span><select id="results-office"><option value="estadual">Deputado Estadual</option><option value="federal">Deputado Federal</option><option value="governador">Governador</option><option value="senador">Senador</option><option value="presidente">Presidente</option></select></label>
+            <label class="field"><span>Região</span><select id="results-region"><option value="">Todas as 13 regiões</option></select></label>
+            <label class="field"><span>Município</span><select id="results-city"><option value="">Todos os municípios do recorte</option></select></label>
+            <label class="field"><span>Zona</span><select id="results-zone"><option value="">Todas as zonas</option></select></label>
+            <label class="field"><span>Partido</span><select id="results-party"><option value="">Todos os partidos</option></select></label>
+            <label class="field"><span>Situação oficial</span><select id="results-situation"><option value="">Todas</option><option value="eleito">Eleitos</option><option value="suplente">Suplentes</option><option value="nao-eleito">Não eleitos</option><option value="segundo-turno">Segundo turno</option><option value="indisponivel">Situação não disponível</option></select></label>
+            <label class="field results-search"><span>Buscar candidato</span><input id="results-search" type="search" placeholder="Nome de urna, nome completo ou número" autocomplete="off"></label>
+            <button id="results-clear" class="button secondary" type="button">Limpar filtros</button>
+          </div>
+          <p id="results-status" role="status" aria-live="polite" class="compact-note">Abra esta página para consultar os resultados.</p>
+          <section id="results-output" hidden>
+            <div class="results-progress-row"><p id="results-progress" role="status" aria-live="polite"></p><button id="results-refresh" class="button secondary" type="button">Consultar apuração</button></div>
+            <details class="data-details tse-quality"><summary>Conferência da fonte e destinação dos votos</summary><div class="tse-body"><p id="tse-live-details" class="compact-note" role="status">Consulte a apuração para conferir a fonte.</p><p id="tse-destination-scope" class="compact-note"></p><div class="table-wrap"><table><thead><tr><th>Destinação no arquivo online</th><th>Votos</th></tr></thead><tbody id="tse-destination-rows"></tbody></table></div><p class="compact-note">Anulados e anulados sob julgamento aparecem separados dos válidos. A votação importada por seção mantém seus valores originais; estes totais não são somados ao ranking. Situação de eleito/suplente e destinação dos votos são informações diferentes.</p><div class="tse-links"><a id="tse-live-source" target="_blank" rel="noopener noreferrer" hidden>Ver arquivo consultado no TSE</a><a href="https://www.tse.jus.br/eleicoes/tabela-de-destinacao-de-votos-eleicoes-2026" target="_blank" rel="noopener noreferrer">Entender a destinação dos votos</a></div></div></details>
+            <div class="metric-grid results-metrics"><div class="metric-card primary"><span>Votos nominais no recorte</span><strong id="results-total">—</strong></div><div class="metric-card"><span>Municípios no recorte</span><strong id="results-municipalities">—</strong></div><div class="metric-card"><span>Candidatos encontrados</span><strong id="results-count">—</strong></div></div>
+            <div class="subpanel-heading"><h3>Destaques do filtro</h3><div class="results-actions"><button id="results-pdf" class="button primary" type="button" disabled>Gerar relatório compacto</button><button id="results-csv" class="button secondary" type="button" disabled>Exportar lista completa</button></div></div>
+            <div id="results-top" class="results-top-grid"></div>
+            <p class="compact-note">A situação oficial é a do candidato na eleição do cargo. A posição mostra sua votação no recorte selecionado.</p>
+            <div class="table-wrap"><table class="results-table"><thead><tr><th>Posição</th><th>Candidato</th><th>Partido</th><th>Situação oficial</th><th>Votos 2026</th><th>% nominal</th><th>Votos 2022</th><th>Diferença: votos e %</th></tr></thead><tbody id="results-rows"></tbody></table></div>
+            <div class="results-pagination"><button id="results-prev" type="button" class="button secondary">Anterior</button><span id="results-page" aria-live="polite"></span><button id="results-next" type="button" class="button secondary">Próxima</button></div>
+            <section id="results-detail" class="results-detail" hidden aria-label="Votação por município do candidato"><div class="subpanel-heading"><h3 id="results-detail-name"></h3><button id="results-close-detail" class="button secondary" type="button">Fechar detalhe</button></div><p id="results-detail-info"></p><section id="tse-candidate-card" class="tse-candidate-card" hidden><h4>Identificação oficial da candidatura</h4><p id="tse-candidate-identity"></p><p id="tse-candidate-destination" class="compact-note"></p><p id="tse-candidate-id" class="compact-note"></p><p id="tse-candidate-extra" class="compact-note"></p><a class="button secondary" href="https://divulgacandcontas.tse.jus.br/divulga/#/home" target="_blank" rel="noopener noreferrer">Consultar candidatura e contas no TSE</a></section><div class="results-actions"><button id="results-detail-pdf" class="button primary" type="button">Relatório do candidato</button><button id="results-xray" class="button secondary" type="button">Abrir raio-X</button></div><div class="table-wrap"><table><thead><tr><th>Município</th><th>Votos 2026</th><th>Votos 2022</th><th>Diferença: votos e %</th></tr></thead><tbody id="results-detail-rows"></tbody></table></div></section>
+            <details class="data-details results-context"><summary>Comparecimento e contexto do eleitorado</summary><div class="metric-grid results-context-grid"><div class="metric-card"><span>Eleitorado apto</span><strong id="results-eligible">—</strong></div><div class="metric-card"><span>Comparecimento</span><strong id="results-attendance">—</strong></div><div class="metric-card"><span>Abstenções</span><strong id="results-abstention">—</strong><small id="results-abstention-rate"></small></div><div class="metric-card"><span>Votos brancos</span><strong id="results-blank">—</strong><small id="results-blank-rate"></small></div><div class="metric-card"><span>Votos nulos</span><strong id="results-null">—</strong><small id="results-null-rate"></small></div><div class="metric-card"><span>Votos de legenda</span><strong id="results-party-votes">—</strong></div></div></details>
+            <details id="tse-profile-panel" class="data-details"><summary>Perfil do eleitorado do território</summary><div class="tse-body"><p id="tse-profile-status" role="status" class="compact-note">Abra para consultar o perfil oficial.</p><p class="compact-note">O perfil descreve o eleitorado na data da extração. Não identifica o voto de mulheres, homens ou pessoas cadastradas. Pode diferir do eleitorado apto após transferências temporárias e atualizações posteriores.</p><div id="tse-profile-content" class="tse-profile-grid"></div><div class="tse-links"><button id="tse-profile-csv" class="button secondary" type="button" disabled>Exportar perfil CSV</button><a href="https://dadosabertos.tse.jus.br/dataset/eleitorado-2026" target="_blank" rel="noopener noreferrer">Fonte do perfil no TSE</a></div></div></details>
+            <details class="data-details"><summary>Fontes e critérios desta consulta</summary><div><p id="results-source" class="compact-note"></p><p id="results-method" class="compact-note"></p><p id="results-history-note" class="compact-note"></p><p><a href="https://dadosabertos.tse.jus.br/dataset/resultados-2026" target="_blank" rel="noopener noreferrer">Resultados oficiais e arquivos do TSE</a></p><p class="compact-note">A consulta à apuração é realizada online ao abrir a página, alterar o território ou tocar em Consultar apuração. A cópia offline mantém os dados preparados no aparelho e suas datas de geração.</p></div></details>
+          </section>
+        </article>
+
+        <article class="panel quotient-panel" data-view-content="quocients" aria-label="Quocientes e vagas do Pará">
+          <div class="subpanel-heading"><div><p class="eyebrow">Sistema proporcional · fonte TSE</p><h2>Quocientes e vagas</h2></div><button id="quotient-refresh" class="button secondary" type="button">Atualizar consulta no TSE</button></div>
+          <p class="compact-note quotient-state-note">O cálculo de deputado usa todo o Pará. A composição de uma federação é tratada como um único grupo para a distribuição de cadeiras. Os filtros desta página não alteram os cadastros nem o território das outras consultas.</p>
+          <div class="quotient-filters">
+            <label class="field"><span>Cargo · 2026, 1º turno</span><select id="quotient-office"><option value="estadual">Deputado Estadual</option><option value="federal">Deputado Federal</option></select></label>
+            <label class="field"><span>Partido ou federação</span><select id="quotient-group" disabled><option value="">Todos os partidos e federações</option></select></label>
+            <label class="field"><span>Buscar composição ou candidato</span><input id="quotient-search" type="search" placeholder="Sigla, nome ou número" disabled></label>
+          </div>
+          <p id="quotient-status" class="compact-note" role="status" aria-live="polite">Abra esta página para carregar os quocientes.</p>
+          <section id="quotient-output" hidden>
+            <p id="quotient-scope" class="quotient-scope"></p>
+            <div class="metric-grid quotient-metrics">
+              <div class="metric-card"><span>Votos válidos no Pará</span><strong id="quotient-valid">—</strong><small>Nominais válidos + legenda válida</small></div>
+              <div class="metric-card"><span>Vagas do cargo</span><strong id="quotient-seats">—</strong><small>Circunscrição estadual</small></div>
+              <div class="metric-card"><span>Quociente eleitoral · QE</span><strong id="quotient-qe">—</strong><small>Válidos ÷ vagas, com arredondamento legal</small></div>
+              <div class="metric-card"><span>Eleitos por QP</span><strong id="quotient-qp">—</strong><small>Situação oficial dos candidatos</small></div>
+              <div class="metric-card"><span>Eleitos por média</span><strong id="quotient-average">—</strong><small>Distribuição das vagas remanescentes</small></div>
+            </div>
+            <p id="quotient-formula" class="compact-note"></p>
+            <div class="quotient-vote-types"><span>Nominais válidos: <b id="quotient-nominal">—</b></span><span>Legenda válida: <b id="quotient-legend">—</b></span></div>
+            <details class="data-details"><summary>Entenda QE, QP e sobras</summary><div class="tse-body"><p>O QE divide os votos válidos do cargo pelas vagas: fração até 0,5 é descartada; acima de 0,5 é arredondada para cima. O QP inicial divide os votos válidos do partido ou da federação pelo QE e descarta a fração.</p><p>O preenchimento por QP exige votação nominal de pelo menos 10% do QE. Na primeira distribuição das sobras, aplicam-se 80% do QE à composição e 20% ao candidato. Esgotadas as composições e candidaturas que atendem a esses limites, as cadeiras restantes seguem as maiores médias com participação de todos.</p><p id="quotient-thresholds" class="compact-note"></p><p class="compact-note">QP inicial é o cálculo de vagas, que pode diferir das vagas efetivamente preenchidas. As colunas “Eleitos por QP” e “Por média” reproduzem a classificação oficial, sem simular um resultado.</p><a href="https://www.tse.jus.br/legislacao/compilada/res/2021/resolucao-no-23-677-de-16-dezembro-de-2021" target="_blank" rel="noopener noreferrer">Resolução TSE 23.677, arts. 8º a 12-A · texto atualizado</a></div></details>
+            <h3>Distribuição das cadeiras</h3><p class="quotient-legend"><span><i class="quotient-qp"></i>Por QP</span><span><i class="quotient-average"></i>Por média</span></p><div id="quotient-chart" class="quotient-chart"></div>
+            <div class="subpanel-heading"><h3>Partidos e federações</h3></div><p id="quotient-filter-note" class="compact-note"></p>
+            <div class="table-wrap"><table class="quotient-table"><thead><tr><th>Composição</th><th>Nominais válidos</th><th>Legenda válida</th><th>Votos válidos</th><th>QP inicial</th><th>Eleitos por QP</th><th>Por média</th><th>Total de vagas</th></tr></thead><tbody id="quotient-rows"></tbody></table></div>
+            <div class="subpanel-heading"><h3>Candidaturas da composição</h3><label class="field"><span>Situação a exibir</span><select id="quotient-candidates" disabled><option value="elected">Somente eleitos</option><option value="all">Todas as situações</option></select></label></div>
+            <div class="table-wrap"><table class="quotient-candidate-table"><thead><tr><th>Candidato</th><th>Partido / federação</th><th>Votos nominais</th><th>Situação e destinação no TSE</th></tr></thead><tbody id="quotient-candidate-rows"></tbody></table></div>
+            <div class="results-pagination"><button id="quotient-prev" class="button secondary" type="button">Anterior</button><span id="quotient-page" aria-live="polite"></span><button id="quotient-next" class="button secondary" type="button">Próxima</button></div>
+            <p class="compact-note">Votos da candidatura aparecem com sua destinação. Votos anulados ou sob julgamento não entram na soma dos votos válidos desta página.</p>
+            <p><a id="quotient-source" target="_blank" rel="noopener noreferrer">Arquivo oficial do TSE</a> · <a href="https://sig.tse.jus.br/ords/dwapr/r/seai/sig-eleicao-resultados/quociente-eleitoral-partid%C3%A1rio" target="_blank" rel="noopener noreferrer">Consultar painel SIG do TSE</a></p>
+          </section>
+          <div class="results-actions quotient-exports"><button id="quotient-pdf" class="button primary" type="button" disabled>Gerar relatório PDF</button><button id="quotient-csv" class="button secondary" type="button" disabled>Exportar CSV do filtro</button></div>
+        </article>
+        <article class="panel election-archive-panel" data-view-content="archive" aria-label="Consulta por eleição e partido">
+          <div class="panel-heading"><div><h2>Consultar eleição</h2><p class="compact-note">Pará • deputados estaduais e federais • 1º turno. Cada ano tem sua própria base.</p></div></div>
+          <div class="archive-filters">
+            <label class="field"><span>Eleição</span><select id="archive-year"><option value="2026">2026 — base ativa</option><option value="2022" selected>2022</option><option value="2018">2018</option><option value="2014">2014</option></select></label>
+            <label class="field"><span>Cargo</span><select id="archive-office"><option value="estadual">Deputado Estadual</option><option value="federal">Deputado Federal</option><option value="vereador">Vereador</option></select></label>
+            <label class="field"><span>Região</span><select id="archive-region" disabled><option value="">Todas as 13 regiões</option></select></label>
+            <label class="field"><span>Município</span><select id="archive-city" disabled><option value="">Todos os municípios do recorte</option></select></label>
+            <label class="field"><span>Zona</span><select id="archive-zone" disabled><option value="">Todas as zonas</option></select></label>
+            <label class="field"><span>Consultar por</span><select id="archive-mode" disabled><option value="candidate">Candidato</option><option value="party">Partido</option><option value="federation">Federação</option></select></label>
+            <label class="field archive-search-field"><span id="archive-search-label">Buscar candidato</span><input id="archive-search" type="search" autocomplete="off" placeholder="Digite o nome de urna, nome completo ou número" disabled /></label>
+            <label class="field archive-entity-field"><span id="archive-entity-label">Candidato</span><select id="archive-entity" disabled></select></label>
+            <label class="field"><span>Comparar com</span><select id="archive-previous-year" disabled><option value="">Sem comparação</option></select></label>
+          </div>
+          <p id="archive-status" class="compact-note" role="status" aria-live="polite">Escolha esta página para carregar as eleições anteriores.</p>
+          <p id="archive-metadata-note" class="compact-note"></p>
+          <section id="archive-result" hidden aria-label="Resultados da consulta eleitoral">
+            <div class="archive-result-heading"><div><p id="archive-context" class="eyebrow"></p><h3 id="archive-name"></h3><p id="archive-party-info" class="compact-note"></p></div><div class="button-row"><button id="archive-pdf" class="button primary" type="button" disabled>Gerar relatório</button><button id="archive-csv" class="button secondary" type="button" disabled>Exportar tabela</button></div></div>
+            <div class="metric-grid archive-metrics">
+              <div class="metric-card primary"><span>Votos nominais</span><strong id="archive-votes">—</strong><small>no recorte selecionado</small></div>
+              <div class="metric-card"><span>Participação nominal</span><strong id="archive-share">—</strong><small>dos votos nominais do cargo no recorte</small></div>
+              <div class="metric-card"><span id="archive-coverage-label">Municípios com votos</span><strong id="archive-coverage">—</strong><small id="archive-coverage-note">com votos / municípios do recorte</small></div>
+              <div id="archive-change-card" class="metric-card" hidden><span id="archive-change-label">Variação</span><strong id="archive-change">—</strong><small>verde: aumentou • vermelho: diminuiu</small></div>
+            </div>
+            <details class="data-details archive-reading" open><summary>Leitura dos resultados</summary><p id="archive-summary" class="compact-note"></p><p id="archive-comparison-note" class="compact-note"></p></details>
+            <div class="archive-dashboard">
+              <article class="chart-card"><div class="chart-heading"><h4 id="archive-chart-title">Municípios com mais votos</h4><small id="archive-chart-legend"></small></div><div id="archive-chart"></div></article>
+              <article class="chart-card"><h4 id="archive-pie-title">Distribuição por região</h4><p id="archive-pie-note" class="compact-note">Percentual dos votos desta consulta em cada região.</p><div id="archive-pie" class="archive-pie" role="img"></div><div id="archive-pie-legend" class="archive-pie-legend"></div><div id="archive-prior-pie-panel" hidden><h5 id="archive-prior-pie-title"></h5><div id="archive-prior-pie" class="archive-pie" role="img"></div><div id="archive-prior-pie-legend" class="archive-pie-legend"></div></div></article>
+            </div>
+            <div class="archive-tabs button-row" role="group" aria-label="Detalhamento dos resultados"><button type="button" class="button secondary" data-archive-tab="regional">Regiões</button><button type="button" class="button secondary" data-archive-tab="municipal" aria-pressed="true">Municípios</button><button type="button" class="button secondary" data-archive-tab="zones">Zonas</button></div>
+            <h4 id="archive-table-title">Todos os municípios do recorte</h4><div class="table-wrap"><table><thead id="archive-table-head"></thead><tbody id="archive-table-body"></tbody></table></div>
+            <details class="data-details archive-sources"><summary>Fontes e critérios</summary><div><p id="archive-source" class="compact-note"></p><p><a id="archive-source-link" target="_blank" rel="noopener noreferrer"></a></p><p id="archive-generation" class="compact-note"></p><p id="archive-version" class="compact-note"></p><p id="archive-previous-source" hidden><a id="archive-previous-source-link" target="_blank" rel="noopener noreferrer"></a></p><p class="compact-note">Votos nominais: votos destinados a candidatos; não incluem legenda, brancos ou nulos. A divisão em 13 regiões é a configurada nesta plataforma e aplicada aos mesmos municípios nos anos consultados. As consultas históricas detalham municípios e zonas; escolas e seções permanecem na área de 2026. Comparações usam o mesmo cargo e turno, sem inferir identidade pelo número de urna.</p></div></details>
+          </section>
+        </article>
+
+        <article class="panel electoral-map-panel" data-view-content="map">
+          <div class="map-filter-grid"><label class="field"><span>Cargo</span><select id="map-office"><option value="estadual">Deputado estadual</option><option value="federal">Deputado federal</option></select></label><label class="field"><span>Região</span><select id="map-region"><option value="">Todas as 13 regiões</option></select></label><label class="field"><span>Visualização</span><select id="map-mode"><option value="heat">Força eleitoral</option><option value="compare">Comparar candidatos lado a lado</option><option value="winner">Liderança entre os selecionados</option><option value="evolution">Avanço ou queda da participação</option></select></label><label class="field"><span>Medida</span><select id="map-metric"><option value="share">Participação nominal (%)</option><option value="votes">Quantidade de votos</option></select></label><label class="field" id="map-focus-field"><span>Candidato em destaque</span><select id="map-focus"></select></label></div>
+          <div class="map-candidate-grid">
+            <div class="map-candidate-field"><label class="field"><span>Candidato principal</span><input id="map-candidate-0" type="search" list="map-candidate-options" placeholder="Nome ou número" autocomplete="off"></label><label class="map-color-label"><span>Cor</span><input id="map-color-0" type="color" value="#13864b" aria-label="Cor do candidato principal"></label></div>
+            <div class="map-candidate-field"><label class="field"><span>Segundo candidato (opcional)</span><input id="map-candidate-1" type="search" list="map-candidate-options" placeholder="Nome ou número" autocomplete="off"></label><label class="map-color-label"><span>Cor</span><input id="map-color-1" type="color" value="#1262ae" aria-label="Cor do segundo candidato"></label></div>
+            <div class="map-candidate-field"><label class="field"><span>Terceiro candidato (opcional)</span><input id="map-candidate-2" type="search" list="map-candidate-options" placeholder="Nome ou número" autocomplete="off"></label><label class="map-color-label"><span>Cor</span><input id="map-color-2" type="color" value="#c76318" aria-label="Cor do terceiro candidato"></label></div>
+          </div><datalist id="map-candidate-options"></datalist>
+          <p id="map-status" class="compact-note" role="status" aria-live="polite">Carregando o mapa municipal.</p>
+          <div id="map-municipal-coverage" class="map-municipal-coverage" aria-live="polite"></div>
+          <div class="map-toolbar"><label class="field"><span>Localizar município no mapa</span><input id="map-city-search" type="search" list="map-city-options" placeholder="Digite o município" autocomplete="off"></label><datalist id="map-city-options"></datalist><div class="button-row"><button id="map-zoom-in" class="button secondary" type="button" aria-label="Ampliar mapa">Ampliar</button><button id="map-zoom-out" class="button secondary" type="button" aria-label="Reduzir mapa">Reduzir</button><button id="map-reset" class="button secondary" type="button">Ver recorte inteiro</button><button id="map-pdf" class="button primary" type="button" disabled>Gerar relatório PDF</button></div></div>
+          <div id="map-legend" class="map-legend"></div><div id="map-intensity" class="map-intensity"></div>
+          <div id="map-main-grid" class="electoral-map-grid"><section><h3 id="map-current-heading">Eleição 2026</h3><div id="map-current" class="electoral-map-canvas"></div></section><section id="map-history-wrap" hidden><h3>Eleição 2022</h3><div id="map-previous" class="electoral-map-canvas"></div></section></div>
+          <div id="map-comparison-grid" class="map-comparison-grid" hidden></div>
+          <p class="compact-note">Toque em um município para consultar os votos. Arraste para mover o mapa; os botões ampliam e reduzem.</p>
+          <p id="map-scale-note" class="compact-note"></p><p id="map-history-note" class="compact-note"></p>
+          <section id="map-detail" class="map-detail" aria-live="polite"></section>
+          <section class="map-zones-panel" aria-labelledby="map-zones-title">
+            <div class="map-zones-heading"><div><h3 id="map-zones-title">Mapa de calor por zona</h3><p id="map-zones-status" class="compact-note" role="status" aria-live="polite">Selecione um município no mapa.</p></div><div class="map-zone-controls"><label class="field"><span>Buscar zona</span><input id="map-zone-search" type="search" inputmode="numeric" placeholder="Número da zona"></label><label class="field"><span>Ordenar zonas</span><select id="map-zone-sort"><option value="zone">Número da zona</option><option value="share">Maior participação do destaque</option><option value="votes">Mais votos do destaque</option></select></label></div></div>
+            <p class="compact-note">A cor indica a participação nos votos nominais de 2026, com a mesma escala para todos os candidatos deste município. Este painel representa zonas eleitorais, sem atribuir limites geográficos.</p>
+            <div id="map-zones-legend" class="map-intensity"></div>
+            <div id="map-zones" class="map-zones-grid"></div>
+            <p id="map-zones-history-note" class="compact-note"></p>
+          </section>
+          <p class="compact-note">Limites municipais: <a href="https://servicodados.ibge.gov.br/api/docs/malhas?versao=3" target="_blank" rel="noopener noreferrer">IBGE, malha simplificada</a>. As 13 regiões seguem a divisão configurada na plataforma. O mapa apresenta totais por município.</p>
+        </article>
+        <article id="crossing-hub" class="panel crossing-hub" data-view-content="paired" aria-label="Central de cruzamentos"></article>
+        <article id="legacy-paired-panel" class="panel paired-panel" data-view-content="legacy-paired" hidden inert>
+          <form id="pair-form">
+            <div class="pair-candidates">
+              <label class="field pair-estadual"><span>Deputado estadual</span><input id="pair-estadual" type="search" list="pair-estadual-options" placeholder="Nome ou número" required autocomplete="off" disabled /><datalist id="pair-estadual-options"></datalist></label>
+              <label class="field pair-federal"><span>Deputado federal</span><input id="pair-federal" type="search" list="pair-federal-options" placeholder="Nome ou número" required autocomplete="off" disabled /><datalist id="pair-federal-options"></datalist></label>
+            </div>
+            <div class="pair-scope">
+              <label class="field"><span>Região</span><select id="pair-region" disabled><option value="">Todas as 13 regiões</option></select></label>
+              <label class="field"><span>Município</span><select id="pair-city" disabled><option value="">Todos os municípios do recorte</option></select></label>
+              <button class="button primary" id="pair-submit" type="submit" disabled>Comparar dupla</button>
+            </div>
+          </form>
+          <p class="compact-note" id="pair-status" role="status" aria-live="polite">Selecione a dupla para consultar os dados de 2026.</p>
+          <div class="pair-method-note"><strong>Compare os votos na mesma zona e seção.</strong> A compatibilidade estimada usa o menor total da dupla em cada seção. Ela não confirma votos casados.</div>
+          <section id="pair-results" hidden aria-label="Resultado da dupla">
+            <div class="pair-refinements">
+              <label class="field"><span>Zona</span><select id="pair-zone"></select></label>
+              <label class="field"><span>Seção</span><select id="pair-section"></select></label>
+              <label class="field"><span>Local de votação (escola)</span><select id="pair-place"></select></label>
+            </div>
+            <p id="pair-coverage" class="compact-note"></p>
+            <div class="metric-grid pair-metrics" id="pair-metrics"></div>
+            <div class="metric-grid pair-remainder-metrics" id="pair-remainder-metrics" aria-live="polite"></div>
+            <details class="data-details pair-zone-details"><summary id="pair-zone-summary">Resultado seco por zona</summary><p class="compact-note">Quantidade de votos de cada candidato, teto compatível e votos além desse teto. O cálculo permanece separado por seção.</p><div class="table-wrap"><table><thead><tr><th>Município / zona</th><th>Estadual (votos)</th><th>Federal (votos)</th><th>Compatíveis · teto (votos)</th><th>Sobra estadual</th><th>Sobra federal</th></tr></thead><tbody id="pair-zone-table"></tbody></table></div><p class="compact-note" id="pair-zone-table-note"></p></details>
+            <details class="data-details"><summary>Como o limite e as sobras são calculados</summary><p id="pair-estimate-note" class="pair-estimate-note"></p></details>
+            <details class="pair-correlation-panel data-details"><summary>Correlação e indicadores avançados</summary><div aria-labelledby="pair-correlation-title">
+              <div class="pair-chart-heading"><div><h3 id="pair-correlation-title">Correlação por seção</h3><p class="compact-note">Seções com mais votos para um também têm mais votos para o outro?</p></div><label class="field"><span>Medida da correlação</span><select id="pair-correlation-basis"><option value="votes">Quantidade de votos</option><option value="share">Participação no cargo (%)</option></select></label></div>
+              <div class="pair-correlation-layout"><div id="pair-correlation-metrics" class="pair-correlation-metrics" aria-live="polite"></div><div><div id="pair-scatter-legend" class="pair-legend"></div><div id="pair-scatter"></div><p id="pair-scatter-note" class="compact-note"></p></div></div>
+              <p id="pair-correlation-note" class="compact-note"></p>
+            </div></details>
+            <div class="pair-chart-heading">
+              <div><h3>Votação por seção</h3><p class="compact-note">Uma linha por município, zona e seção.</p></div>
+              <div class="button-row"><button class="button secondary" id="pair-pdf" type="button">Gerar relatório PDF</button><button class="button secondary" id="pair-csv" type="button">Baixar tabela CSV</button></div>
+            </div>
+            <div class="pair-display-controls">
+              <label class="field"><span>Seções exibidas</span><select id="pair-match"><option value="voted">Com votos para pelo menos um</option><option value="equal">Totais iguais, com votos</option><option value="near">Dentro da tolerância</option><option value="different">Acima da tolerância</option><option value="missing">Sem cobertura completa</option><option value="all">Todas, inclusive sem votos</option></select></label>
+              <label class="field"><span>Tolerância da diferença</span><select id="pair-tolerance"><option value="0">0% — somente iguais</option><option value="5">Até 5%</option><option value="10" selected>Até 10%</option><option value="20">Até 20%</option></select></label>
+              <label class="field"><span>Ordenar seções</span><select id="pair-order"><option value="votes">Maior volume de votos</option><option value="gap">Maior diferença em votos</option><option value="closest">Maior proximidade percentual</option></select></label>
+            </div>
+            <p class="compact-note">Esses controles selecionam as seções do gráfico, da tabela e do relatório. Os indicadores e as escolas mantêm o recorte geográfico completo. A tolerância é um critério de consulta, sem valor de comprovação.</p>
+            <p class="compact-note" id="pair-history-note"></p>
+            <div class="pair-dashboard">
+              <section class="pair-bars-panel" aria-labelledby="pair-chart-title"><h3 id="pair-chart-title">Estadual × Federal por seção</h3><div class="pair-legend" id="pair-legend"></div><p class="compact-note" id="pair-chart-note"></p><div class="pair-bars" id="pair-bars"></div></section>
+              <section class="pair-similarity-panel" aria-labelledby="pair-similarity-title"><h3 id="pair-similarity-title">Compatibilidade máxima por seção</h3><div id="pair-similarity"></div><p class="compact-note">100% significa totais iguais em todas as seções do recorte. O limite é dividido pelo maior total da dupla. Diferenças entre seções não se compensam neste índice; ele não comprova votos casados.</p></section>
+            </div>
+            <details class="data-details"><summary id="pair-table-summary">Tabela das seções</summary><div class="table-wrap"><table><thead><tr><th>Seção / escola</th><th>Estadual 2026</th><th>Federal 2026</th><th>Limite compatível (votos)</th><th>Compatibilidade máxima (%)</th><th>Diferença (votos)</th><th>Diferença (%)</th><th>Sobra estadual (votos)</th><th>Sobra federal (votos)</th><th>Conferência</th></tr></thead><tbody id="pair-table"></tbody></table></div><p class="compact-note" id="pair-table-note"></p></details>
+            <section class="pair-school-panel" aria-labelledby="pair-school-title">
+              <div class="pair-chart-heading"><div><h3 id="pair-school-title">Conferência por local de votação</h3><p class="compact-note">Somamos as seções de cada escola e verificamos se as diferenças ficam escondidas no total.</p></div><button id="pair-clear-place" class="button secondary" type="button" hidden>Limpar filtro de escola</button></div>
+              <p class="compact-note" id="pair-school-note"></p><div class="pair-legend" id="pair-school-legend"></div><div class="pair-bars" id="pair-school-bars"></div>
+              <details class="data-details"><summary id="pair-school-summary">Todas as escolas do recorte</summary><div class="table-wrap"><table><thead><tr><th>Escola / município</th><th>Seções</th><th>Estadual 2026</th><th>Federal 2026</th><th>Limite compatível (votos)</th><th>Compatibilidade máxima (%)</th><th>Diferença (votos)</th><th>Diferença (%)</th><th>Sobra estadual (votos)</th><th>Sobra federal (votos)</th><th>Conferência das seções</th><th>Detalhar</th></tr></thead><tbody id="pair-school-table"></tbody></table></div><p class="compact-note" id="pair-school-table-note"></p></details>
+            </section>
+            <div class="pair-chart-heading"><div><h3>Relatório individual por município</h3><p class="compact-note">Votação completa no recorte municipal selecionado, com indicadores e histórico disponível. Agrupa os votos por município, independentemente dos filtros de zona, seção e escola acima.</p></div><div class="button-row"><button class="button secondary" id="pair-estadual-municipal-pdf" type="button">Estadual por município</button><button class="button secondary" id="pair-federal-municipal-pdf" type="button">Federal por município</button></div></div>
+            <p class="compact-note" id="pair-sources"></p>
+          </section>
+          <details class="data-details"><summary>Como interpretar os indicadores</summary><div class="pair-method-body"><p>A correlação de Pearson mede a relação linear entre as votações por seção, de −1 a +1. Correlação positiva não exige totais iguais; negativa indica tendências opostas. Neste quadro, o cálculo é exibido a partir de três seções válidas, com variação nas duas votações. Não mede votos das mesmas pessoas nem prova relação causal. <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/scatterp.htm" target="_blank" rel="noopener noreferrer">Referência estatística: NIST</a>.</p><p>A diferença em votos é o valor absoluto de estadual menos federal. A diferença percentual divide esse valor pelo maior total. Exemplo: 100 e 80 votos dão 20 votos de diferença, ou 20%; a proximidade dos totais é 80%.</p><p>O limite de compatibilidade soma o menor total entre estadual e federal em cada município, zona e seção. A compatibilidade máxima divide esse limite pelo maior total da dupla no recorte. Também mostramos quanto o limite representa dos votos de cada candidato e quantos votos ficam além dele. É um teto matemático, não uma quantidade comprovada de votos casados nem uma estimativa de abstenção. Se ambos têm zero votos, o percentual fica sem base; dados ausentes não viram zero.</p><p>Exemplos hipotéticos: 1 voto para cada candidato na mesma seção gera limite de 1 e compatibilidade de 100%. Com 2.085 votos para o estadual e 1.530 para o federal em uma mesma seção, o limite é 1.530: 73,38% do estadual, 100% do federal e 555 votos do estadual além do limite. Ao juntar várias seções, calculamos o menor total de cada uma antes de somar; o limite pode ser menor que 1.530.</p><p>Na escola, totais iguais podem esconder diferenças. Exemplo: 100 × 0 na primeira seção e 0 × 100 na segunda dão 100 × 100 na escola, mas as duas seções são diferentes. O quadro sinaliza essa compensação. Escolas não informadas ou divergentes ficam identificadas para conferência, sem agrupamento automático.</p><p>Os percentuais de participação usam os votos nominais do próprio cargo. O histórico de 2022 aparece separado e apenas para quem tem correspondência única pelo nome completo no mesmo cargo e dados por seção disponíveis. Escolas exigem o mesmo nome; ausências aparecem como traço, sem inventar votos ou comparações.</p><p><a href="https://www.tse.jus.br/eleicoes/historia/processo-eleitoral-brasileiro/votacao/votacao-segura" target="_blank" rel="noopener noreferrer">TSE: por que não é possível associar votos entre cargos</a></p></div></details>
+        </article>
+        <article class="panel base-panel" data-view-content="base">
+          <div class="panel-heading"><div><h2>Atualizar os resultados de 2026</h2><p>Confira a prévia antes de substituir a base. A atualização fica disponível no celular e no computador.</p></div></div>
+          <form id="base-import-form">
+            <div class="base-import-grid">
+              <label class="field"><span>Cargo da atualização</span><select id="base-office"><option value="estadual">Deputado Estadual</option><option value="federal">Deputado Federal</option></select></label>
+              <label class="field"><span>Codificação do CSV</span><select id="base-encoding"><option value="auto">Detectar automaticamente</option><option value="windows-1252">Windows-1252 (TSE)</option><option value="utf-8">UTF-8</option></select></label>
+              <label class="field base-file-field"><span>Votação por seção — Pará, 2026, 1º turno</span><input id="base-votes-file" type="file" accept=".csv,text/csv" required /><small>Extraia o CSV do ZIP oficial do TSE. Envie o arquivo completo do Pará.</small></label>
+              <label class="field base-file-field"><span>Locais de votação de 2026 (opcional)</span><input id="base-locations-file" type="file" accept=".csv,text/csv" /><small>Inclui escolas e bairros. Sem este arquivo, os locais serão conferidos na base atual de 2026.</small></label>
+            </div>
+            <div class="button-row"><button id="base-preview-button" class="button primary" type="submit">Validar e gerar prévia</button><button id="base-cancel-button" class="button secondary" type="button" hidden>Cancelar</button></div>
+          </form>
+          <div id="base-progress-wrap" class="base-progress" hidden><label for="base-progress" id="base-progress-label">Validando…</label><progress id="base-progress" max="100" value="0"></progress></div>
+          <p id="base-status" class="compact-note" role="status" aria-live="polite">A base de 2022 é mantida separadamente para as comparações.</p>
+          <section id="base-preview" class="base-preview" hidden aria-label="Prévia da atualização">
+            <h3>Prévia validada</h3><p id="base-preview-source"></p>
+            <div class="table-wrap"><table><thead><tr><th>Indicador</th><th>Base atual</th><th>Nova base</th><th>Diferença</th></tr></thead><tbody id="base-preview-body"></tbody></table></div>
+            <details class="operational-audit"><summary id="base-diff-summary">Diferenças por município</summary><p class="compact-note">Compara os totais municipais. Uma redistribuição entre candidatos pode manter o mesmo total de votos.</p><div class="table-wrap"><table><thead><tr><th>Município</th><th>Antes</th><th>Depois</th><th>Diferença de votos</th><th>Seções antes / depois</th></tr></thead><tbody id="base-diff-body"></tbody></table></div></details><p id="base-preview-warnings" class="compact-note"></p>
+            <button id="base-apply-button" class="button primary" type="button">Aplicar esta atualização</button>
+          </section>
+          <details class="data-details" open><summary>Versões da base e recuperação</summary><div class="versions-controls"><p id="base-active-version" class="compact-note"></p><label class="field"><span>Versão para recuperar</span><select id="base-version-select"></select></label><button id="base-restore-button" class="button secondary" type="button">Recuperar versão selecionada</button><button id="base-refresh-button" class="button secondary" type="button">Atualizar lista de versões</button><p class="compact-note">Cada cargo tem seu próprio histórico. As últimas 20 importações concluídas ficam disponíveis para recuperação.</p></div></details>
+        </article>
+
+        <article class="panel tse-section-panel" data-view-content="base territory" aria-label="Conferência de seção e boletim de urna">
+          <div class="panel-heading"><div><h2>Conferir seção e boletim de urna</h2><p class="compact-note">Pará • 2026 • 1º turno. Confira município, zona e seção na mesma fonte.</p></div></div>
+          <form id="tse-section-form" class="tse-section-form"><label class="field"><span>Município eleitoral</span><select id="tse-section-city" required><option value="">Selecione o município</option></select></label><label class="field"><span>Zona</span><input id="tse-section-zone" inputmode="numeric" pattern="[0-9]{1,3}" maxlength="3" required placeholder="Ex.: 072"></label><label class="field"><span>Seção</span><input id="tse-section-number" inputmode="numeric" pattern="[0-9]{1,4}" maxlength="4" required placeholder="Ex.: 0013"></label><button id="tse-section-submit" class="button primary" type="submit">Conferir seção</button></form>
+          <p id="tse-section-status" role="status" class="compact-note">A consulta usa o município selecionado. Seções antigas não são convertidas por aproximação.</p><div id="tse-section-output" class="tse-section-output"></div>
+          <div class="tse-links"><a href="https://www.tse.jus.br/servicos-eleitorais/autoatendimento-eleitoral" target="_blank" rel="noopener noreferrer">Confirmar local individual no TSE</a><a href="https://dadosabertos.tse.jus.br/dataset/resultados-2026-boletim-de-urna" target="_blank" rel="noopener noreferrer">Boletins de urna: dados abertos</a></div>
+          <details class="data-details"><summary>Qualidade da fonte de locais</summary><div class="tse-body"><button id="tse-location-audit" class="button secondary" type="button">Conferir índice de locais</button><p id="tse-location-audit-status" role="status" class="compact-note">Conferência dos vínculos entre município, zona, seção, escola e bairro. Não consulta situação individual de títulos.</p></div></details>
+        </article>
+
+        <article class="panel panel-candidate" id="candidato" data-view-content="overview territory regional xray comparison">
+          <div class="panel-heading">
+            <span class="step-number">01</span>
+            <div>
+              <h2>Filtros da consulta</h2>
+            </div>
+          </div>
+
+          <div class="selection-grid">
+            <label class="field">
+              <span>Cargo</span>
+              <select id="office-select" autocomplete="off">
+                <option value="estadual">Deputado Estadual</option>
+                <option value="federal">Deputado Federal</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Região</span>
+              <select id="ibge-region-select" autocomplete="off" disabled>
+                <option value="">Carregando regiões…</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Município</span>
+              <select id="municipality-select" autocomplete="off" disabled>
+                <option>Carregando municípios…</option>
+              </select>
+            </label>
+
+            <div class="field candidate-search-field">
+              <label for="candidate-search">Candidato(a) ou número</label>
+              <div class="search-shell">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.35-4.35m2.35-5.4A7.75 7.75 0 1 1 3.5 11.25a7.75 7.75 0 0 1 15.5 0Z"/></svg>
+                <input
+                  id="candidate-search"
+                  type="search"
+                  placeholder="Digite o nome ou número"
+                  autocomplete="off"
+                  aria-controls="candidate-results"
+                  aria-autocomplete="list"
+                  disabled
+                />
+                <span class="input-spinner" id="candidate-loading" hidden aria-label="Carregando"></span>
+              </div>
+              <div id="candidate-results" class="search-results" role="listbox" hidden></div>
+            </div>
+          </div>
+
+          <div class="municipality-selection-shortcut">
+            <button id="open-municipality-picker" type="button" class="button secondary" disabled>Selecionar municípios manualmente</button>
+            <p class="compact-note">Marque os municípios desejados para apurar somente essa seleção. Em Zonas e locais, você também pode selecionar várias escolas.</p>
+          </div>
+
+          <details id="municipality-picker" class="data-details municipality-picker" hidden>
+            <summary><span id="municipality-picker-summary">Selecionar municípios manualmente</span></summary>
+            <div class="municipality-picker-content">
+              <label class="field"><span>Buscar município</span><input id="municipality-picker-search" type="search" placeholder="Digite o nome do município" autocomplete="off" /></label>
+              <div class="municipality-picker-toolbar"><span id="municipality-picker-count" role="status" aria-live="polite">Nenhum município selecionado</span><button id="municipality-picker-clear" type="button" class="button secondary">Limpar seleção</button></div>
+              <fieldset class="municipality-checkboxes"><legend class="sr-only">Municípios do Pará</legend><div id="municipality-picker-options"></div></fieldset>
+              <p id="municipality-picker-no-match" class="compact-note" hidden>Nenhum município encontrado com esse nome.</p>
+              <button id="municipality-picker-apply" type="button" class="button primary" disabled>Aplicar seleção</button>
+            </div>
+          </details>
+
+          <details class="data-details favorites-panel">
+            <summary>Consultas favoritas</summary>
+            <div class="favorites-controls">
+              <label class="field"><span>Nome da consulta (opcional)</span><input id="favorite-name" maxlength="160" placeholder="Ex.: Carlos Vinícios — Metropolitana" /></label>
+              <button id="favorite-save" class="button secondary" type="button">Salvar consulta atual</button>
+              <label class="field"><span>Consultas salvas</span><select id="favorite-select"><option value="">Carregando consultas…</option></select></label>
+              <div class="button-row"><button id="favorite-open" class="button primary" type="button">Abrir</button><button id="favorite-remove" class="button secondary" type="button">Excluir</button></div>
+              <p id="favorite-status" class="compact-note" role="status" aria-live="polite">Salvas na sua conta para acessar em outro aparelho.</p>
+            </div>
+          </details>
+          <div id="region-filter-bar" class="region-filter-bar" hidden>
+            <div><span>Resultado regional selecionado</span><strong id="region-filter-name">—</strong><small id="region-filter-detail">—</small></div>
+            <button id="view-regional-button" class="button secondary" type="button">Ver municípios</button>
+          </div>
+
+          <div id="candidate-empty" class="empty-state compact" role="status" aria-live="polite">
+            <span class="empty-icon" aria-hidden="true">↗</span>
+            <div><strong id="candidate-empty-title">Carregando a base eleitoral…</strong><p id="candidate-empty-description">A consulta estará disponível em instantes.</p><button id="retry-city-load" class="button secondary" type="button" hidden>Tentar novamente</button></div>
+          </div>
+
+          <section id="municipality-selection-result" class="municipality-selection-result" hidden aria-labelledby="municipality-selection-title">
+            <div class="subpanel-heading"><div><h3 id="municipality-selection-title">Resultados dos municípios selecionados</h3><p id="municipality-selection-candidate" class="compact-note"></p></div><div class="button-row"><button id="municipality-selection-pdf" type="button" class="button primary">Gerar relatório</button><button id="municipality-selection-csv" type="button" class="button secondary">Exportar CSV</button></div></div>
+            <p id="municipality-selection-source" class="compact-note"></p>
+            <p class="compact-note"><a href="https://dadosabertos.tse.jus.br/dataset/resultados-2026" target="_blank" rel="noopener noreferrer">Referência oficial: resultados de 2026 do TSE</a></p>
+            <div class="metric-grid municipality-selection-metrics"><div class="metric-card"><span>Municípios selecionados</span><strong id="municipality-selection-total-count">—</strong></div><div class="metric-card primary"><span>Votos nos municípios selecionados</span><strong id="municipality-selection-total-votes">—</strong></div><div class="metric-card"><span>Votos no filtro</span><strong id="municipality-selection-filtered-votes">—</strong></div></div>
+            <div class="municipality-selection-filters"><label class="field"><span>Município na seleção</span><select id="municipality-selection-city"><option value="">Todos os selecionados</option></select></label><label class="field"><span>Zona e município</span><select id="municipality-selection-zone"><option value="">Todas as zonas</option></select></label><label class="field"><span>Buscar local de votação / escola</span><input id="municipality-selection-place" type="search" placeholder="Digite parte do nome da escola" autocomplete="off" /></label><button id="municipality-selection-clear" class="button secondary" type="button">Limpar filtros</button></div>
+            <div class="territory-school-filter">
+              <label class="field"><span>Selecionar local de votação / escola</span><select id="municipality-selection-school" aria-describedby="municipality-selection-school-status"><option value="">Todos os locais / escolas</option></select></label>
+              <div id="manual-school-picker" class="school-picker-host"></div>
+              <p id="municipality-selection-school-status" class="compact-note" role="status" aria-live="polite"></p>
+            </div>
+            <section id="manual-school-results" class="school-selection-results" hidden aria-label="Resultado das escolas selecionadas"></section>
+            <p id="municipality-selection-note" class="compact-note" role="status" aria-live="polite"></p>
+            <div id="municipality-selection-cards" class="municipality-selection-cards"></div>
+          </section>
+
+          <div id="candidate-result" hidden>
+            <div class="candidate-title-row">
+              <div>
+                <span class="candidate-number" id="candidate-number">—</span>
+                <h3 id="candidate-name">—</h3>
+                <p class="candidate-ballot-info">Nome de urna: <strong id="candidate-ballot-name">—</strong> <a href="https://dadosabertos.tse.jus.br/pt_BR/dataset/candidatos-2026" target="_blank" rel="noopener noreferrer">Fonte TSE</a></p>
+                <p id="candidate-place">—</p>
+                <p id="candidate-official-info" class="results-situation" data-situation="indisponivel">Situação eleitoral ainda não disponível nesta consulta.</p>
+              </div>
+              <span class="official-badge">VOTAÇÃO TSE</span>
+            </div>
+
+            <div class="provenance-row"><span id="active-data-provenance">TSE • 2026 • 1º turno</span><button id="summary-pdf-button" type="button" hidden>Resumo PDF</button><div class="complete-report-controls" data-view-content="overview territory regional xray comparison"><button id="complete-report-button" class="button primary" type="button">Gerar relatório</button></div></div>
+            <details class="query-data-status" data-view-content="overview territory regional xray comparison"><summary><span id="query-data-summary">Conferindo os dados do recorte…</span></summary><dl id="query-data-detail"></dl></details>
+            <div class="metric-grid candidate-metrics" data-view-content="overview">
+              <div class="metric-card primary">
+                <span>Votos nominais</span><strong id="candidate-votes">—</strong><small id="candidate-votes-context">no município</small>
+              </div>
+              <div class="metric-card">
+                <span id="candidate-rank-context">Posição no município</span><strong id="candidate-rank">—</strong><small>entre candidatos</small>
+              </div>
+              <div class="metric-card">
+                <span>Participação</span><strong id="candidate-share">—</strong><small>dos votos a candidatos</small>
+              </div>
+              <div class="metric-card">
+                <span>Seções com voto</span><strong id="candidate-sections">—</strong><small>alcance registrado</small>
+              </div>
+              <div class="metric-card">
+                <span>Zona mais forte</span><strong id="candidate-top-zone">—</strong><small id="candidate-top-zone-votes">—</small>
+              </div>
+            </div>
+
+            <div class="history-summary" data-view-content="overview" aria-live="polite">
+              <p id="candidate-history-identity" class="compact-note"></p>
+              <p id="candidate-history-share" class="compact-note"></p>
+              <p id="candidate-history-status">—</p>
+              <div id="candidate-history-previous" hidden><span>Votos 2022 no mesmo recorte</span><strong id="candidate-history-votes">—</strong></div>
+              <div id="candidate-history-change" hidden><span>Variação em votos e % • 2022 → 2026</span><strong id="candidate-history-variation">—</strong></div>
+            </div>
+
+            <details class="data-details current-reading" data-view-content="overview"><summary>Leitura dos resultados</summary><p id="candidate-factual-summary" class="compact-note"></p></details>
+
+            <div class="result-detail-grid" data-view-content="overview">
+              <div class="subpanel">
+                <div class="subpanel-heading"><h4>Seções mais fortes</h4><span>Top 10</span></div>
+                <div class="table-wrap">
+                  <table>
+                    <thead><tr><th>Zona</th><th>Seção</th><th>Local</th><th class="number-cell">Votos</th></tr></thead>
+                    <tbody id="top-sections-body"></tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="subpanel zone-panel">
+                <div class="subpanel-heading"><h4>Distribuição por zona</h4><span id="zone-count">—</span></div>
+                <div id="zone-bars" class="zone-bars"></div>
+              </div>
+            </div>
+
+            <section class="territory-report" data-view-content="territory" aria-labelledby="territory-report-title">
+              <div class="territory-heading">
+                <div>
+                  <h4 id="territory-report-title">Votação por zona, seção e local</h4>
+                </div>
+                <span id="territory-context">—</span>
+              </div>
+
+              <div class="territory-school-filter">
+                <label class="field">
+                  <span>Filtrar por local de votação / escola</span>
+                  <select id="territory-place-select" aria-describedby="territory-place-status" data-search-placeholder="Selecione ou digite o nome da escola"><option value="">Todos os locais</option></select>
+                </label>
+                <button id="territory-place-clear" class="button secondary" type="button" disabled>Todos os locais</button>
+                <div id="territory-school-picker" class="school-picker-host"></div>
+                <p id="territory-place-status" class="compact-note" role="status" aria-live="polite">Selecione ou busque uma escola pelo nome.</p>
+              </div>
+              <section id="territory-school-results" class="school-selection-results" hidden aria-label="Resultado das escolas selecionadas"></section>
+              <div class="territory-filter-grid">
+                <label class="field">
+                  <span>Zona</span>
+                  <select id="territory-zone-select"><option value="">Todas as zonas</option></select>
+                </label>
+                <label class="field">
+                  <span>Seção</span>
+                  <select id="territory-section-select"><option value="">Todas as seções</option></select>
+                </label>
+                <label class="field">
+                  <span>Bairro</span>
+                  <select id="territory-neighborhood-select"><option value="">Todos os bairros</option></select>
+                </label>
+              </div>
+
+              <div class="metric-grid territory-metrics">
+                <div class="metric-card primary"><span>Votos no filtro</span><strong id="territory-votes">—</strong><small>votação oficial</small></div>
+                <div class="metric-card"><span>Seções</span><strong id="territory-sections">—</strong><small id="territory-sections-caption">com votos</small></div>
+                <div class="metric-card"><span>Locais</span><strong id="territory-places">—</strong><small>escolas encontradas</small></div>
+                <div class="metric-card"><span>Bairros</span><strong id="territory-neighborhoods">—</strong><small>áreas alcançadas</small></div>
+              </div>
+
+              <details class="data-details highlights-details">
+                <summary>Ver os destaques do recorte</summary>
+              <div class="territory-highlights" aria-label="Principais indicadores territoriais">
+                <div class="highlight-card">
+                  <span>Zona mais forte</span>
+                  <strong id="territory-strongest-zone">—</strong>
+                  <small id="territory-strongest-zone-detail">—</small>
+                </div>
+                <div class="highlight-card">
+                  <span>Bairro com mais votos</span>
+                  <strong id="territory-strongest-neighborhood">—</strong>
+                  <small id="territory-strongest-neighborhood-detail">—</small>
+                </div>
+                <div class="highlight-card">
+                  <span>Local de votação mais forte</span>
+                  <strong id="territory-strongest-place">—</strong>
+                  <small id="territory-strongest-place-detail">—</small>
+                </div>
+              </div>
+              </details>
+
+              <div class="territory-chart-grid" aria-label="Dashboard gráfico da votação">
+                <article class="chart-card zone-pie-card">
+                  <div class="chart-heading">
+                    <div><h5>Distribuição por zona</h5></div>
+                    <small>Percentual no filtro</small>
+                  </div>
+                  <div class="donut-layout">
+                    <div id="territory-zone-donut" class="donut-chart" role="img" aria-label="Distribuição dos votos por zona">
+                      <div><strong id="territory-zone-donut-total">—</strong><span>votos • 2026</span></div>
+                    </div>
+                    <div id="territory-zone-legend" class="chart-legend"></div>
+                  </div>
+                  <div id="territory-zone-year-chart" class="regional-year-chart" hidden></div>
+                </article>
+                <article class="chart-card">
+                  <div class="chart-heading">
+                    <div><h5>Votação por bairro</h5></div>
+                    <small>Top 10 • 2026</small>
+                  </div>
+                  <div id="territory-neighborhood-chart" class="ranking-chart"></div>
+                </article>
+                <article class="chart-card territory-chart-wide">
+                  <div class="chart-heading">
+                    <div><h5>Locais de votação</h5></div>
+                    <small>Top 10</small>
+                  </div>
+                  <div id="territory-place-chart" class="ranking-chart"></div>
+                </article>
+              </div>
+
+              <p id="territory-history-note" class="chart-explainer">—</p>
+
+              <div class="territory-actions">
+                <button id="open-zone-history" class="button secondary" type="button">Reconstruir zona 107 em 2022</button>
+                <button id="export-territory-button" class="button secondary" type="button">Exportar CSV</button>
+                <button id="print-territory-button" hidden class="button primary" type="button">Baixar PDF</button>
+                <button id="clear-territory-button" class="button secondary" type="button" disabled>Limpar filtros</button>
+              </div>
+
+              <details class="data-details report-data">
+                <summary>Consultar tabelas por zona, bairro, local e seção</summary>
+              <div class="territory-report-grid">
+                <div class="subpanel">
+                  <div class="subpanel-heading"><h4>Votação por zona</h4><span id="territory-zone-note">—</span></div>
+                  <div class="table-wrap territory-table">
+                    <table>
+                      <thead><tr><th>Zona</th><th class="number-cell">Seções</th><th class="number-cell">Votos</th></tr></thead>
+                      <tbody id="territory-zone-body"></tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="subpanel">
+                  <div class="subpanel-heading"><h4>Votação por bairro</h4><span id="territory-neighborhood-note">—</span></div>
+                  <div class="table-wrap territory-table">
+                    <table>
+                      <thead><tr><th>Bairro</th><th class="number-cell">Locais</th><th class="number-cell">Seções</th><th class="number-cell">Votos</th></tr></thead>
+                      <tbody id="territory-neighborhood-body"></tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="subpanel territory-wide-panel">
+                  <div class="subpanel-heading"><h4>Votação por local de votação</h4><span id="territory-place-note">—</span></div>
+                  <div class="table-wrap territory-table">
+                    <table>
+                      <thead><tr><th>Local / escola</th><th>Bairro</th><th>Zonas</th><th class="number-cell">Seções</th><th class="number-cell">Votos</th></tr></thead>
+                      <tbody id="territory-place-body"></tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="subpanel territory-wide-panel">
+                  <div class="subpanel-heading"><h4>Votação por seção</h4><span id="territory-section-note">—</span></div>
+                  <div class="table-wrap territory-table territory-section-table">
+                    <table>
+                      <thead><tr><th>Zona</th><th>Seção</th><th>Local / escola</th><th>Bairro</th><th class="number-cell">Votos</th></tr></thead>
+                      <tbody id="territory-section-body"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              </details>
+            </section>
+
+            <section class="candidate-xray" id="raio-x" data-view-content="xray" aria-labelledby="xray-title">
+              <div class="territory-heading">
+                <div>
+                  <h4 id="xray-title">Desempenho do candidato em todo o Pará</h4>
+                </div>
+                <span id="xray-scope-note">Eleição 2026 • 144 municípios</span>
+              </div>
+
+              <div class="metric-grid xray-metrics">
+                <div class="metric-card primary"><span id="xray-votes-label">Votos no Pará</span><strong id="xray-state-votes">—</strong><small>total nominal no recorte</small></div>
+                <div class="metric-card xray-municipality-count"><span>Municípios com votos</span><strong id="xray-coverage">—</strong><small><span id="xray-coverage-note">Municípios com pelo menos um voto em 2026</span> • <a href="https://resultados.tse.jus.br/" target="_blank" rel="noopener noreferrer">Fonte TSE</a></small></div>
+                <div class="metric-card"><span id="xray-rank-label">Ranking estadual</span><strong id="xray-state-rank">—</strong><small>entre candidatos do cargo</small></div>
+                <div class="metric-card"><span id="xray-index-label">Índice estadual</span><strong id="xray-state-share">—</strong><small>dos votos nominais do cargo</small></div>
+                <div class="metric-card"><span>Concentração Top 30</span><strong id="xray-top30-share">—</strong><small>dos votos do candidato</small></div>
+                <div class="metric-card" id="xray-weight-card"><span id="xray-weight-label">Peso deste município no Pará</span><strong id="xray-city-share">—</strong><small>na votação estadual do candidato</small></div>
+              </div>
+
+              <div class="xray-grid">
+                <article class="chart-card">
+                  <div class="chart-heading">
+                    <div><h5>Top 30 municípios</h5></div>
+                    <small>Votos por eleição</small>
+                  </div>
+                  <div id="xray-municipality-chart" class="ranking-chart xray-ranking-chart"></div>
+                </article>
+                <details class="data-details report-data">
+                  <summary>Consultar os dados do Top 30</summary>
+                <div class="subpanel">
+                  <div class="subpanel-heading"><h4>Detalhamento municipal</h4><span>Top 30</span></div>
+                  <div class="table-wrap xray-table">
+                    <table>
+                      <thead><tr><th>#</th><th>Município</th><th class="number-cell">Votos 2026</th><th class="number-cell">% no filtro do Raio-X</th><th class="number-cell">Índice municipal</th><th class="number-cell">Votos 2022</th><th class="number-cell">Diferença: votos e %</th></tr></thead>
+                      <tbody id="xray-top30-body"></tbody>
+                    </table>
+                  </div>
+                </div>
+                </details>
+              </div>
+
+              <div class="territory-actions">
+                <button id="export-xray-button" class="button secondary" type="button">Exportar CSV</button>
+                <button id="print-xray-button" hidden class="button primary" type="button">Relatório por município</button>
+              </div>
+            </section>
+
+            <section class="candidate-regional" id="analise-regional" data-view-content="regional" aria-labelledby="regional-title">
+              <div class="territory-heading">
+                <div>
+                  <h4 id="regional-title">Resultados pelas 13 regiões</h4>
+                </div>
+                <span id="regional-year-status">Comparativo 2026 × 2022 • 1º turno</span>
+              </div>
+
+              <div class="regional-source-note" hidden>
+                <strong id="regional-previous-match">—</strong>
+                <span>Comparação apenas com correspondência única do nome completo, no mesmo cargo e turno. Sem correspondência confirmada, somente 2026.</span>
+              </div>
+
+              <div class="metric-grid regional-metrics">
+                <div class="metric-card primary"><span id="regional-region-label">Região mais forte</span><strong id="regional-best-name">—</strong><small>resultado regional de 2026</small></div>
+                <div class="metric-card"><span>Votos na região</span><strong id="regional-best-votes">—</strong><small>resultado regional</small></div>
+                <div class="metric-card"><span>Concentração</span><strong id="regional-best-share">—</strong><small>dos votos do candidato</small></div>
+                <div class="metric-card"><span>Melhor posição regional</span><strong id="regional-best-rank">—</strong><small>entre candidatos do cargo</small></div>
+                <div class="metric-card" id="regional-change-card"><span>Variação em votos e % • 2022 → 2026</span><strong id="regional-total-change">—</strong><small>na região indicada</small></div>
+              </div>
+
+              <div class="regional-dashboard">
+                <article class="chart-card regional-wide" id="regional-overview-chart">
+                  <div class="chart-heading">
+                    <div><h5>Votação por região</h5></div>
+                    <small id="regional-previous-columns-note">2026 × 2022</small>
+                  </div>
+                  <div class="regional-year-legend" aria-label="Legenda dos anos">
+                    <span><i class="year-current"></i>2026</span><span id="regional-year-previous-legend"><i class="year-previous"></i>2022</span>
+                  </div>
+                  <div id="regional-year-chart" class="regional-year-chart"></div>
+                </article>
+                <article class="chart-card">
+                  <div class="chart-heading">
+                    <div><h5 id="regional-donut-title">Distribuição regional</h5></div>
+                    <small>% dos votos do candidato</small>
+                  </div>
+                  <div class="donut-layout regional-donut-layout">
+                    <div id="regional-donut" class="donut-chart" role="img" aria-label="Distribuição dos votos do candidato pelas 13 regiões do Pará">
+                      <div><strong id="regional-donut-total">—</strong><span>votos • 2026</span></div>
+                    </div>
+                    <div id="regional-donut-legend" class="chart-legend"></div>
+                  </div>
+                </article>
+                <details class="data-details report-data">
+                  <summary>Consultar os indicadores regionais</summary>
+                <div class="subpanel">
+                  <div class="subpanel-heading"><h4>Indicadores regionais</h4><span id="regional-table-scope">13 regiões do Pará</span></div>
+                  <div class="table-wrap regional-table">
+                    <table>
+                      <thead><tr><th>Região</th><th class="number-cell">Municípios</th><th class="number-cell">Votos 2026</th><th class="number-cell">% dos votos do candidato no Pará</th><th class="number-cell">Índice regional</th><th class="number-cell">Posição</th><th class="number-cell">Votos 2022</th><th class="number-cell">Diferença: votos e %</th></tr></thead>
+                      <tbody id="regional-results-body"></tbody>
+                    </table>
+                  </div>
+                </div>
+                </details>
+              </div>
+
+              <div class="regional-breakdown">
+                <div class="territory-heading regional-breakdown-heading" id="regional-municipalities">
+                  <div><h4>Todos os municípios da região</h4></div>
+                  <label class="field regional-select-field" hidden><span>Região</span><select id="regional-region-select"></select></label>
+                </div>
+                <div class="regional-breakdown-grid">
+                  <article class="chart-card">
+                    <div class="chart-heading"><div><h5 id="regional-municipality-chart-title">Municípios com maior votação</h5></div><small>Votos por eleição</small></div>
+                    <div id="regional-municipality-chart" class="ranking-chart regional-municipality-chart"></div>
+                  </article>
+                  <details class="data-details report-data">
+                    <summary>Consultar a tabela de todos os municípios</summary>
+                  <div class="subpanel">
+                    <div class="subpanel-heading"><h4>Todos os municípios da região</h4><span id="regional-municipality-note">—</span></div>
+                    <div class="table-wrap regional-municipality-table">
+                      <table><thead><tr><th>#</th><th>Município</th><th class="number-cell">Votos 2026</th><th class="number-cell">% da região</th><th class="number-cell">Votos 2022</th><th class="number-cell">Diferença: votos e %</th></tr></thead><tbody id="regional-municipality-body"></tbody></table>
+                    </div>
+                  </div>
+                  </details>
+                </div>
+              </div>
+
+              <div class="territory-actions">
+                <button id="export-regional-button" class="button secondary" type="button">Exportar CSV</button>
+                <button id="print-regional-button" hidden class="button primary" type="button">Baixar PDF</button>
+              </div>
+            </section>
+
+            <section class="candidate-comparison" id="comparativo-candidatos" data-view-content="comparison" aria-labelledby="comparison-title">
+              <div class="territory-heading">
+                <div>
+                  <h4 id="comparison-title">Apuração individual de candidatos</h4>
+                </div>
+                <span id="comparison-context">—</span>
+              </div>
+
+              <div class="candidate-query-controls"><label class="field"><span>Apurar</span><select id="candidate-query-mode"><option value="both">Os dois — consultas individuais</option><option value="first">Somente candidato 1</option><option value="second">Somente candidato 2</option></select></label><label class="field" id="candidate-query-focus-field"><span>Exibir apuração</span><select id="candidate-query-focus"></select></label></div>
+              <div class="comparison-selectors">
+                <label class="field comparison-field candidate-one"><span>Candidato 1</span><select id="compare-select-1" class="compare-candidate-select"></select></label>
+                <label class="field comparison-field candidate-two"><span>Candidato 2</span><select id="compare-select-2" class="compare-candidate-select"></select></label>
+              </div>
+              <p id="comparison-selection-note" class="compact-note" role="status" aria-live="polite">Selecione o candidato para consultar a apuração individual.</p>
+              <p id="candidate-query-status" class="compact-note" role="status" aria-live="polite">Escolha o candidato para consultar os dados oficiais da base identificada.</p>
+              <section id="candidate-query-output" hidden aria-label="Apuração individual"><h4 id="candidate-query-name"></h4><div class="metric-card primary"><span>Votos nominais no recorte</span><strong id="candidate-query-votes"></strong></div><p id="candidate-query-source" class="compact-note"></p><a href="https://dadosabertos.tse.jus.br/dataset/resultados-2026" target="_blank" rel="noopener noreferrer">Consultar a fonte oficial no TSE</a><h5>Votação por município</h5><div class="table-wrap"><table><thead><tr><th>Município</th><th>Votos</th></tr></thead><tbody id="candidate-query-municipalities"></tbody></table></div><details class="data-details"><summary>Votação por zona</summary><div class="table-wrap"><table><thead><tr><th>Município</th><th>Zona</th><th>Votos</th></tr></thead><tbody id="candidate-query-zones"></tbody></table></div></details></section>
+              <div id="candidate-query-legacy" hidden inert>
+              <div id="comparison-legend" class="comparison-legend" aria-label="Legenda dos candidatos"></div>
+              <div id="comparison-scoreboard" class="comparison-scoreboard" aria-label="Votos e participação entre candidatos selecionados"></div>
+              <div class="comparison-reading-panel"><h5>Leitura rápida do filtro</h5><div id="comparison-reading" aria-live="polite"></div><small>Indicadores calculados na plataforma. A participação considera apenas os candidatos selecionados.</small><details><summary>Consultar com IA</summary><p>Copie os resultados públicos deste filtro e cole no serviço de IA que utiliza. Nenhum cadastro pessoal é incluído.</p><div class="ai-actions"><button type="button" id="comparison-ai-copy" class="button secondary" disabled>Copiar resumo para IA</button><a class="button secondary" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Abrir ChatGPT</a></div><p id="comparison-ai-status" role="status"></p><textarea id="comparison-ai-prompt" aria-label="Resumo público para copiar" readonly hidden rows="8"></textarea></details></div>
+
+              <details class="data-details report-data">
+                <summary>Consultar os indicadores dos candidatos</summary>
+              <div class="subpanel comparison-summary-panel">
+                <div class="subpanel-heading"><h4>Indicadores de desempenho</h4><span>Recorte selecionado × Pará</span></div>
+                <div class="table-wrap">
+                  <table>
+                    <thead><tr><th>Candidato</th><th class="number-cell">Votos no filtro • 2026</th><th class="number-cell">Participação nominal</th><th class="number-cell">Votos no filtro • 2022</th><th class="number-cell">Diferença: votos e %</th></tr></thead>
+                    <tbody id="comparison-summary-body"></tbody>
+                  </table>
+                </div>
+              </div>
+              </details>
+
+              <div class="comparison-territory-grid">
+                <article class="chart-card comparison-matrix-panel">
+                  <div class="chart-heading"><div><h5>Intensidade da votação por município</h5><p class="compact-note">Percentual dos votos nominais do cargo, votos exatos e diferença entre os dois.</p></div></div>
+                  <div id="comparison-matrix-controls" class="comparison-matrix-controls"><label class="field"><span>Ordenar municípios</span><select id="comparison-matrix-sort"><option value="gap">Maior diferença de votos</option><option value="volume">Maior votação dos dois</option><option value="name">Nome do município</option></select></label></div>
+                  <div id="comparison-matrix-head" class="comparison-matrix-head"><span>Município</span><span id="comparison-matrix-candidate-0">Candidato 1</span><span id="comparison-matrix-candidate-1">Candidato 2</span><span>Diferença</span></div>
+                  <div id="comparison-matrix" class="comparison-matrix"></div>
+                  <div id="comparison-matrix-pagination" class="comparison-matrix-pagination"><span id="comparison-matrix-count" aria-live="polite"></span><div class="button-row"><button id="comparison-matrix-prev" class="button secondary" type="button">Anterior</button><button id="comparison-matrix-next" class="button secondary" type="button">Próxima</button></div></div>
+                </article>
+                <article class="chart-card comparison-focus-panel">
+                  <label class="field"><span>Detalhar município</span><select id="comparison-focus-select" disabled></select></label>
+                  <div class="chart-heading"><div><h5 id="comparison-focus-title">Detalhe por município</h5></div><small id="comparison-zone-note">—</small></div>
+                  <div id="comparison-focus-metrics" class="comparison-focus-metrics"></div>
+                  <h5 class="comparison-focus-subtitle">Votação por zona</h5>
+                  <div id="comparison-zone-chart" class="grouped-chart"></div>
+                  <details class="data-details"><summary id="comparison-focus-place-title">Locais de votação</summary><div id="comparison-place-chart" class="grouped-chart comparison-focus-places"></div></details>
+                  <p class="compact-note">Este detalhe mantém o recorte geral dos relatórios. Para restringi-los, use os filtros principais.</p>
+                </article>
+              </div>
+              <details class="data-details report-data comparison-statistics"><summary>Distribuição municipal · candlestick</summary>
+                <article class="chart-card">
+                  <div class="chart-heading">
+                    <div><h5 id="comparison-distribution-title">Distribuição municipal • candlestick</h5></div>
+                    <small>Mínimo • Q1 • Mediana • Q3 • Máximo</small>
+                  </div>
+                  <div id="comparison-candlestick" class="candlestick-chart" role="img" aria-label="Distribuição municipal dos votos dos candidatos"></div>
+                  <p class="chart-explainer">A caixa mostra os 50% centrais dos municípios; a linha interna é a mediana e as extremidades representam mínimo e máximo.</p>
+                </article>
+              </details>
+
+              <details class="data-details report-data">
+                <summary>Consultar a votação por escola</summary>
+              <div class="subpanel comparison-place-panel">
+                <div class="subpanel-heading"><h4>Comparativo por local de votação</h4><span>Top 10</span></div>
+                <div class="table-wrap">
+                  <table>
+                    <thead id="comparison-place-head"></thead>
+                    <tbody id="comparison-place-body"></tbody>
+                  </table>
+                </div>
+              </div>
+              </details>
+
+              </div>
+              <div class="territory-actions">
+                <button id="export-comparison-button" class="button secondary" type="button">Exportar CSV</button>
+                <button id="print-comparison-button" hidden class="button primary" type="button">Baixar PDF</button>
+                <span id="comparison-scope-note">—</span>
+              </div>
+            </section>
+
+          </div>
+        </article>
+
+        <article class="panel panel-lists" id="liderancas" data-view-content="lists archived-records quality-review operations duplicates distribution leadership intake crm-settings partnership">
+          <div class="panel-heading">
+            <span class="step-number">02</span>
+            <div>
+              <h2>Eleitores e lideranças</h2>
+            </div>
+          </div>
+
+          <div class="privacy-note">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 10V7a4.5 4.5 0 0 1 9 0v3M6 10h12v10H6V10Z"/></svg>
+            <div><strong>Dados pessoais ficam neste aparelho.</strong><span>As listas desta base de 2026 ficam separadas das versões anteriores. Exporte um CSV para levá-las a outro dispositivo.</span></div>
+          </div>
+
+          <div class="list-toolbar">
+            <label class="field grow">
+              <span>Liderança em edição</span>
+              <select id="list-select"><option value="">Nenhuma lista cadastrada</option></select>
+            </label>
+            <button id="rename-list-button" class="button secondary" type="button" disabled>Renomear</button>
+            <button id="delete-list-button" class="button danger-soft" type="button" disabled>Excluir lista</button>
+          </div>
+
+          <div class="coordinator-editor">
+            <label class="field grow">
+              <span>Coordenador desta liderança</span>
+              <input id="coordinator-input" type="text" maxlength="100" placeholder="Ex.: RESPONSÁVEL DE EXEMPLO" disabled />
+            </label>
+            <button id="save-coordinator-button" class="button primary" type="button" disabled>Salvar coordenador</button>
+          </div>
+
+          <div class="import-card">
+            <div class="import-copy">
+              <h3>Importar uma planilha</h3>
+              <p>Use CSV ou XLSX com as colunas: Coordenador, Liderança, Nome, Título, Zona, Seção e Contato. ID, Mãe, CPF, RG, Nascimento, Observações e Fonte também são preservados quando informados.</p>
+            </div>
+            <div class="import-meta-grid">
+              <label class="field">
+                <span>Coordenador padrão</span>
+                <input id="import-coordinator-name" type="text" maxlength="100" placeholder="Ex.: RESPONSÁVEL DE EXEMPLO" />
+              </label>
+              <label class="field">
+                <span>Liderança padrão</span>
+                <input id="import-list-name" type="text" maxlength="80" placeholder="Ex.: LIDERANÇA DE EXEMPLO" />
+              </label>
+            </div>
+            <div class="button-row">
+              <label class="button primary file-button">
+                <input id="file-input" type="file" accept=".csv,.xlsx,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" multiple />
+                Importar CSV/XLSX
+              </label>
+              <button id="model-button" class="button secondary" type="button">Baixar modelo</button>
+              <button id="export-lists-button" class="button secondary" type="button" disabled>Exportar listas</button>
+              <button id="reset-imports-button" class="button danger-soft" type="button" disabled>Arquivar listas</button>
+            </div>
+            <p class="microcopy">As colunas Coordenador e Liderança organizam automaticamente a hierarquia. Os campos padrão são usados quando essas colunas não existirem. Arquivar listas prepara uma alteração para revisão. Os cadastros ficam recuperáveis pelo histórico central.</p>
+          </div>
+
+          <details class="entry-details" id="paste-details">
+            <summary>Colar dados de uma planilha</summary>
+            <div class="details-content">
+              <label class="field">
+                <span>Copie as colunas da sua planilha e cole abaixo</span>
+                <textarea id="paste-input" rows="7" placeholder="Coordenador&#9;Liderança&#9;Nome&#9;Título&#9;Zona&#9;Seção&#9;Contato"></textarea>
+              </label>
+              <button id="paste-button" class="button primary" type="button">Importar dados colados</button>
+            </div>
+          </details>
+
+          <details class="entry-details" id="manual-details">
+            <summary>Adicionar um cadastro manualmente</summary>
+            <form id="manual-form" class="manual-grid">
+              <label class="field"><span>Nome</span><input name="name" type="text" maxlength="120" required /></label>
+              <label class="field"><span>Título</span><input name="title" type="text" inputmode="numeric" maxlength="20" /></label>
+              <label class="field"><span>Zona</span><input name="zone" type="number" inputmode="numeric" min="1" required /></label>
+              <label class="field"><span>Seção</span><input name="section" type="number" inputmode="numeric" min="1" required /></label>
+              <label class="field"><span>Contato</span><input name="contact" type="tel" maxlength="40" /></label>
+              <button class="button primary" type="submit">Adicionar à lista</button>
+            </form>
+          </details>
+
+          <div id="list-empty" class="empty-state">
+            <span class="empty-icon" aria-hidden="true">＋</span>
+            <div><strong>Nenhuma lista neste aparelho</strong><p>Importe uma planilha ou crie o primeiro cadastro manual.</p></div>
+          </div>
+
+          <div id="list-content" hidden>
+            <div class="hierarchy-card" aria-label="Hierarquia da lista selecionada">
+              <div class="hierarchy-node coordinator-node"><span>Coordenador</span><strong id="active-coordinator-name">Não informado</strong></div>
+              <span class="hierarchy-arrow" aria-hidden="true">→</span>
+              <div class="hierarchy-node"><span>Liderança</span><strong id="active-leadership-name">—</strong></div>
+            </div>
+            <div class="list-summary-row">
+              <div><span>Cadastros</span><strong id="list-record-count">0</strong></div>
+              <div><span>Com zona e seção</span><strong id="list-valid-count">0</strong></div>
+              <div><span>Incompletos</span><strong id="list-invalid-count">0</strong></div>
+              <div><span>Títulos repetidos</span><strong id="list-duplicate-count">0</strong></div>
+            </div>
+            <div class="subpanel list-preview-panel">
+              <div class="subpanel-heading"><h4>Prévia da lista</h4><span id="list-preview-note">—</span></div>
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>Nome</th><th>Título</th><th>Zona</th><th>Seção</th><th>Contato</th><th></th></tr></thead>
+                  <tbody id="list-preview-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article id="workspace-analysis-locked" class="panel workspace-locked-notice" data-view-content="analysis"><h2>Abra sua base para fazer o cruzamento</h2><p>Os cadastros e os resultados da liderança ficam disponíveis depois do acesso com sua senha.</p><button type="button" class="button primary" data-view="lists">Abrir base de cadastros</button></article>
+        <article class="panel panel-analysis" id="analise" data-view-content="analysis">
+          <div class="panel-heading analysis-heading">
+            <span class="step-number">03</span>
+            <div>
+              <h2>Conferência por candidato</h2>
+              <button id="crm-open-partnership" class="button secondary" type="button">Conferir parceria do grupo</button>
+              <button id="crm-open-leadership-map" class="button secondary" type="button">Mapa das lideranças</button>
+            </div>
+            <div class="analysis-filter-group">
+              <label class="field analysis-scope-field">
+                <span>Escopo analisado</span>
+                <select id="analysis-list-select" disabled><option value="">Cadastre uma lista</option></select>
+              </label>
+              <label class="field analysis-zone-field">
+                <span>Zona analisada</span>
+                <select id="analysis-zone-select" disabled><option value="">Todas as zonas</option></select>
+              </label>
+            </div>
+          </div>
+
+          <details class="data-details"><summary>Distribuição do recorte analisado</summary><section id="analysis-registration-summary" class="registration-summary" hidden></section></details>
+
+          <div id="analysis-empty" class="empty-state analysis-empty">
+            <span class="empty-icon" aria-hidden="true">✓</span>
+            <div><strong>Escolha um candidato para conferir a votação</strong><p>O painel territorial acima mostra os cadastros por zona, bairro, escola e liderança. Para consultar também o cruzamento eleitoral, escolha um candidato em Resumo ou Raio-X.</p></div>
+          </div>
+
+          <div id="analysis-content" hidden>
+            <div class="analysis-banner">
+              <div>
+                <p id="analysis-context">—</p>
+                <strong id="analysis-rate">—</strong>
+                <span>taxa estimada de acerto</span>
+              </div>
+              <div class="rate-ring" id="rate-ring" aria-hidden="true"><span id="rate-ring-label">—</span></div>
+            </div>
+
+            <div class="metric-grid analysis-metrics">
+              <div class="metric-card"><span>Cadastros válidos</span><strong id="analysis-valid">—</strong><small>com zona e seção</small></div>
+              <div class="metric-card positive"><span>Acertos estimados</span><strong id="analysis-hits">—</strong><small>compatíveis com os votos</small></div>
+              <div class="metric-card warning"><span>Sem correspondência</span><strong id="analysis-unmatched">—</strong><small>acima dos votos da seção</small></div>
+              <div class="metric-card"><span>Em seções com voto</span><strong id="analysis-in-voting-sections">—</strong><small>cadastros localizados</small></div>
+              <div class="metric-card"><span>Votos nas seções da lista</span><strong id="analysis-votes-listed">—</strong><small>total oficial do candidato</small></div>
+            </div>
+
+            <div class="analysis-actions">
+              <button id="export-analysis-button" class="button primary" type="button">Exportar análise CSV</button>
+              <button id="print-button" class="button secondary" type="button">Baixar PDF</button>
+            </div>
+
+            <div class="subpanel coordinator-compare-panel" id="coordinator-compare-panel">
+              <div class="subpanel-heading"><h4>Eficiência por coordenador</h4><span>Lideranças consolidadas</span></div>
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>Coordenador</th><th class="number-cell">Lideranças</th><th class="number-cell">Cadastros</th><th class="number-cell">Válidos</th><th class="number-cell">Acertos estimados</th><th class="number-cell">Taxa</th></tr></thead>
+                  <tbody id="coordinator-compare-body"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="subpanel compare-panel" id="compare-panel">
+              <div class="subpanel-heading"><h4>Comparação entre lideranças</h4><span>Todas as listas</span></div>
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>Coordenador</th><th>Liderança / lista</th><th class="number-cell">Cadastros</th><th class="number-cell">Válidos</th><th class="number-cell">Acertos estimados</th><th class="number-cell">Taxa</th></tr></thead>
+                  <tbody id="compare-body"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="subpanel section-analysis-panel">
+              <div class="subpanel-heading"><h4>Resultado por seção</h4><span id="section-analysis-note">—</span></div>
+              <div class="table-wrap tall-table">
+                <table>
+                  <thead><tr><th>Zona</th><th>Seção</th><th>Local</th><th class="number-cell">Cadastros</th><th class="number-cell">Votos</th><th class="number-cell">Acertos estimados</th><th class="number-cell">Taxa</th></tr></thead>
+                  <tbody id="section-analysis-body"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <details class="entry-details people-details">
+              <summary>Ver conferência dos cadastros</summary>
+              <div class="details-content">
+                <p class="microcopy strong-copy">Esta conferência mostra apenas compatibilidade coletiva da seção; não identifica em quem uma pessoa votou.</p>
+                <div class="table-wrap tall-table">
+                  <table>
+                    <thead><tr><th>Coordenador</th><th>Liderança</th><th>Nome</th><th>Título</th><th>Zona</th><th>Seção</th><th class="number-cell">Votos na seção</th><th>Leitura</th></tr></thead>
+                    <tbody id="people-analysis-body"></tbody>
+                  </table>
+                </div>
+                <p id="people-analysis-note" class="microcopy"></p>
+              </div>
+            </details>
+
+            <div class="method-warning">
+              <strong>O voto é secreto.</strong>
+              <p>A taxa não prova votos individuais. Ela mede o máximo de cadastros que pode ser compatível com a votação agregada em cada seção.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="method-section" id="metodologia" data-view-content="help">
+        <div class="method-intro">
+          <h2>Como o “acerto” é estimado</h2>
+          <p>Em cada seção, a ferramenta compara a quantidade de cadastros válidos com os votos oficiais do candidato e usa o menor dos dois números.</p>
+        </div>
+        <div class="guide-notes">
+          <h3>Como ler os resultados</h3>
+          <p><strong>Região:</strong> selecioná-la soma todos os seus municípios. O filtro de município permite consultar um deles; a tela Regiões mantém o resultado regional consolidado.</p>
+          <p><strong>Participação ou índice:</strong> votos do candidato divididos pelos votos nominais do cargo no mesmo recorte. Ranking de votos não determina se o candidato foi eleito.</p>
+          <p><strong>Histórico:</strong> 2022 aparece somente com correspondência única do nome completo no mesmo cargo e turno. A falta de correspondência não comprova primeira candidatura.</p>
+          <p><strong>Parceria de trabalho:</strong> em Eleitores e lideranças, abra “Conferência da parceria Estadual × Federal”, escolha o grupo e declare a dupla. Salvar a declaração exige conexão. A consulta pode funcionar offline com as cópias preparadas. Os indicadores mostram proximidade e limites possíveis nas seções trabalhadas; não confirmam voto individual nem sua origem. O relatório é compacto, por municípios e zonas.</p>
+          <p><strong>Eleições anteriores e partidos:</strong> use o menu para consultar 2014, 2018, 2022 ou a versão ativa de 2026. Para vereador, selecione o cargo e consulte 2024 ou 2020 por município e zona. O número de vereador pode se repetir em cidades diferentes; a comparação exige nome completo único no mesmo município. Escolha candidato, partido ou federação e refine por região, município e zona. Partido e federação são os registrados na eleição consultada. Essa área não altera os filtros dos cadastros de 2026.</p>
+          <p><strong>Variação:</strong> diferença em votos = votos de 2026 − votos de 2022. Variação percentual = diferença ÷ votos de 2022 × 100. Verde indica aumento; vermelho, queda. Quando a base anterior é zero, não há percentual calculável.</p>
+          <p><strong>Escolas e bairros:</strong> os locais históricos são associados pelo município e nome da escola. Locais sem correspondência ficam sem comparação. Bairros usam apenas 2026, pois a base histórica carregada não informa bairro.</p>
+          <p><strong>Percentuais:</strong> a diferença em votos é a votação de 2026 menos a de 2022. A variação percentual divide essa diferença pela votação de 2022 e multiplica por 100. Exemplo: de 2.500 para 2.750 são +250 votos (+10%). Pontos percentuais (p.p.) medem a mudança de participação nos votos nominais: de 5% para 7% são +2 p.p. e um crescimento relativo de 40%.</p>
+          <p><strong>Atualização da base:</strong> em Atualizar base, envie o CSV de votação por seção do Pará, confira a prévia e aplique. Cada cargo tem versões próprias para recuperação. O histórico de 2022 permanece separado. Consultas favoritas ficam salvas na sua conta.</p>
+          <p><strong>Relatórios:</strong> exporte CSV para trabalhar com as tabelas ou use Gerar relatório para escolher o conteúdo e conferir a quantidade de páginas antes de baixar o PDF. As listas sincronizadas ficam na base central. A cópia offline é protegida pela senha neste aparelho.</p>
+        </div>
+        <div class="formula-card">
+          <span>Por seção</span>
+          <div><b>Acertos estimados</b> = mínimo entre <b>cadastros</b> e <b>votos</b></div>
+          <span>No total</span>
+          <div><b>Taxa</b> = soma dos acertos estimados ÷ cadastros válidos</div>
+        </div>
+        <div class="method-steps">
+          <div><span>1</span><strong>Validação</strong><p>Exige zona e seção; títulos repetidos são contados uma vez.</p></div>
+          <div><span>2</span><strong>Cruzamento</strong><p>Localiza os votos oficiais nas mesmas zonas e seções da lista.</p></div>
+          <div><span>3</span><strong>Consolidação</strong><p>Calcula separadamente cada liderança e reúne todas por coordenador.</p></div>
+        </div>
+        <p class="source-footnote">
+          Fonte eleitoral: arquivos de votação por seção do TSE, Pará, cargos Deputado Estadual e Deputado Federal, 1º turno de 2026.
+          A comparação regional usa, em coluna separada e identificada, a base do 1º turno de 2022. A composição dos municípios
+          está organizada em 13 regiões territoriais do Pará. Registros de legenda, branco e nulo foram excluídos da base de candidaturas.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <div><strong>Análise Eleitoral Pará</strong><span>Ferramenta independente de conferência de dados públicos.</span></div>
+      <button class="link-button light" type="button" data-view="help">Ajuda e fontes</button>
+    </footer>
+
+<nav class="mobile-app-navigation" id="mobile-app-navigation" aria-label="Navegação principal"><button type="button" data-view="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 11 10-9 10 9M5 9v13h5v-7h4v7h5V9"/></svg><span>Início</span></button><button type="button" data-view="lists"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="3"/><path d="M3 20v-3a6 6 0 0 1 12 0v3M17 4a3 3 0 0 1 0 6M18 14a5 5 0 0 1 3 5"/></svg><span>Cadastros</span></button><button type="button" data-view="paired"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h6v14H3zM15 5h6v14h-6zM9 12h6"/></svg><span>Cruzar</span></button><button type="button" data-view="reports"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18H5zM8 8h8M8 12h8m-8 4 2 2 5-5"/></svg><span>Relatórios</span></button><button type="button" data-view="menu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 0 1 6 0c0 2-3 2-3 4M12 16v1"/></svg><span>Menu</span></button></nav>
+
+    <dialog id="report-center" class="report-dialog" aria-labelledby="report-center-title">
+      <div class="report-dialog-heading"><h2 id="report-center-title">Gerar relatório</h2><button id="report-close" class="button secondary" type="button">Fechar</button></div>
+      <div class="report-options"><label class="field"><span>Tipo de relatório</span><select id="report-type"></select></label><label class="field" id="report-format-field"><span>Formato do PDF</span><select id="report-format" aria-describedby="report-format-help"><option value="summary">Resumo A4 — 1 página</option><option value="compact">Enxuto — todas as linhas</option><option value="original">Detalhado — disposição original</option></select></label><label class="field" id="report-layout-field" hidden><span>Organização</span><select id="complete-report-organization"><option value="consolidated">Consolidado</option><option value="regions">Separar por regiões</option></select></label></div>
+      <p id="report-format-help" class="compact-note" role="status" aria-live="polite"></p>
+      <fieldset id="report-content-field" class="report-content-field" hidden><legend>Conteúdo do relatório</legend><p class="compact-note">Marque somente os quadros que deseja incluir. Os filtros atuais continuam aplicados.</p><div id="report-content-options" class="report-content-options"></div><p id="report-content-status" class="compact-note" role="status" aria-live="polite"></p></fieldset>
+      <p id="report-description" class="compact-note"></p><button id="report-prepare" class="button primary" type="button">Preparar prévia</button><p id="report-feedback" class="compact-note" role="status" aria-live="polite"></p>
+      <section id="report-preview" class="report-preview" hidden aria-label="Prévia do PDF"><h3 id="report-preview-title"></h3><p id="report-preview-candidate"></p><div class="report-size"><strong id="report-preview-pages"></strong><span id="report-preview-size"></span></div><p id="report-preview-content" class="compact-note"></p><dl id="report-preview-meta"></dl><p id="report-preview-warning" class="report-warning" hidden></p><div id="report-shortcuts" class="report-shortcuts" hidden><button id="report-use-summary" class="button secondary" type="button">Preparar resumo A4</button><button id="report-use-compact" class="button secondary" type="button">Preparar formato enxuto</button></div></section>
+      <div class="report-download-row"><button id="report-download" class="button primary" type="button" disabled>Baixar PDF conferido</button></div>
+    </dialog>
+    <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="./vendor/jszip.min.js?v=2026-10-06-region-filter-v1"></script>
+    <script src="./data-cache.js?v=2026-10-14-performance-v47"></script>
+    <script src="./election-scope.js?v=2026-10-14-performance-v47"></script>
+    <script src="./municipality-selection.js?v=2026-10-17-groups-v82"></script>
+    <script src="./municipal-report.js?v=2026-10-14-performance-v47"></script>
+    <script src="./comparison-report.js?v=2026-10-14-performance-v47"></script>
+    <script src="./candidate-identity.js?v=2026-10-14-performance-v47"></script>
+    <script src="./report-pdf.js?v=2026-10-23-aproveitamento-v97"></script>
+    <script src="./report-center.js?v=2026-10-23-aproveitamento-v97"></script>
+    <script src="./platform-tools.js?v=2026-10-17-groups-v82"></script>
+    <script src="./paired-analysis.js?v=2026-10-23-aproveitamento-v97"></script>
+    <script src="./paired-view.js?v=2026-10-23-aproveitamento-v97"></script>
+    <script src="/searchable-select.js?v=2026-10-17-groups-v82"></script>
+    <script src="/offline-manager.js?v=2026-10-28-qualidade-v107"></script>
+    <script src="/crm-workspace.js?v=2026-10-28-qualidade-v107"></script>
+    <script src="./map-model.js?v=2026-10-14-performance-v47"></script>
+    <script src="./electoral-map.js?v=2026-10-14-performance-v47"></script>
+    <script src="./election-archive-model.js?v=2026-10-14-performance-v47"></script>
+    <script src="./election-archive.js?v=2026-10-14-performance-v47"></script>
+    <script src="./comparison-reading.js?v=2026-10-14-performance-v47"></script>
+    <script src="./comparison-territory.js?v=2026-10-14-performance-v47"></script>
+    <script src="./tse-model.js?v=2026-10-16-tse-v75"></script>
+    <script src="./tse-resources.js?v=2026-10-16-tse-v75"></script>
+    <script src="./results-model.js?v=2026-10-14-performance-v47"></script>
+    <script src="./results.js?v=2026-10-16-tse-v75"></script>
+    <script src="./home.js?v=2026-10-27-conselho-v98"></script>
+    <script src="./zone-history-model.js?v=2026-10-14-performance-v47"></script>
+    <script src="./zone-history.js?v=2026-10-14-performance-v47"></script>
+    <script src="./platform-audit.js?v=2026-10-23-aproveitamento-v97"></script>
+    <script src="./platform-health.js?v=2026-10-28-qualidade-v107"></script>
+    <script src="./workspace-pages.js?v=2026-10-28-qualidade-v107"></script>
+    <script src="./candidate-apuration.js?v=2026-10-17-groups-v82"></script>
+    <script src="./school-picker.js?v=2026-10-17-groups-v82"></script>
+    <script src="./crossing-model.js?v=2026-10-23-aproveitamento-v97"></script>
+    <script src="./crossing-view.js?v=2026-10-23-aproveitamento-v97"></script>
+    <script src="./quocients-model.js?v=2026-10-20-quocients-v88"></script>
+    <script src="./quocients.js?v=2026-10-20-quocients-v88"></script>
+    <script src="./council-model.js?v=2026-10-27-polos-v99"></script>
+    <script src="./council-register-model.js?v=2026-10-27-polos-v99"></script>
+    <script src="./council-extras.js?v=2026-10-27-polos-v99"></script>
+    <script src="./council.js?v=2026-10-27-polos-v99"></script>
+    <script src="./app.js?v=2026-10-28-qualidade-v107"></script>
+  </body>
+</html>

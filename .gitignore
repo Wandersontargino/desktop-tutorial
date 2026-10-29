@@ -1,0 +1,11 @@
+/dist/
+/tmp/
+/node_modules/
+/.sites-runtime/
+/.env
+
+independent-build/
+
+/android-launcher/build/
+/android-launcher/output/
+/android-launcher/signing/

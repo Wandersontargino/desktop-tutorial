@@ -1,0 +1,27 @@
+{
+  "name": "analise-eleitoral-pa",
+  "private": true,
+  "version": "2.15.0",
+  "scripts": {
+    "build": "node scripts/unpack-public-assets.mjs && node scripts/build-platform.mjs",
+    "check": "node scripts/check_quality_workflow.mjs && node scripts/check_operational_metrics.mjs && node scripts/check_automatic_backup.mjs && node scripts/check_document_review.mjs && node scripts/check_maintenance_ui.mjs && node scripts/check_security.mjs && node scripts/check_crm_transport.mjs && node scripts/check_crm_resilience_ui.mjs && node scripts/check_crm_recovery.mjs && node scripts/check_archived_records_ui.mjs && node scripts/check_local_record_review.mjs && node scripts/check_local_record_review_ui.mjs && node scripts/check_duplicate_drafts_ui.mjs && node scripts/check_registry_utilization.mjs && node scripts/check_group_admin.mjs && node scripts/check_leadership_pendency_pages.mjs && node scripts/check_registration_territory.mjs && node scripts/check_registration_distribution.mjs && node scripts/check_report_formats.mjs && node scripts/check_report_selection.mjs && node scripts/check_section_alerts.mjs && node scripts/check_crossing_summary.mjs && node scripts/check_crossing_hub.mjs && node scripts/check_crossing_navigation.mjs && node scripts/check_workspace_pages.mjs && node scripts/check_platform_health_ui.mjs && node scripts/check_location_lookup.mjs && node scripts/check_municipal_accounting.mjs && node scripts/check_search.mjs && node scripts/check_responsive.mjs && node scripts/check_offline.mjs && node scripts/check_performance.mjs",
+    "check:browser": "playwright test"
+  },
+  "dependencies": {
+    "@noble/hashes": "^2.4.0",
+    "drizzle-orm": "^0.45.3",
+    "pdfjs-dist": "^6.4.299",
+    "qrcode": "^1.5.4",
+    "tesseract.js": "^7.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "drizzle-kit": "^0.31.11",
+    "esbuild": "^0.28.2",
+    "fake-indexeddb": "^6.2.5",
+    "happy-dom": "^21.0.4"
+  },
+  "overrides": {
+    "esbuild": "$esbuild"
+  }
+}

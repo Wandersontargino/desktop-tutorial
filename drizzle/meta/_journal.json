@@ -1,0 +1,62 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1791300859129,
+      "tag": "0000_nappy_dakota_north",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1791302141245,
+      "tag": "0001_handy_white_queen",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1791374880044,
+      "tag": "0002_amusing_boomerang",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1791479887582,
+      "tag": "0003_outstanding_impossible_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1792708215413,
+      "tag": "0004_blushing_vector",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1793198099835,
+      "tag": "0005_duplicate_reviews",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1793215171494,
+      "tag": "0006_mixed_mentallo",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1793226827543,
+      "tag": "0007_daffy_sentinels",
+      "breakpoints": true
+    }
+  ]
+}

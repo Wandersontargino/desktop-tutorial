@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {findSimilarRecords,suggestDuplicateObservation} from '../lib/local-record-review.mjs';
+const a={id:'a',name:'MARIA APARECIDA SOUZA',mother:'ANA MARIA COSTA',birth:'1980-01-12',cpf:'52998224725',title:'123456789012'},b={...a,id:'b',name:'MARIA APARECIDA SOUSA',cpf:'11144477735',title:'987654321012'};
+const unchanged=structuredClone([a,b]);let result=findSimilarRecords([a,b]);
+assert.equal(result.matches.length,1);assert.ok(result.matches[0].reasons.some(r=>r.includes('escrita')));assert.equal(result.matches[0].anchors,2);assert.deepEqual(result.matches[0].warnings,['CPF divergente.','Título divergente.']);assert.deepEqual([a,b],unchanged,'Review must not change records.');
+assert.equal(findSimilarRecords([a,b],[{id:'confirmed',records:[a,b]}]).matches.length,0,'Existing comparison groups must not be repeated.');
+assert.equal(findSimilarRecords([a,{...b,name:a.name}]).matches.length,0,'Exact homonyms belong to the existing duplicate workflow.');
+assert.equal(findSimilarRecords([a,{...b,name:'OUTRA PESSOA FICTÍCIA',contact:a.contact}]).matches.length,0,'Shared contact and birth cannot substitute for a similar name.');
+assert.equal(findSimilarRecords([{...a,deleted:true},{...b,deleted:true}]).matches.length,0);assert.equal(findSimilarRecords([a,{...b,deleted:true}]).matches.length,1);
+assert.equal(findSimilarRecords([{...a,name:'JOSÉ TARGINO',mother:'',birth:''},{...b,name:'JOSÉ TARGINHO',mother:'',birth:''}]).matches.length,0,'Short names need additional evidence.');
+assert.equal(findSimilarRecords([{...a,name:'JOSÉ TARGINO'},{...b,name:'JOSÉ TARGINHO',birth:'12/01/1980'}]).matches.length,1);
+assert.equal(findSimilarRecords([a,{...b,name:'MARIA APARECIDA DE SOUZA'}]).matches[0].distance,0);
+assert.equal(findSimilarRecords([a,{...b,name:'MARIA APARECIDA SUOZA'}]).matches.length,1,'Adjacent transpositions are spelling leads.');
+assert.equal(findSimilarRecords([{...a,name:'JOSE TARGINO',birth:'1980-02-31',mother:''},{...b,name:'JOSE TARGINHO',birth:'1980-02-31',mother:''}]).matches.length,0,'Invalid dates are not evidence.');
+assert.equal(findSimilarRecords([{...a,name:'A B'},{...b,name:'A C'}]).matches.length,0);
+const limited=findSimilarRecords(Array.from({length:300},(_,i)=>({...a,id:'person-'+i,name:'MARIA APARECIDA SOU'+String.fromCharCode(65+i%26)})),[],{budget:20,bucketLimit:10,limit:3});assert.ok(limited.limited);assert.ok(limited.examined<=20);assert.ok(limited.matches.length<=3);
+const before=structuredClone({status:'review',eligible:false,blockers:['Nascimento divergente.','A ordem de criação não pôde ser comprovada.']});const note=suggestDuplicateObservation(before);assert.match(note,/Revisão documental pendente/);assert.match(note,/Nascimento divergente/);assert.match(note,/ordem de criação não pôde ser comprovada/);assert.match(note,/não confirma a identidade/);assert.equal(before.status,'review');assert.equal(suggestDuplicateObservation({status:'resolved'}),'');assert.match(suggestDuplicateObservation({status:'eligible',eligible:true}),/não executa o tratamento/);
+console.log('Conferência local: grafias, transposições, homônimos, evidências, documentos divergentes, arquivos preservados, limites e sugestões sem tratamento verificados.');
