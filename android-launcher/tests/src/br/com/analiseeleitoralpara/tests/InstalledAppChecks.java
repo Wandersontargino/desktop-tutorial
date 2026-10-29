@@ -2,7 +2,7 @@ package br.com.analiseeleitoralpara.tests;
 import android.app.*;
 import android.content.*;
 import android.os.*;
-import android.webkit.WebView;
+import android.webkit.*;
 import android.view.WindowManager;
 import org.json.*;
 import java.lang.reflect.Field;
@@ -16,6 +16,11 @@ public final class InstalledAppChecks extends Instrumentation {
         CountDownLatch done=new CountDownLatch(1);final String[] result={null};
         runOnMainSync(()->web.evaluateJavascript(script,value->{result[0]=value;done.countDown();}));
         if(!done.await(15,TimeUnit.SECONDS))throw new Exception("WebView did not answer");return result[0];
+    }
+    private void waitLoaded() throws Exception {
+        long deadline=System.currentTimeMillis()+90000;final int[] progress={0};
+        while(System.currentTimeMillis()<deadline){runOnMainSync(()->progress[0]=web.getProgress());if(progress[0]>=100){Thread.sleep(300);return;}Thread.sleep(100);}
+        throw new Exception("Initial document did not finish; progress="+progress[0]);
     }
     private void waitFor(String expression,String label) throws Exception {
         long deadline=System.currentTimeMillis()+60000;String last="";
@@ -32,6 +37,12 @@ public final class InstalledAppChecks extends Instrumentation {
         try{
             Intent intent=new Intent();intent.setClassName("br.com.analiseeleitoralpara","br.com.analiseeleitoralpara.MainActivity");intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);activity=startActivitySync(intent);runOnMainSync(()->activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON|WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON|WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED));
             Field field=activity.getClass().getDeclaredField("platform");field.setAccessible(true);web=(WebView)field.get(activity);
+            runOnMainSync(()->web.setWebChromeClient(new WebChromeClient(){
+                @Override public boolean onConsoleMessage(ConsoleMessage message){if(message.messageLevel()==ConsoleMessage.MessageLevel.ERROR){Bundle b=new Bundle();b.putString("stream","JS ERROR: "+message.message()+" at "+message.sourceId()+":"+message.lineNumber()+"\n");sendStatus(0,b);}return true;}
+                @Override public boolean onJsAlert(WebView v,String u,String m,JsResult r){r.confirm();return true;}
+                @Override public boolean onJsConfirm(WebView v,String u,String m,JsResult r){r.confirm();return true;}
+            }));
+            waitLoaded();
             waitFor("window.CrmWorkspace&&document.getElementById('crm-auth')&&window.PlatformTools?.manifests.size>=1","installed UI start with no internet");
             waitFor("location.origin==='https://appassets.androidplatform.net'&&!navigator.onLine&&isSecureContext&&crypto.subtle","secure installed origin");
             run("window.testCoverage='';Promise.all(['/data/index.json','/data/federal/index.json','/data/4154.json'].map(p=>fetch(p).then(r=>r.json()))).then(values=>testCoverage=values[0].municipalities.length+':'+values[1].municipalities.length+':'+values[2].m[0]);");
@@ -43,7 +54,7 @@ public final class InstalledAppChecks extends Instrumentation {
             waitFor("CrmWorkspace.getOperationalState().pending===2&&document.getElementById('crm-review').open","new registration saved offline through UI");
             run("document.getElementById('crm-accept-review').click();window.lockDone=false;setTimeout(()=>PANative.lock().then(()=>lockDone=true),1000);");
             waitFor("window.lockDone&&!CrmWorkspace.isUnlocked()&&!document.getElementById('crm-table-body').textContent.includes('PESSOA FICTICIA')","lock hides private records and saves approved queue");
-            runOnMainSync(()->web.reload());
+            runOnMainSync(()->web.reload());waitLoaded();
             waitFor("window.CrmWorkspace&&document.getElementById('crm-auth')","restart from installed resources");unlock();
             waitFor("CrmWorkspace.getOperationalState().pending===2&&CrmWorkspace.getRecords().length===2","pending edits persist across restart");
             run("window.syncCalls=[];const original=window.fetch;window.fetch=async(input,options={})=>{const path=String(input);if(path==='/api/crm/sync'){const sent=JSON.parse(options.body);syncCalls.push(sent);return new Response(JSON.stringify({snapshot:{revision:8,records:sent.changes.map(r=>({...r,version:r.version+1})),partnerships:[],leadershipLocations:[],duplicateReviews:[],qualityReviews:[]}}),{status:200,headers:{'Content-Type':'application/json'}});}if(path.startsWith('/api/crm/'))return new Response(JSON.stringify({}),{headers:{'Content-Type':'application/json'}});return original(input,options);};PANative.network(true);PANative.offline(false);");

@@ -55,11 +55,13 @@ jobs:
           target: default
           profile: pixel_6
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          emulator-options: -memory 4096 -cores 2 -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: |
             adb install android-launcher/build/device-tests/target-ci.apk
             adb install android-launcher/build/device-tests/checks-ci.apk
             adb shell cmd connectivity airplane-mode enable
+            adb shell wm size 720x1280
+            adb shell wm density 320
             adb shell input keyevent KEYCODE_WAKEUP
             adb shell wm dismiss-keyguard
             adb shell svc power stayon true
