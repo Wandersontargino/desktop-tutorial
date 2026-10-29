@@ -6,14 +6,30 @@
   const json=(body,status=200)=>new Response(JSON.stringify(body),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
   const current=()=>connected&&!manualOffline;
   Object.defineProperty(navigator,'onLine',{configurable:true,get:current});
-  const status=()=>{const el=document.getElementById('connection-label');if(el)el.textContent=current()?'Online':'Offline';};
+  let accountAuthorized=false,authorizationPending=false,authorizationMessage='';
+  function renderAccountAccess(){
+    const panel=document.getElementById('native-account-access');if(!panel)return;
+    const button=document.getElementById('native-connect-base'),message=document.getElementById('native-account-status');
+    panel.dataset.state=!connected?'offline':accountAuthorized?'authorized':authorizationPending?'connecting':'required';
+    button.disabled=!connected||authorizationPending;
+    document.getElementById('native-account-title').textContent=accountAuthorized?'1. Conta autorizada neste aparelho':'1. Autorize este aparelho';
+    message.textContent=!connected?'Conecte-se à internet para autorizar este aparelho. Se já preparou a base aqui, use Usar cópia offline.':manualOffline?'Você está usando a cópia offline. Conectar base permite autorizar sua conta e voltar à base central.':accountAuthorized?'Conta autorizada. Agora entre com a senha da base abaixo.':authorizationPending?'Conclua o acesso à sua conta na janela de autorização.':authorizationMessage||'Toque em Conectar base e entre com a mesma conta do ChatGPT que acessa a plataforma privada. Depois, use a senha da base abaixo.';
+  }
+  const status=()=>{const el=document.getElementById('connection-label');if(el)el.textContent=current()?'Online':'Offline';renderAccountAccess();};
   const emit=previous=>{status();if(previous!==current())window.dispatchEvent(new Event(current()?'online':'offline'));};
+  async function connectBase(){
+    if(!connected||authorizationPending){renderAccountAccess();return;}
+    authorizationPending=true;authorizationMessage='';renderAccountAccess();
+    try{await window.PANative.lock();manualOffline=false;status();native.authorize();}
+    catch{authorizationPending=false;authorizationMessage='Não foi possível abrir a autorização. Toque em Conectar base para tentar novamente.';renderAccountAccess();}
+  }
   window.PANative={
-    version:'2.16.0',
+    version:'2.16.1',
     network(value){const before=current();connected=!!value;emit(before);},
     offline(value){const before=current();manualOffline=!!value;emit(before);},
     reply(id,result){const request=pending.get(id);if(!request)return;pending.delete(id);request.cleanup();request.resolve(json(result.body,result.status));},
     async lock(){try{await window.CrmWorkspace?.lock();}catch{}},
+    authorizationClosed(){authorizationPending=false;authorizationMessage='A autorização não foi concluída. Toque em Conectar base para tentar novamente.';renderAccountAccess();},
   };
   window.fetch=async function(input,options={}){
     const url=new URL(typeof input==='string'?input:input.url,location.href);
@@ -44,7 +60,16 @@
       try{native.request(id,JSON.stringify({path:url.pathname+url.search,method,body:options.body||'',revision:headers.get('X-PA-Known-Revision')||''}));}
       catch(error){pending.delete(id);options.signal?.removeEventListener('abort',onAbort);reject(error);}
     });
-    if(url.pathname==='/api/crm/session'&&response.ok){const info=await response.clone().json();if(info.user?.email)try{localStorage.setItem('pa-native-account-email',info.user.email);}catch{}}
+    if(url.pathname==='/api/crm/session'||url.pathname.startsWith('/api/crm/')&&[401,403].includes(response.status)){
+      const info=await response.clone().json();
+      if(url.pathname==='/api/crm/session'&&method==='GET'&&response.ok&&info.user){
+        accountAuthorized=true;authorizationPending=false;authorizationMessage='';
+        if(info.user.email)try{localStorage.setItem('pa-native-account-email',info.user.email);}catch{}
+      }else if(info.requiresDeviceAuthorization===true||String(info.error||'').startsWith('Autorize este aparelho em Conectar base')){
+        accountAuthorized=false;authorizationPending=false;authorizationMessage='É preciso autorizar sua conta neste aparelho. Use Conectar base aqui acima e depois entre com a senha da base.';
+      }
+      renderAccountAccess();
+    }
     return response;
   };
   async function saveAnchor(anchor){
@@ -59,8 +84,16 @@
   const installedState=()=>({installed:true,ready:true,preparedAt:'2026-10-29T00:00:00Z',at:'2026-10-29T00:00:00Z',versions:{estadual:'bundled',federal:'bundled'},busy:false,storageAvailable:true,freshness:'ready'});
   window.OfflineManager={getState:installedState,prepare:async()=>{},init(){
     const $=id=>document.getElementById(id);
-    $('install-app').textContent='Android 2.16 • instalado';$('install-app').disabled=true;
-    $('prepare-offline').textContent='Conectar base';$('prepare-offline').addEventListener('click',async()=>{await window.PANative.lock();manualOffline=false;status();native.authorize();});
+    $('install-app').textContent='Android 2.16.1 • instalado';$('install-app').disabled=true;
+    $('prepare-offline').textContent='Conectar base';$('prepare-offline').addEventListener('click',connectBase);
+    const form=$('crm-auth');
+    if(form&&!$('native-account-access')){
+      const style=document.createElement('style');style.textContent='.native-account-access{box-sizing:border-box;display:grid;gap:10px;min-width:0;margin:12px 0;padding:16px;border:2px solid #2358ed;border-radius:14px;background:#eef3ff;color:#16336d}.native-account-access h4,.native-account-access p{margin:0;overflow-wrap:anywhere}.native-account-access h4{font-size:1.05rem}.native-account-access p{line-height:1.5}.native-account-access .button{box-sizing:border-box;width:100%;min-height:48px;white-space:normal}.native-account-access[data-state="authorized"]{border-color:#25834b;background:#eef8f0;color:#17532c}.native-login-step{font-weight:700;margin:16px 0 8px}';document.head.append(style);
+      const panel=document.createElement('section');panel.id='native-account-access';panel.className='native-account-access';panel.setAttribute('aria-labelledby','native-account-title');
+      panel.innerHTML='<h4 id="native-account-title">1. Autorize este aparelho</h4><p id="native-account-status" role="status" aria-live="polite"></p><button id="native-connect-base" class="button primary" type="button" aria-describedby="native-account-status">Conectar base</button>';
+      const step=document.createElement('p');step.className='native-login-step';step.id='native-login-step';step.textContent='2. Entre com a senha da base';form.before(panel,step);
+      $('native-connect-base').addEventListener('click',connectBase);
+    }
     const mode=document.createElement('button');mode.className='button secondary';mode.id='native-offline-mode';mode.textContent='Usar cópia offline';
     mode.addEventListener('click',()=>{window.PANative.offline(true);$('offline-status').textContent='Cópia offline selecionada. Entre com o e-mail e a senha usados neste aparelho. Conectar base retoma a sincronização.';const email=$('crm-email');email.readOnly=false;$('crm-confirm-wrap').hidden=true;$('crm-confirm').required=false;$('crm-mfa-wrap').hidden=true;});
     $('prepare-offline').after(mode);
