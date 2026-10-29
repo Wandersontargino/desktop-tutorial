@@ -9,3 +9,7 @@ independent-build/
 /android-launcher/build/
 /android-launcher/output/
 /android-launcher/signing/
+/windows-launcher/build/
+/windows-launcher/output/
+
+/android-launcher/__pycache__/

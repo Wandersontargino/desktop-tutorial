@@ -1,0 +1,42 @@
+name: Instaladores Windows e Android
+on:
+  push:
+    branches: [main]
+    paths: ['windows-launcher/**', 'android-launcher/**', '.github/workflows/installers.yml']
+  pull_request:
+    paths: ['windows-launcher/**', 'android-launcher/**', '.github/workflows/installers.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-2025
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - name: Construir e verificar instalador por usuario
+        shell: pwsh
+        run: ./windows-launcher/build.ps1
+      - uses: actions/upload-artifact@v7
+        with:
+          name: instalador-windows
+          path: windows-launcher/output/
+          retention-days: 14
+          if-no-files-found: error
+  android:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - name: Preparar SDK oficial
+        shell: bash
+        run: |
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-36' 'build-tools;36.0.0'
+      - name: Compilar APK para assinatura local
+        run: python3 android-launcher/build.py --sdk "$ANDROID_HOME" --unsigned-only
+      - uses: actions/upload-artifact@v7
+        with:
+          name: android-para-assinatura-local
+          path: android-launcher/output/
+          retention-days: 14
+          if-no-files-found: error
