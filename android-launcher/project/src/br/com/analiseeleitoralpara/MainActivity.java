@@ -130,7 +130,7 @@ public final class MainActivity extends Activity {
             for(Map.Entry<String,List<String>> header:connection.getHeaderFields().entrySet())if("set-cookie".equalsIgnoreCase(header.getKey()))for(String value:header.getValue())CookieManager.getInstance().setCookie(CENTRAL+"/",value);
             CookieManager.getInstance().flush();
             JSONObject result=new JSONObject();String type=connection.getContentType();
-            if(status>=300&&status<400||type==null||!type.toLowerCase(Locale.ROOT).contains("application/json"))return result.put("status",status==403?403:401).put("body",new JSONObject().put("error","Autorize este aparelho em Conectar base e entre com a senha da plataforma."));
+            if(status>=300&&status<400||type==null||!type.toLowerCase(Locale.ROOT).contains("application/json"))return result.put("status",status==403?403:401).put("body",new JSONObject().put("error","Autorize este aparelho em Conectar base e entre com a senha da plataforma.").put("requiresDeviceAuthorization",true));
             InputStream input=status>=400?connection.getErrorStream():connection.getInputStream();
             ByteArrayOutputStream data=new ByteArrayOutputStream();byte[] buffer=new byte[16384];int read;
             if(input!=null)try(InputStream in=input){while((read=in.read(buffer))!=-1){data.write(buffer,0,read);if(data.size()>24*1024*1024)throw new IOException("Resposta excedeu o limite do aparelho.");}}
@@ -180,6 +180,7 @@ public final class MainActivity extends Activity {
     private void closeAccount(boolean authorized){
         if(account==null)return;root.removeView(accountPane);account.destroy();account=null;accountPane=null;
         if(authorized){Toast.makeText(this,"Aparelho autorizado. Entre com a senha da base.",Toast.LENGTH_LONG).show();platform.reload();}
+        else evaluate("window.PANative?.authorizationClosed()");
     }
     @Override protected void onActivityResult(int requestCode,int resultCode,Intent data){
         super.onActivityResult(requestCode,resultCode,data);fileFlow=false;

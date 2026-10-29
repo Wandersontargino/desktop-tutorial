@@ -7,10 +7,10 @@ const walk=dir=>readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()
 for(const name of ['sw.js','offline-manager.js','offline-files.json'])rmSync(target+'/'+name,{force:true});
 let html=readFileSync(target+'/index.html','utf8').replace('<head>','<head>\n    <script src="/native-device.js"></script>').replace(/\s*<script src="\/offline-manager\.js[^>]*><\/script>/,'');
 writeFileSync(target+'/index.html',html);cpSync('android-launcher/native/device.js',target+'/native-device.js');
-const health=target+'/platform-health.js';writeFileSync(health,readFileSync(health,'utf8').replaceAll("VERSION='2.15.0'","VERSION='2.16.0'").replace("const environment=local?","const environment=root.PANative?'Android instalado':local?"));
-const release=JSON.parse(readFileSync(target+'/platform-release.json','utf8'));release.version='2.16.0';release.nativeAndroid=true;writeFileSync(target+'/platform-release.json',JSON.stringify(release));
+const health=target+'/platform-health.js';writeFileSync(health,readFileSync(health,'utf8').replaceAll("VERSION='2.15.0'","VERSION='2.16.1'").replace("const environment=local?","const environment=root.PANative?'Android instalado':local?"));
+const release=JSON.parse(readFileSync(target+'/platform-release.json','utf8'));release.version='2.16.1';release.nativeAndroid=true;writeFileSync(target+'/platform-release.json',JSON.stringify(release));
 const forbidden=/\.(p12|pfx|jks|keystore|sqlite|db|env)$|initial-leadership|authorized-.*data|server\/|recovery-key|backup.*\.(json|csv)$/i;
 const files=walk(target);for(const path of files)if(forbidden.test(path))throw Error('Non-client content in APK assets.');
-const result={version:'2.16.0',origin:'https://appassets.androidplatform.net/',files:files.map(path=>({path:path.slice(target.length+1),bytes:statSync(path).size,sha256:createHash('sha256').update(readFileSync(path)).digest('hex')})),privateRecordsIncluded:false,offlineExpiryDays:7};
+const result={version:'2.16.1',origin:'https://appassets.androidplatform.net/',files:files.map(path=>({path:path.slice(target.length+1),bytes:statSync(path).size,sha256:createHash('sha256').update(readFileSync(path)).digest('hex')})),privateRecordsIncluded:false,offlineExpiryDays:7};
 writeFileSync(target+'/native-assets.json',JSON.stringify(result));
 console.log(JSON.stringify({version:result.version,files:files.length,bytes:files.reduce((sum,p)=>sum+statSync(p).size,0),privateRecordsIncluded:false}));
