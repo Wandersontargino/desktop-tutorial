@@ -1,0 +1,9 @@
+'use client';
+import {Info} from 'lucide-react';
+import type {BillReading} from '@/lib/bill';
+import {billEvidence} from '@/lib/bill-evidence';
+import {money,num} from '@/lib/solar';
+export default function BillEvidence({bill}:{bill:BillReading}){
+ const x=billEvidence(bill),s=bill.solar;
+ return <div className="bill-evidence"><div className="section-heading"><div><div className="eyebrow">O QUE O DOCUMENTO PERMITE CONCLUIR</div><h3>{bill.hasSolar?'Compensação observada e Fio B':'Base da conta sem energia solar'}</h3></div><span className="badge blue">Fatura {bill.reference||'a conferir'}</span></div><div className="fiscal-facts"><span>Energia efetivamente cobrada <b>{money(x.energy)}</b></span><span>Bandeira identificada <b>{money(x.flag)}</b></span><span>Iluminação pública <b>{money(bill.lighting)}</b></span><span>Despesas eventuais <b>{money(bill.nonRecurring)}</b></span>{s&&<><span>Energia compensada <b>{num(s.compensated,2)} kWh</b></span><span>Débito de consumo compensado <b>{money(s.compensationDebit)}</b></span><span>Crédito de energia injetada <b>{money(s.injectionCredit)}</b></span><span>Saldo desses dois lançamentos <b>{money(x.settlement||0)}</b></span></>}<span>Cobrança autônoma de Fio B no documento <b>{x.gridCharge===null?'Não discriminada':money(x.gridCharge)}</b></span></div><div className="notice"><Info size={18}/><p>{x.explanation}</p></div>{bill.special&&<p className="pending-note">Tarifa Social: há benefício e faixa de tarifa zero nesta conta. Uma conta residencial comum de outro cliente não substitui esse tratamento.</p>}<p className="hint">Os tributos destacados na fatura já integram os valores cobrados. A análise respeita o titular, a unidade e a competência de cada documento. Uma conta antiga mantém sua tarifa histórica; não vira tarifa vigente para o projeto novo.</p></div>;
+}

@@ -1,0 +1,40 @@
+{
+  "capturedAt": "2026-10-29",
+  "source": "https://dadosabertos.aneel.gov.br/dataset/componentes-tarifarias/resource/e8717aa8-2521-453f-bf16-fbb9a16eea39",
+  "records": [
+    {
+      "DatGeracaoConjuntoDados": "2026-10-22",
+      "DscResolucaoHomologatoria": "RESOLUÇÃO HOMOLOGATÓRIA Nº 3.608, DE 18 DE SETEMBRO DE 2026",
+      "SigNomeAgente": "EQUATORIAL PA",
+      "DatInicioVigencia": "2026-09-18",
+      "DatFimVigencia": "2027-08-06",
+      "DscBaseTarifaria": "Tarifa de Aplicação",
+      "DscSubGrupoTarifario": "B1",
+      "DscModalidadeTarifaria": "Convencional",
+      "DscClasseConsumidor": "Residencial",
+      "DscSubClasseConsumidor": "Residencial",
+      "DscDetalheConsumidor": "SCEE",
+      "DscPostoTarifario": "Não se aplica",
+      "DscUnidade": "R$/MWh",
+      "DscComponenteTarifario": "TUSD_FioB",
+      "VlrComponenteTarifario": "379,352320561"
+    },
+    {
+      "DatGeracaoConjuntoDados": "2026-10-22",
+      "DscResolucaoHomologatoria": "RESOLUÇÃO HOMOLOGATÓRIA Nº 3.608, DE 18 DE SETEMBRO DE 2026",
+      "SigNomeAgente": "EQUATORIAL PA",
+      "DatInicioVigencia": "2026-09-18",
+      "DatFimVigencia": "2027-08-06",
+      "DscBaseTarifaria": "Tarifa de Aplicação",
+      "DscSubGrupoTarifario": "B1",
+      "DscModalidadeTarifaria": "Convencional",
+      "DscClasseConsumidor": "Residencial",
+      "DscSubClasseConsumidor": "Baixa Renda",
+      "DscDetalheConsumidor": "SCEE",
+      "DscPostoTarifario": "Não se aplica",
+      "DscUnidade": "R$/MWh",
+      "DscComponenteTarifario": "TUSD_FioB",
+      "VlrComponenteTarifario": "379,352320561"
+    }
+  ]
+}

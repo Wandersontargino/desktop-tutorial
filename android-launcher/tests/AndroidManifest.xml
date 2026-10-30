@@ -1,5 +1,0 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="br.com.analiseeleitoralpara.tests">
-  <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="36" />
-  <application android:label="Synthetic installed-app checks" android:usesCleartextTraffic="false" />
-  <instrumentation android:name=".InstalledAppChecks" android:targetPackage="br.com.analiseeleitoralpara" android:functionalTest="true" />
-</manifest>

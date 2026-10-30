@@ -1,0 +1,36 @@
+# Contabilidade da energia e fontes
+
+Consulta regulatória: 30/10/2026. Escopo do motor: Grupo B convencional, on-grid, sem bateria; hipóteses futuras expressas. Tarifa Social, Grupo A, sistemas com armazenamento e condições de GD III exigem estudo próprio.
+
+## Grandezas separadas
+
+- Produção AC do inversor = uso direto + injeção, para a mesma janela e fronteira de medição, observadas perdas.
+- Consumo total do imóvel = uso direto + retirada da rede.
+- Retirada da rede não é apenas consumo noturno. Ela também ocorre com geração insuficiente de dia.
+- Quantidade tarifada pode diferir da leitura do medidor por ajustes documentados. Essa diferença não é autoconsumo.
+- Compensação é a energia utilizada para abater o consumo faturável, com a injeção e créditos disponíveis, respeitando o mínimo monetário aplicável.
+
+A fatura não mede a produção completa nem o uso direto. O contrato ou a meta mensal não substituem a geração efetiva no mesmo ciclo. O formulário exige datas coincidentes, fonte e conferência antes de usar o perfil do inversor. Usar um perfil histórico nos meses futuros continua sendo uma hipótese; não significa medição futura. O percentual sobre a geração e o percentual sobre o consumo total são exibidos separadamente.
+
+## Faturamento e créditos
+
+O motor apura uso direto, retirada e injeção antes da compensação. O Fio B usa os kWh compensados. Na transição GD II: 60% da componente em 2026, 75% em 2027 e 90% em 2028, pelo ano civil de cada mês. Uma tarifa unitária efetivamente cobrada na linha GD2 já inclui o percentual daquele ciclo; na reprodução ela não é multiplicada de novo. Converter essa tarifa em componente integral requer dividir pelo percentual do ano observado.
+
+Após 2028, a percentagem do modelo é hipótese editável: o art. 17 prevê regras tarifárias da ANEEL, e não uma garantia de 100% da mesma componente. O enquadramento de cada unidade precisa ser comprovado.
+
+A disponibilidade é um piso da parcela variável, não um acréscimo repetido. Novos créditos são utilizados por antiguidade e expiram após 60 ciclos. A projeção nova inicia sem saldo histórico; o saldo real é exibido na conferência documental, sem inventar sua distribuição por vencimento. A conferência entre saldos exige ciclos consecutivos, saldo e expiração expressos; divergências podem indicar outros créditos, alocações ou ajustes.
+
+## Tributos e períodos
+
+ICMS, PIS e COFINS destacados já integram os lançamentos brutos. O efeito entre benefício SCEE bruto e líquido é mostrado separadamente do Fio B, sem presumir uma incidência universal. A hipótese por kWh derivada de uma fatura tem fonte e referência e exige revisão para o cliente/período futuro. Sem base suficiente, a parcela permanece pendente.
+
+As faturas são conciliadas até os centavos. Multa, juros e correção ficam separados do custo recorrente. Competência, duração do ciclo, tarifas, CIP e bandeira são preservadas; nomes de arquivos divergentes geram aviso. Diferença histórica de contas não é, por si só, economia causal normalizada nem comprova dimensionamento anual.
+
+## Fontes primárias
+
+- [Lei 14.300/2022 atualizada, arts. 16, 17, 26 e 27](https://www2.camara.leg.br/legin/fed/lei/2022/lei-14300-6-janeiro-2022-792217-normaatualizada-pl.html).
+- [REN ANEEL 1.059/2023: regras incorporadas à REN 1.000/2021, arts. 655-I, 655-L e 655-Q](https://www2.aneel.gov.br/cedoc/ren20231059.pdf).
+- [Cartilha de Geração Distribuída Equatorial, junho/2025, pp. 8-10](https://pi.equatorialenergia.com.br/siteantigo/wp-content/uploads/2025/07/Cartilha_GD_24062025.pdf).
+- [Componentes tarifárias ANEEL](https://dadosabertos.aneel.gov.br/dataset/componentes-tarifarias): agente, classe e vigência são parte da referência. A TUSD completa não é a componente Fio B.
+
+Os testes de código usam dados fictícios. Faturas de clientes, identificadores, relatórios do inversor e bases de produção ficam fora da distribuição do código-fonte.
