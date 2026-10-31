@@ -51,3 +51,6 @@ yarn-error.log*
 /backups/
 *.sqlite
 *.sqlite3
+
+# Build-time, server-only source download (never commit the embedded archive)
+/lib/generated/claude-workspace.ts

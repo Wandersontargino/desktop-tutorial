@@ -9,7 +9,18 @@ Plataforma privada de pré-dimensionamento comercial, análise de faturas, propo
 - **Apresentação:** leitura local de PDF ou imagem, conferência da fatura, inventário de equipamentos, reserva de crescimento, mês crítico, Fio B detalhado e previsão de custos/economia.
 - **Fornecedores:** custos de kits, comparação por kWp com frete e importação CSV com prévia. Sem integração comercial contratada ou preços de mercado simulados como reais.
 - **Tarifas:** cadastro por concessionária, fonte e vigência; consulta opcional da base ANEEL. A consulta pode falhar sem alterar dados. TE + TUSD não é tarifa final, nem a TUSD inteira equivale ao Fio B.
-- **Configurações:** marca, contatos, mão de obra padrão, margem e backup JSON. Restauração cria cópias após prévia, preservando a base atual.
+- **Configurações:** marca, contatos, mão de obra padrão, margem, projeto para Claude Code e backup JSON. Restauração cria cópias após prévia, preservando a base atual.
+
+## Desenvolvimento com Claude Code
+
+Em **Configurações → Projeto para Claude Code**, com o administrador desbloqueado,
+baixe o projeto e extraia o ZIP. Abra `CoopSun/ABRIR_COOPSUN_COM_IA.cmd` para usar o
+iniciador já instalado em `%USERPROFILE%\CoopSun-IA\ABRIR_CLAUDE_COOPSUN.cmd`.
+Ele recebe a pasta real do projeto e usa a conexão NVIDIA salva no computador.
+
+O pacote contém código, testes e `CLAUDE.md`, sem dados de clientes, credenciais,
+banco de produção ou fotografias. Mudanças locais precisam de revisão e publicação
+para chegar ao Site. Veja [o guia completo](docs/CLAUDE_CODE.md).
 
 Para entregar uma proposta, salve-a, abra **Apresentar** e use **Imprimir / salvar PDF**. O PDF inclui dados do cliente, escopo, premissas, financiamento, decomposição da conta, histórico lido e fluxo de 25 anos. Custos internos e margem ficam na operação comercial.
 
@@ -47,7 +58,7 @@ pnpm install
 node scripts/prepare-solar-assets.mjs
 pnpm run db:generate  # somente ao alterar db/schema.ts
 pnpm test
-pnpm exec tsc --noEmit
+pnpm typecheck
 pnpm build
 ```
 

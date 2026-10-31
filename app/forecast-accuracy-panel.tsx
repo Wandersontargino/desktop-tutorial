@@ -1,0 +1,20 @@
+'use client';
+import {useState} from 'react';
+import {money,num,type SolarInput} from '@/lib/solar';
+import {measuredOperatingProfile,applyMeasuredOperatingProfile,billingRateChecks} from '@/lib/forecast-accuracy';
+
+export default function ForecastAccuracyPanel({p,onChange,readOnly=false}:{p:SolarInput;onChange?:(p:SolarInput)=>void;readOnly?:boolean}){
+ const profile=measuredOperatingProfile(p),rates=billingRateChecks(p),[error,setError]=useState('');
+ const canApply=profile.supported&&p.projectMode!=='expansion'&&profile.count>=3;
+ return <section className="forecast-accuracy"><div className="eyebrow">PRECISÃO · DADOS CONFERIDOS E TESTES</div><h3>Quanto desta previsão já foi conferido?</h3>
+ <p>Conferir a soma de uma fatura e prever a próxima conta são etapas diferentes. O perfil abaixo usa somente leituras do inversor conferidas no mesmo ciclo da fatura e da mesma unidade.</p>
+ <div className="invoice-summary"><div><small>CICLOS COM GERAÇÃO CONFERIDA</small><b>{profile.count}</b><span>{profile.count?`${profile.days} dias · ${profile.reference}`:'Complete a geração do inversor nos ciclos abaixo.'}</span></div><div><small>USO DIRETO PONDERADO PELA GERAÇÃO</small><b>{profile.percent===null?'A medir':`${num(profile.percent,2)}%`}</b><span>{profile.minimum===null?'A fatura da rede não mede esse percentual.':`Variação observada: ${num(profile.minimum,2)}% a ${num(profile.maximum!,2)}%.`}</span></div><div><small>CONSUMO TOTAL · MÊS MÉDIO</small><b>{profile.monthlyConsumption===null?'A medir':`${num(profile.monthlyConsumption,2)} kWh`}</b><span>Uso direto + rede, normalizados pela duração dos ciclos.</span></div></div>
+ {profile.count<3&&<p className="pending-note">Previsão futura ainda sem histórico suficiente do inversor. Confira pelo menos três ciclos para aplicar um perfil conjunto. Essa quantidade é um ponto de partida, sem garantir uma margem de erro.</p>}
+ {!profile.supported&&<p className="pending-note">Baterias exigem um balanço próprio de carga e descarga.</p>}
+ {p.projectMode==='expansion'&&<p className="hint">Na ampliação, o perfil do sistema existente é apenas referência; o uso direto da geração adicional precisa de estudo específico.</p>}
+ {onChange&&!readOnly&&<><button className="btn secondary" disabled={!canApply} onClick={()=>{try{onChange(applyMeasuredOperatingProfile(p));setError('');}catch(e){setError((e as Error).message);}}}>Aplicar perfil dos ciclos conferidos</button><p className="hint">Atualiza o uso direto e o consumo futuro do rascunho, mantendo a meta de geração. O perfil medido continua sendo uma hipótese para os meses seguintes.</p></>}
+ {error&&<p role="alert" className="pending-note">{error}</p>}
+ <details className="review-details"><summary>Testar encargos com faturas posteriores</summary><p>Para cada fatura, usamos as tarifas efetivas do último ciclo anterior disponível e ajustamos o percentual legal do ano. A fatura testada não entra na calibração. O teste usa os kWh compensados já conhecidos e avalia somente Fio B + SCEE; não mede a precisão da previsão de consumo, geração ou conta total.</p>
+ {rates.count?<><p className="hint"><b>{rates.count} teste(s)</b> · desvio absoluto médio dos encargos: <b>{money(rates.mae!)}</b> · maior desvio: <b>{money(rates.maximum!)}</b>. Mudanças de tarifa e tributos podem explicar parte das diferenças. Esses desvios não são uma margem garantida para contas futuras.</p><div className="table-scroll"><table className="fiscal-table"><thead><tr><th>Referência anterior</th><th>Fatura testada</th><th>kWh conhecidos</th><th>Encargos estimados</th><th>Encargos observados</th><th>Estimado − observado</th></tr></thead><tbody>{rates.checks.map(r=><tr key={r.target}><td>{r.source}</td><td>{r.target}</td><td>{num(r.knownKwh,2)}</td><td>{money(r.predicted)}</td><td>{money(r.actual)}</td><td>{r.difference>0?'+':''}{money(r.difference)}</td></tr>)}</tbody></table></div></>:<p className="pending-note">Vincule pelo menos duas faturas GD2 conciliadas da mesma unidade para iniciar esse teste parcial.</p>}
+ </details></section>;
+}

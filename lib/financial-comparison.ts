@@ -37,7 +37,7 @@ export function financialComparison(p:SolarInput,basis:ComparisonBasis=p.compari
  if(p.consumptionScenario&&p.consumptionScenario!=='current')checks.push('Consumo futuro é uma hipótese do projeto; a diferença frente à fatura atual não representa economia para o mesmo consumo');
  if(!p.tariffConfirmed)checks.push('Tarifa integral, componente Fio B e enquadramento a conferir');
  if(unknownSelfUse)checks.push('Uso direto dos painéis ainda não conferido. Zero por ausência de dados não descreve o perfil real; confira uma hipótese ou informe a geração do inversor no mesmo ciclo');
- if(p.selfUseBasis?.confirmed)checks.push(`Uso direto: ${p.selfUseBasis.kind==='inverter'?'balanço de um ciclo do inversor extrapolado como hipótese':'hipótese informada'} · ${p.selfUseBasis.reference||'cenário'} · ${p.selfUseBasis.source}`);
+ if(p.selfUseBasis?.confirmed)checks.push(`Uso direto: ${p.selfUseBasis.kind==='inverter'?'balanço do inversor extrapolado como hipótese':'hipótese informada'} · ${p.selfUseBasis.reference||'cenário'} · ${p.selfUseBasis.source}`);
  if(p.billingAdjustment)checks.push(`Ajuste entre medição e quantidade tarifada: fator ${p.billingAdjustment.factor.toFixed(6)} da referência ${p.billingAdjustment.reference}, ${p.billingAdjustment.confirmed?'conferido':'a conferir'}. Variações entre ciclos exigem revisão`);
  if(unknownCompensation)checks.push('Tributos/ajustes adicionais sobre compensação SCEE ainda não informados; não foram presumidos como zero');
  else if(p.compensationTax&&!p.compensationTax.confirmed)checks.push('Encargo SCEE por kWh é uma hipótese observada, ainda a conferir para o projeto');

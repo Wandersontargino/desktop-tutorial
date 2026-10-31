@@ -12,6 +12,7 @@ As rotas `/api/*` pertencem ao próprio Site. A identidade é obtida pelo gatewa
 | GET `/api/fio-b` | Consultar componente oficial | `agent`, `group`, `at`, `social`; fonte e vigência na resposta |
 | GET `/api/tariffs` | Consultar tarifa de energia | Ver parâmetros e filtragem em `app/api/tariffs/route.ts` |
 | POST `/api/admin-access` | Autenticar sessão administrativa | Operação interna da interface; não enviar PIN por URL nem versioná-lo |
+| GET `/api/development/workspace` | Baixar projeto para Claude Code | ZIP de código da versão publicada; exige identidade e sessão administrativa válida; resposta privada sem cache |
 
 Estados relevantes: 400 para validação, 401 sem identidade, 403 sem sessão administrativa/origem recusada, 409 para conflito de revisão e 413 para tamanho excedido. Os endpoints de alteração não são uma API pública aberta a terceiros. Integrações externas exigem autenticação e autorização próprias; não reutilizar cookies ou credenciais em código-fonte.
 
