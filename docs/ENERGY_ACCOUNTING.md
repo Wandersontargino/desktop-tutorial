@@ -44,3 +44,21 @@ A diferença entre conta observada e média simulada é decomposta em volume com
 
 O teste retrospectivo de encargos usa somente a fatura anterior como referência de tarifa, com ajuste do percentual legal do ano. Os kWh da fatura testada são mantidos conhecidos. O desvio absoluto médio resultante avalia apenas Fio B + SCEE; não valida a previsão de consumo, geração ou conta total. A fatura testada não participa de sua própria calibração. Nenhuma margem universal de acerto é declarada.
 
+## Apresentação das contas reais
+
+Ao abrir uma proposta com documentos, a apresentação começa pelas faturas reais,
+inclusive em modo de leitura. A escolha entre contas e projeção vale para a tela
+atual; uma opção antiga salva no rascunho não força a projeção na reabertura.
+O resumo mostra os totais antes e com solar, a diferença histórica e a composição
+da conta solar. Diferenças entre ciclos não são renomeadas como economia causal.
+
+Faturas conferidas de outros rascunhos carregados da mesma conta/unidade são
+reunidas na leitura do projeto. Isso preserva o rascunho salvo e não altera
+consumo, tarifas, sistema ou autoconsumo. Documentos de outra unidade são recusados.
+Os valores projetados ficam na opção explícita de simular o projeto futuro.
+Uma componente ausente ou uma fatura não conciliada não vira valor zero validado.
+Ao selecionar um projeto salvo, o navegador lembra apenas seu identificador. Na
+reabertura, ele só é restaurado se continuar entre os registros autorizados da
+conta atual e não estiver arquivado. Faturas e dados financeiros não são gravados
+nesse armazenamento. A opção de nova proposta limpa essa preferência.
+

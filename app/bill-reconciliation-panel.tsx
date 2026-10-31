@@ -7,6 +7,7 @@ import {comparisonBill,reproduceInvoice,sameBillCustomer,observedProjectionCharg
 import {money,num,type SolarInput} from '@/lib/solar';
 import type {projectExpenses} from '@/lib/fiscal';
 import {explainChargeDifference} from '@/lib/forecast-accuracy';
+import {attachComparisonBill} from '@/lib/client-bill-summary';
 
 export default function BillReconciliationPanel({p,estimated,forecast,onChange,readOnly=false,importOnly=false}:{p:SolarInput;estimated:number;forecast:ReturnType<typeof projectExpenses>;onChange?:(p:SolarInput)=>void;readOnly?:boolean;importOnly?:boolean}){
  const file=useRef<HTMLInputElement>(null),[progress,setProgress]=useState(''),[error,setError]=useState('');
@@ -16,11 +17,11 @@ export default function BillReconciliationPanel({p,estimated,forecast,onChange,r
  const calibrated=actual?.compensationTaxPerKwh!==null&&actual?.compensationTaxPerKwh!==undefined&&same;
  async function read(f:File){setError('');setProgress('Lendo a conta solar…');try{
   const text=await readBillFile(f,setProgress,{includeImagePages:false}),b=parseBill(text,f.name);
-  if(!b.hasSolar||!b.solar||!b.total)throw new Error('Não foi possível identificar uma fatura solar com total e compensação. Confira o documento.');
+  if(!b.total||!b.consumption||!importOnly&&(!b.hasSolar||!b.solar))throw new Error('Não foi possível identificar uma fatura válida para esta comparação. Confira o total e o consumo do documento.');
   if(!sameBillCustomer(p.billAnalysis,b))throw new Error('A conta contrato ou unidade não coincide com a fatura deste projeto. Use uma conta do mesmo cliente.');
-  onChange?.({...p,solarComparison:{bill:b,fileName:f.name}});
+  onChange?.(attachComparisonBill(p,b,f.name));
  }catch(e){setError((e as Error).message);}finally{setProgress('');if(file.current)file.current.value='';}}
- if(importOnly)return <div className="bill-reconciliation document-import"><div className="section-heading"><div><h3><FileText size={19}/> Documentos para comparar</h3><p>{bill?`Fatura solar ${bill.reference} disponível para conferência.`:'Importe a conta após o solar da mesma unidade para comparar com a conta de origem.'}</p></div>{editable&&<><input ref={file} type="file" accept="application/pdf,image/png,image/jpeg,image/webp" hidden onChange={e=>{const f=e.target.files?.[0];if(f)void read(f);}}/><button className="btn secondary" disabled={!!progress||!p.billAnalysis} onClick={()=>file.current?.click()}><Upload size={15}/>{progress?'Lendo…':'Comparar com fatura após o solar'}</button></>}</div>{progress&&<p role="status" className="hint">{progress}</p>}{error&&<p role="alert" className="pending-note">{error}</p>}</div>;
+ if(importOnly)return <div className="bill-reconciliation document-import"><div className="section-heading"><div><h3><FileText size={19}/> Documentos para comparar</h3><p>{bill?`Fatura solar ${bill.reference} disponível para conferência.`:'Importe a conta após o solar da mesma unidade para comparar com a conta de origem.'}</p></div>{editable&&<><input ref={file} type="file" accept="application/pdf,image/png,image/jpeg,image/webp" hidden onChange={e=>{const f=e.target.files?.[0];if(f)void read(f);}}/><button className="btn secondary" disabled={!!progress||!p.billAnalysis} onClick={()=>file.current?.click()}><Upload size={15}/>{progress?'Lendo…':'Vincular fatura antes ou depois do solar'}</button></>}</div>{editable&&<p className="hint">A fatura é vinculada ao projeto atual. Salve o cenário com o administrador desbloqueado para manter o vínculo na próxima abertura.</p>}{progress&&<p role="status" className="hint">{progress}</p>}{error&&<p role="alert" className="pending-note">{error}</p>}</div>;
  return <div className="bill-reconciliation">
   <div className="section-heading"><div><div className="eyebrow">PROJEÇÃO E CONTA OBSERVADA</div><h3><FileText size={19}/> Por que a previsão pode diferir da fatura?</h3><p>O ciclo observado e a média dos próximos meses têm bases diferentes. Cada parcela permanece visível.</p></div>{editable&&<><input ref={file} type="file" accept="application/pdf,image/png,image/jpeg,image/webp" hidden onChange={e=>{const f=e.target.files?.[0];if(f)void read(f);}}/><button className="btn secondary" disabled={!!progress||!p.billAnalysis} onClick={()=>file.current?.click()}><Upload size={15}/>{progress?'Lendo…':'Comparar com fatura após o solar'}</button></>}</div>
   {progress&&<p role="status" className="hint">{progress}</p>}{error&&<p role="alert" className="pending-note">{error}</p>}
