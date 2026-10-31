@@ -1,7 +1,8 @@
 'use client';
 import {Info,Zap,TrendingUp} from 'lucide-react';
 import {financialComparison} from '@/lib/financial-comparison';
-import {MONTHS,fioFactor,money,num,type SolarInput} from '@/lib/solar';
+import {clientBillSummary} from '@/lib/client-bill-summary';
+import {MONTHS,money,num,type SolarInput} from '@/lib/solar';
 import {BalanceLine,resultTone} from './result-colors';
 
 export function SavingPercent({savingPct,remainingPct,partial=false}:{savingPct:number|null;remainingPct:number|null;partial?:boolean}){
@@ -13,7 +14,9 @@ export function SavingPercent({savingPct,remainingPct,partial=false}:{savingPct:
 }
 
 export default function ClientValueCharts({p,x}:{p:SolarInput;x:ReturnType<typeof financialComparison>}){
- const max=Math.max(x.current,x.cashTotal,x.financedTotal,1),factor=fioFactor(p.startYear,p.regime,p.post2028);
+ const max=Math.max(x.current,x.cashTotal,x.financedTotal,1),observed=clientBillSummary(p).observed;
+ const observedFio=observed?.fioB??null,first=x.monthly[0],last=x.monthly.at(-1)!;
+ const period=`${MONTHS[first.month]}/${first.calendarYear} a ${MONTHS[last.month]}/${last.calendarYear}`;
  const credit=x.monthly.reduce((sum,m)=>sum+m.credit,0)/12;
  const fio=x.fiscal.charges.find(c=>c.id==='fioB')?.gross??0;
  const width=660,height=250,left=64,right=18,top=22,bottom=36;
@@ -43,11 +46,11 @@ export default function ClientValueCharts({p,x}:{p:SolarInput;x:ReturnType<typeo
     </svg><div className="value-legend">{series.map(s=><span key={s.key}><i style={{background:s.color}}/>{s.label}</span>)}</div>
     <p className="hint">Perfil anual inicial, com as tarifas e o consumo usados nesta comparação. O resíduo não é uma taxa fixa. Entrada e investimento à vista não fazem parte das linhas mensais.</p>
    </section>
-   <section className="value-chart-card value-fio"><div className="eyebrow">USO DA REDE EXPLICADO</div><h3><Zap size={20}/> Quanto é o Fio B?</h3>
-    <strong className="value-fio-amount">{x.unknownFio?'A confirmar':money(fio)}<small>{x.unknownFio?'Componente não informada':'por mês · média inicial estimada'}</small></strong>
-    <div className="value-fio-formula"><span>{num(credit,2)} kWh compensados</span><b>×</b><span>{x.unknownFio?'Tarifa a confirmar':`R$ ${num(p.fioB,6)}/kWh`}</span><b>×</b><span>Percentual conforme cada ano civil</span></div>
-    <p>O percentual incide sobre a componente Fio B da energia compensada. A conta total é calculada com as demais parcelas; não usamos um percentual fixo da fatura como previsão.</p>
-    <div className="value-tax-list"><h4>Tributos dentro da conta projetada</h4>{x.fiscal.taxes.map(t=><div key={t.name}><span>{t.name} {t.rate===null?'· alíquota pendente':`· ${num(t.rate,4)}%`}</span><b>{t.amount===null?'A confirmar':money(t.amount)}</b></div>)}<div><span>Tributos/ajustes SCEE adicionais</span><b>{x.unknownCompensation?'A confirmar':money(x.fiscal.compensationTax)}</b></div><small>Valores destacados já incluídos nas tarifas brutas informadas. Não são somados novamente. Incidências pendentes precisam de conferência.</small></div>
+   <section className="value-chart-card value-fio"><div className="eyebrow">{observedFio===null?'SIMULAÇÃO SEPARADA DA FATURA':'VALOR COBRADO NA FATURA'}</div><h3><Zap size={20}/> {observedFio===null?'Fio B do cenário futuro':'Quanto foi cobrado de Fio B?'}</h3>
+    <strong className="value-fio-amount">{observedFio!==null?money(observedFio):x.unknownFio||x.unknownSelfUse?'A conferir':money(fio)}<small>{observedFio!==null?`Fatura ${observed!.reference} · incluído no total de ${money(observed!.total)}`:x.unknownSelfUse?'Uso direto da geração ainda não validado':`Média projetada · ${period}`}</small></strong>
+    {observedFio!==null&&<><div className="value-fio-formula"><span>{num(observed!.compensationKwh,2)} kWh compensados neste ciclo</span><b>×</b><span>R$ {num(observed!.gridRate!,8)}/kWh efetivamente cobrados</span></div><p>Esta tarifa já inclui o percentual do ciclo. O valor vem dos lançamentos da conta; não aplicamos o percentual novamente.</p></>}
+    <details className="review-details"><summary>{observedFio!==null?'Comparar com a simulação futura':'Ver as hipóteses e a estimativa do cenário'}</summary><p><b>{x.unknownFio?'Fio B a confirmar':money(fio)}</b> por mês na hipótese de <b>{num(credit,2)} kWh compensados</b> em média. Período: {period}. Componente integral: R$ {num(p.fioB,6)}/kWh, com o percentual de cada ano.</p><p>Uso direto assumido: {num(p.selfUse,2)}% da geração. {x.unknownSelfUse?'Essa hipótese ainda não está conferida. Zero sem medição não significa ausência real de uso direto.':''} A meta de geração do contrato não é a energia compensada medida.</p>
+    <div className="value-tax-list"><h4>Tributos dentro da conta projetada</h4>{x.fiscal.taxes.map(t=><div key={t.name}><span>{t.name} {t.rate===null?'· alíquota pendente':`· ${num(t.rate,4)}%`}</span><b>{t.amount===null?'A confirmar':money(t.amount)}</b></div>)}<div><span>Tributos/ajustes SCEE adicionais</span><b>{x.unknownCompensation?'A confirmar':money(x.fiscal.compensationTax)}</b></div><small>Tributos já incluídos nas tarifas brutas não são somados novamente.</small></div></details>
     <a className="text-btn" href="https://www2.camara.leg.br/legin/fed/lei/2022/lei-14300-6-janeiro-2022-792217-normaatualizada-pl.html" target="_blank" rel="noreferrer">Consultar a Lei 14.300 · arts. 26 e 27</a>
    </section>
    <section className="value-chart-card value-payback"><div><div className="eyebrow">RETORNO DO INVESTIMENTO À VISTA</div><h3><TrendingUp size={20}/> Em que momento o investimento se paga?</h3><p>O saldo começa em <b>−{money(x.price)}</b>. {x.partial?'Fluxo parcial: faltam parcelas tarifárias/tributárias. O retorno só poderá ser estimado após completar essas informações.':'O cruzamento da linha zero indica recuperação do investimento.'}</p></div>

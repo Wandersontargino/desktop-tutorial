@@ -17,9 +17,10 @@ export function reproduceInvoice(b:BillReading){
 }
 export function sameBillCustomer(a:BillReading|null,b:BillReading){
  const norm=(s:string)=>s.replace(/\D/g,'');
- if(a?.accountCode&&b.accountCode)return norm(a.accountCode)===norm(b.accountCode);
- if(a?.consumerUnit&&b.consumerUnit)return norm(a.consumerUnit)===norm(b.consumerUnit);
- return false;
+ const accountA=norm(a?.accountCode||''),accountB=norm(b.accountCode||'');
+ if(accountA&&accountB)return accountA===accountB;
+ const unitA=norm(a?.consumerUnit||''),unitB=norm(b.consumerUnit||'');
+ return !!unitA&&!!unitB&&unitA===unitB;
 }
 export function comparisonBill(p:SolarInput){return p.solarComparison?.bill??(p.billAnalyses||[]).filter(b=>b.hasSolar).sort((a,b)=>(b.reference.slice(3)+b.reference.slice(0,2)).localeCompare(a.reference.slice(3)+a.reference.slice(0,2)))[0]??(p.billAnalysis?.hasSolar?p.billAnalysis:null);}
 export function observedProjectionCharges(p:SolarInput,b:BillReading):SolarInput{

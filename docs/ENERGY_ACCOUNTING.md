@@ -34,3 +34,31 @@ As faturas são conciliadas até os centavos. Multa, juros e correção ficam se
 - [Componentes tarifárias ANEEL](https://dadosabertos.aneel.gov.br/dataset/componentes-tarifarias): agente, classe e vigência são parte da referência. A TUSD completa não é a componente Fio B.
 
 Os testes de código usam dados fictícios. Faturas de clientes, identificadores, relatórios do inversor e bases de produção ficam fora da distribuição do código-fonte.
+# Precisão da projeção e conferência histórica
+
+Novos projetos importados mantêm o consumo atual como hipótese inicial. A reserva de geração não cria demanda automaticamente; crescimento de consumo continua disponível por escolha explícita.
+
+`lib/forecast-accuracy.ts` reúne ciclos conferidos do inversor na mesma unidade, com datas alinhadas e sem sobreposição. O uso direto é ponderado pelos kWh gerados. O consumo total é reconstruído por uso direto + retirada da rede e normalizado pelos dias dos ciclos. Aplicar o perfil requer pelo menos três ciclos e altera somente o rascunho, preservando a meta de geração. Esse mínimo é um critério operacional, sem representar garantia estatística. Perfis de bateria e da geração adicional de uma ampliação exigem estudo próprio.
+
+A diferença entre conta observada e média simulada é decomposta em volume compensado, tarifas/ajustes por kWh, energia residual/mínimo, CIP, bandeira e outras despesas. Comparar períodos diferentes não mede o erro de uma previsão para o mesmo ciclo.
+
+O teste retrospectivo de encargos usa somente a fatura anterior como referência de tarifa, com ajuste do percentual legal do ano. Os kWh da fatura testada são mantidos conhecidos. O desvio absoluto médio resultante avalia apenas Fio B + SCEE; não valida a previsão de consumo, geração ou conta total. A fatura testada não participa de sua própria calibração. Nenhuma margem universal de acerto é declarada.
+
+## Apresentação das contas reais
+
+Ao abrir uma proposta com documentos, a apresentação começa pelas faturas reais,
+inclusive em modo de leitura. A escolha entre contas e projeção vale para a tela
+atual; uma opção antiga salva no rascunho não força a projeção na reabertura.
+O resumo mostra os totais antes e com solar, a diferença histórica e a composição
+da conta solar. Diferenças entre ciclos não são renomeadas como economia causal.
+
+Faturas conferidas de outros rascunhos carregados da mesma conta/unidade são
+reunidas na leitura do projeto. Isso preserva o rascunho salvo e não altera
+consumo, tarifas, sistema ou autoconsumo. Documentos de outra unidade são recusados.
+Os valores projetados ficam na opção explícita de simular o projeto futuro.
+Uma componente ausente ou uma fatura não conciliada não vira valor zero validado.
+Ao selecionar um projeto salvo, o navegador lembra apenas seu identificador. Na
+reabertura, ele só é restaurado se continuar entre os registros autorizados da
+conta atual e não estiver arquivado. Faturas e dados financeiros não são gravados
+nesse armazenamento. A opção de nova proposta limpa essa preferência.
+
